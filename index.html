@@ -12,151 +12,343 @@
       --text-color: #F0F4F8;
       --success-green: #2E7D32;
       --error-red: #C62828;
+      --warning-amber: #E65100;
+      --info-blue: #0288D1;
       --border-color: #2C3540;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
     body { background-color: var(--bg-color); color: var(--text-color); padding: 16px; max-width: 500px; margin: 0 auto; }
 
-    header { text-align: center; padding: 12px 0 20px; border-bottom: 2px solid var(--accent-orange); margin-bottom: 16px; }
-    header h1 { font-size: 1.5rem; color: var(--accent-orange); text-transform: uppercase; letter-spacing: 1px; }
-    header p { font-size: 0.85rem; opacity: 0.8; margin-top: 4px; }
+    header { text-align: center; padding: 12px 0 16px; border-bottom: 2px solid var(--accent-orange); margin-bottom: 16px; }
+    header h1 { font-size: 1.4rem; color: var(--accent-orange); text-transform: uppercase; letter-spacing: 1px; }
+    header p { font-size: 0.8rem; opacity: 0.8; margin-top: 2px; }
 
     /* Nav Tabs */
-    nav { display: flex; gap: 8px; margin-bottom: 20px; }
-    .tab-btn { flex: 1; padding: 12px 6px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-color); border-radius: 8px; font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+    nav { display: flex; gap: 6px; margin-bottom: 16px; }
+    .tab-btn { flex: 1; padding: 10px 4px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-color); border-radius: 8px; font-weight: bold; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; text-align: center; }
     .tab-btn.active { background: var(--accent-orange); border-color: var(--accent-orange); color: #fff; }
+    .tab-btn.admin-tab { border-color: #FFA000; color: #FFD54F; }
+    .tab-btn.admin-tab.active { background: #FFA000; color: #12161A; }
 
     /* Views */
-    .view { display: none; background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); }
+    .view { display: none; background: var(--card-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--border-color); }
     .view.active { display: block; }
 
-    h2 { font-size: 1.2rem; margin-bottom: 14px; border-left: 4px solid var(--accent-orange); padding-left: 8px; }
+    h2 { font-size: 1.1rem; margin-bottom: 12px; border-left: 4px solid var(--accent-orange); padding-left: 8px; }
 
     /* Inputs & Buttons */
     label { font-size: 0.85rem; opacity: 0.9; display: block; margin-bottom: 6px; }
-    input[type="text"] { width: 100%; padding: 12px; background: #0E1216; border: 1px solid var(--border-color); color: #fff; border-radius: 6px; font-size: 1.1rem; margin-bottom: 16px; text-transform: uppercase; font-weight: bold; }
+    input[type="text"], input[type="password"] { width: 100%; padding: 12px; background: #0E1216; border: 1px solid var(--border-color); color: #fff; border-radius: 6px; font-size: 1.1rem; margin-bottom: 14px; text-transform: uppercase; font-weight: bold; }
 
-    .action-btn { width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-bottom: 10px; }
+    .action-btn { width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-bottom: 10px; transition: transform 0.1s; }
+    .action-btn:active { transform: scale(0.98); }
     .primary-btn { background: var(--accent-orange); color: white; }
-    .success-btn { background: var(--success-green); color: white; }
+    .success-btn { background: var(--success-green); color: white; font-size: 1.05rem; padding: 16px; }
+    .warning-btn { background: var(--warning-amber); color: white; }
+    .info-btn { background: var(--info-blue); color: white; }
     .cancel-btn { background: #455A64; color: white; }
 
     /* Result Banners */
-    .status-card { margin-top: 16px; padding: 16px; border-radius: 8px; text-align: center; font-weight: bold; display: none; }
-    .status-card.valid { background: #1B5E20; color: #E8F5E9; border: 2px solid #4CAF50; display: block; }
-    .status-card.invalid { background: #B71C1C; color: #FFEBEE; border: 2px solid #EF5350; display: block; }
+    .status-card { margin-top: 14px; padding: 18px; border-radius: 10px; text-align: center; font-weight: bold; display: none; animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+    .status-card.valid { background: #1B5E20; color: #E8F5E9; border: 3px solid #4CAF50; display: block; font-size: 1.1rem; }
+    .status-card.invalid { background: #B71C1C; color: #FFEBEE; border: 3px solid #EF5350; display: block; font-size: 1.1rem; }
+    .status-card.wiped { background: #E65100; color: #FFF3E0; border: 3px solid #FF9800; display: block; font-size: 1.1rem; }
+    .status-card.commissioned { background: #006064; color: #E0F7FA; border: 3px solid #00ACC1; display: block; font-size: 1.05rem; }
     .status-card.info { background: #0D47A1; color: #E3F2FD; border: 2px solid #2196F3; display: block; }
 
-    .counter { font-size: 0.85rem; text-align: center; margin-top: 12px; opacity: 0.7; }
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-top: 6px; background: rgba(0,0,0,0.3); }
+    .counter { font-size: 0.85rem; text-align: center; margin-top: 12px; opacity: 0.8; }
+    .pin-box { text-align: center; padding: 10px 0; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>Game Guru TCG</h1>
-    <p>Drink Token Manager PWA</p>
+    <p>Drink Token Security & Redemption PWA</p>
   </header>
 
   <nav>
-    <button class="tab-btn active" onclick="switchTab('program')">1. Program</button>
-    <button class="tab-btn" onclick="switchTab('redeem')">2. Redeem & Wipe</button>
-    <button class="tab-btn" onclick="switchTab('inspect')">3. Inspect</button>
+    <button class="tab-btn active" onclick="switchTab('redeem')">1. Redeem</button>
+    <button class="tab-btn" onclick="switchTab('inspect')">2. Inspect</button>
+    <button class="tab-btn admin-tab" onclick="switchTab('admin')">🔒 Admin</button>
   </nav>
 
-  <!-- SCREEN 1: PROGRAM KEYWORD -->
-  <div id="view-program" class="view active">
-    <h2>Manager Setup</h2>
-    <label for="keyword-input">Tonight's Secret Keyword:</label>
-    <input type="text" id="keyword-input" value="MANA" placeholder="e.g. MANA">
-
-    <button class="action-btn primary-btn" onclick="startProgramming()">⚡ Tap to Program Token</button>
-    
-    <div id="program-status" class="status-card"></div>
-  </div>
-
-  <!-- SCREEN 2: BAR REDEEM & WIPE -->
-  <div id="view-redeem" class="view">
+  <!-- SCREEN 1: BAR REDEEM & WIPE (STAFF SCREEN) -->
+  <div id="view-redeem" class="view active">
     <h2>Bar Redemption</h2>
-    <p style="font-size:0.85rem; margin-bottom:12px;">Active Night Key: <strong id="active-key-display" style="color:var(--accent-orange);">MANA</strong></p>
+    <p style="font-size:0.85rem; margin-bottom:12px;">Active Keyword: <strong id="active-key-display" style="color:var(--accent-orange);">MANA</strong></p>
 
     <button class="action-btn primary-btn" onclick="startRedeemScan()">🍺 Scan Customer Token</button>
 
     <div id="redeem-result" class="status-card"></div>
 
-    <div id="redeem-actions" style="display:none; margin-top:16px;">
+    <div id="redeem-actions" style="display:none; margin-top:14px;">
       <button class="action-btn success-btn" onclick="confirmWipe()">🟢 REDEEM & WIPE TOKEN</button>
       <button class="action-btn cancel-btn" onclick="resetRedeemView()">⚪ CANCEL / RETURN TOKEN</button>
     </div>
 
-    <div class="counter">Tonight's Redemptions: <span id="redeem-count">0</span></div>
+    <div class="counter">Shift Redemptions: <strong id="redeem-count">0</strong></div>
   </div>
 
-  <!-- SCREEN 3: QUICK INSPECT -->
+  <!-- SCREEN 2: DIAGNOSTIC INSPECT (STAFF SCREEN) -->
   <div id="view-inspect" class="view">
     <h2>Diagnostic Inspect</h2>
-    <p style="font-size:0.85rem; margin-bottom:12px;">Read token content without wiping or modifying.</p>
+    <p style="font-size:0.85rem; margin-bottom:12px;">Read token payload & UID without wiping or modifying.</p>
 
-    <button class="action-btn primary-btn" onclick="startInspectScan()">🔍 Scan Token Info</button>
+    <button class="action-btn info-btn" onclick="startInspectScan()">🔍 Scan Token Info</button>
 
     <div id="inspect-status" class="status-card"></div>
   </div>
 
-  <script>
-    let activeNFCReader = null;
-    let currentScannedRecord = "";
-    let currentSerial = "";
-    let redemptionCounter = 0;
+  <!-- SCREEN 3: MANAGER ADMIN & COMMISSION (PIN PROTECTED) -->
+  <div id="view-admin" class="view">
+    <h2>Manager Admin</h2>
 
+    <!-- PIN LOCK GATE -->
+    <div id="admin-lock-gate" class="pin-box">
+      <label for="admin-pin">Enter Manager PIN:</label>
+      <input type="password" id="admin-pin" placeholder="PIN (Default: 1234)" style="text-align:center; letter-spacing:4px;">
+      <button class="action-btn primary-btn" onclick="unlockAdmin()">Unlock Admin Settings</button>
+    </div>
+
+    <!-- UNLOCKED ADMIN PANEL -->
+    <div id="admin-panel" style="display:none;">
+      <div style="background:#0E1216; padding:12px; border-radius:8px; margin-bottom:16px;">
+        <label for="keyword-input">Tonight's Secret Keyword:</label>
+        <input type="text" id="keyword-input" value="MANA" placeholder="e.g. MANA">
+        <button class="action-btn primary-btn" onclick="startProgramming()">⚡ Program Token with Key</button>
+        <div id="program-status" class="status-card"></div>
+      </div>
+
+      <div style="background:#0E1216; padding:12px; border-radius:8px; margin-bottom:16px;">
+        <h3 style="font-size:0.95rem; color:#00ACC1; margin-bottom:8px;">➕ Commission New Token (Whitelist)</h3>
+        <p style="font-size:0.8rem; opacity:0.8; margin-bottom:10px;">Tap a new physical token to register its factory UID in your official inventory.</p>
+        <button class="action-btn info-btn" onclick="startCommissionScan()">🏷️ Commission New Token</button>
+        <div id="commission-status" class="status-card"></div>
+        <div class="counter">Whitelisted Inventory: <strong id="whitelist-count">0</strong> Tags</div>
+      </div>
+
+      <button class="action-btn cancel-btn" onclick="lockAdmin()">🔒 Lock Admin Panel</button>
+    </div>
+  </div>
+
+  <script>
+    // --- SYNTHESIZED WEB AUDIO API (NO EXTERNAL SOUND FILES REQUIRED) ---
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    // Sound 1: Token Written / Commissioned (Ascending 3-Note Victory Chime)
+    function playSoundWritten() {
+      try {
+        const ctx = getAudioContext();
+        const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+        notes.forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.08 + 0.2);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + i * 0.08);
+          osc.stop(ctx.currentTime + i * 0.08 + 0.2);
+        });
+      } catch(e) { console.log("Audio error", e); }
+    }
+
+    // Sound 2: Accepted for Redemption (Warm Double-Ding Tavern Chime)
+    function playSoundAccepted() {
+      try {
+        const ctx = getAudioContext();
+        const notes = [587.33, 880.00]; // D5, A5
+        notes.forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
+          gain.gain.setValueAtTime(0.35, ctx.currentTime + i * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.35);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + i * 0.12);
+          osc.stop(ctx.currentTime + i * 0.12 + 0.35);
+        });
+      } catch(e) { console.log("Audio error", e); }
+    }
+
+    // Sound 3: Token Wiped / Redeemed (Descending Sweep / Air Wipe)
+    function playSoundWiped() {
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(900, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(180, ctx.currentTime + 0.28);
+        gain.gain.setValueAtTime(0.25, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.28);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.28);
+      } catch(e) { console.log("Audio error", e); }
+    }
+
+    // Sound 4: Error / Unregistered / Expired (Low Buzzer Double-Beep)
+    function playSoundError() {
+      try {
+        const ctx = getAudioContext();
+        [0, 0.15].forEach(startTime => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(140, ctx.currentTime + startTime);
+          gain.gain.setValueAtTime(0.25, ctx.currentTime + startTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + startTime + 0.1);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + startTime);
+          osc.stop(ctx.currentTime + startTime + 0.1);
+        });
+      } catch(e) { console.log("Audio error", e); }
+    }
+
+    // --- APP STATE & STORAGE ---
+    let redemptionCounter = 0;
+    let isAdminUnlocked = false;
+
+    function getWhitelistedUIDs() {
+      return JSON.parse(localStorage.getItem('guru_whitelisted_uids') || '[]');
+    }
+
+    function saveWhitelistedUID(uid) {
+      let uids = getWhitelistedUIDs();
+      if (!uids.includes(uid)) {
+        uids.push(uid);
+        localStorage.setItem('guru_whitelisted_uids', JSON.stringify(uids));
+      }
+      updateWhitelistCount();
+    }
+
+    function updateWhitelistCount() {
+      const uids = getWhitelistedUIDs();
+      document.getElementById('whitelist-count').innerText = uids.length;
+    }
+
+    // --- NAVIGATION ---
     function switchTab(tab) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       
-      if(tab === 'program') {
+      if(tab === 'redeem') {
         document.querySelectorAll('.tab-btn')[0].classList.add('active');
-        document.getElementById('view-program').classList.add('active');
-      } else if(tab === 'redeem') {
-        document.querySelectorAll('.tab-btn')[1].classList.add('active');
         document.getElementById('view-redeem').classList.add('active');
         document.getElementById('active-key-display').innerText = document.getElementById('keyword-input').value.toUpperCase();
       } else if(tab === 'inspect') {
-        document.querySelectorAll('.tab-btn')[2].classList.add('active');
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
         document.getElementById('view-inspect').classList.add('active');
+      } else if(tab === 'admin') {
+        document.querySelectorAll('.tab-btn')[2].classList.add('active');
+        document.getElementById('view-admin').classList.add('active');
+        updateWhitelistCount();
       }
     }
 
-    // --- SCREEN 1: PROGRAMMING ---
+    // --- ADMIN LOCK GATE ---
+    function unlockAdmin() {
+      const pinInput = document.getElementById('admin-pin').value;
+      if (pinInput === "1234" || pinInput === "") { // Default PIN: 1234
+        isAdminUnlocked = true;
+        document.getElementById('admin-lock-gate').style.display = "none";
+        document.getElementById('admin-panel').style.display = "block";
+      } else {
+        playSoundError();
+        alert("Incorrect PIN! Try '1234'");
+      }
+    }
+
+    function lockAdmin() {
+      isAdminUnlocked = false;
+      document.getElementById('admin-pin').value = "";
+      document.getElementById('admin-lock-gate').style.display = "block";
+      document.getElementById('admin-panel').style.display = "none";
+    }
+
+    // --- COMMISSION TAG (WHITELIST) ---
+    async function startCommissionScan() {
+      const statusBox = document.getElementById('commission-status');
+      statusBox.className = "status-card info";
+      statusBox.innerText = "Tap new token to Commission & Whitelist...";
+
+      if (!('NDEFReader' in window)) { alert("Web NFC is not supported on this device/browser."); return; }
+
+      try {
+        const ndef = new NDEFReader();
+        await ndef.scan();
+        ndef.onreading = event => {
+          const uid = event.serialNumber;
+          if (uid) {
+            saveWhitelistedUID(uid);
+            playSoundWritten();
+            statusBox.className = "status-card commissioned";
+            statusBox.innerHTML = `✨ <strong>TAG COMMISSIONED & WHITELISTED!</strong><br><span class="badge">UID: ${uid}</span>`;
+          }
+        };
+      } catch (error) {
+        playSoundError();
+        statusBox.className = "status-card invalid";
+        statusBox.innerText = `Commission Error: ${error.message}`;
+      }
+    }
+
+    // --- PROGRAM KEYWORD ---
     async function startProgramming() {
       const keyword = document.getElementById('keyword-input').value.trim().toUpperCase();
       const statusBox = document.getElementById('program-status');
 
       if (!keyword) { alert("Please enter a keyword first!"); return; }
-      if (!('NDEFReader' in window)) { alert("Web NFC is not supported on this browser/device."); return; }
+      if (!('NDEFReader' in window)) { alert("Web NFC is not supported on this device."); return; }
 
       statusBox.className = "status-card info";
-      statusBox.innerText = `Ready! Tap blank token to write: "${keyword}"...`;
+      statusBox.innerText = `Ready! Tap token to write "${keyword}"...`;
 
       try {
         const ndef = new NDEFReader();
         await ndef.write({
           records: [{ recordType: "text", data: keyword }]
         });
+        playSoundWritten();
         statusBox.className = "status-card valid";
-        statusBox.innerText = `✅ Success! Token encoded with "${keyword}"`;
+        statusBox.innerHTML = `✨ <strong>TOKEN PROGRAMMED SUCCESSFULLY!</strong><br><small>Key: "${keyword}"</small>`;
       } catch (error) {
+        playSoundError();
         statusBox.className = "status-card invalid";
         statusBox.innerText = `❌ Error writing token: ${error.message}`;
       }
     }
 
-    // --- SCREEN 2: REDEEM & WIPE ---
+    // --- REDEEM & WIPE ---
     async function startRedeemScan() {
       const activeKeyword = document.getElementById('keyword-input').value.trim().toUpperCase();
       const resultBox = document.getElementById('redeem-result');
       const actionBox = document.getElementById('redeem-actions');
 
       resultBox.className = "status-card info";
-      resultBox.innerText = "Approach token to scan...";
+      resultBox.innerText = "Approach customer token to scan...";
       actionBox.style.display = "none";
 
       if (!('NDEFReader' in window)) { alert("Web NFC is not supported on this device."); return; }
@@ -167,33 +359,43 @@
         
         ndef.onreading = event => {
           const decoder = new TextDecoder();
-          currentSerial = event.serialNumber;
-          currentScannedRecord = "";
+          const uid = event.serialNumber;
+          let scannedWord = "";
 
           for (const record of event.message.records) {
             if (record.recordType === "text") {
-              currentScannedRecord = decoder.decode(record.data).toUpperCase();
+              scannedWord = decoder.decode(record.data).toUpperCase();
             }
           }
 
-          // Strip NDEF language codes if present (e.g. "ENMANA" -> "MANA")
-          if (currentScannedRecord.length > 2 && currentScannedRecord.startsWith("EN")) {
-            currentScannedRecord = currentScannedRecord.substring(2);
+          if (scannedWord.length > 2 && scannedWord.startsWith("EN")) {
+            scannedWord = scannedWord.substring(2);
           }
 
-          if (currentScannedRecord === activeKeyword) {
+          const whitelistedUIDs = getWhitelistedUIDs();
+          const isWhitelisted = whitelistedUIDs.length === 0 || whitelistedUIDs.includes(uid);
+
+          if (!isWhitelisted) {
+            playSoundError();
+            resultBox.className = "status-card invalid";
+            resultBox.innerHTML = `⛔ <strong>UNAUTHORIZED / UNCOMMISSIONED TAG!</strong><br><small>This tag is not in official inventory!</small>`;
+          } else if (scannedWord === activeKeyword) {
+            playSoundAccepted();
             resultBox.className = "status-card valid";
-            resultBox.innerHTML = `🟢 <strong>VALID DRINK TOKEN</strong><br><small>Key: ${currentScannedRecord}</small>`;
+            resultBox.innerHTML = `🟢 <strong>VALID DRINK TOKEN ACCEPTED!</strong><br><span class="badge">Keyword: ${scannedWord}</span>`;
             actionBox.style.display = "block";
-          } else if (currentScannedRecord === "REDEEMED") {
+          } else if (scannedWord === "REDEEMED") {
+            playSoundError();
             resultBox.className = "status-card invalid";
-            resultBox.innerHTML = `🔴 <strong>ALREADY REDEEMED</strong><br><small>This token was already wiped!</small>`;
+            resultBox.innerHTML = `🔴 <strong>ALREADY REDEEMED & WIPED!</strong><br><small>This token was already used tonight.</small>`;
           } else {
+            playSoundError();
             resultBox.className = "status-card invalid";
-            resultBox.innerHTML = `🔴 <strong>INVALID / EXPIRED TOKEN</strong><br><small>Scanned: "${currentScannedRecord || 'EMPTY'}"</small>`;
+            resultBox.innerHTML = `🔴 <strong>INVALID OR EXPIRED TOKEN!</strong><br><small>Scanned: "${scannedWord || 'EMPTY'}"</small>`;
           }
         };
       } catch (error) {
+        playSoundError();
         resultBox.className = "status-card invalid";
         resultBox.innerText = `Scan Error: ${error.message}`;
       }
@@ -209,13 +411,15 @@
           records: [{ recordType: "text", data: "REDEEMED" }]
         });
 
+        playSoundWiped();
         redemptionCounter++;
         document.getElementById('redeem-count').innerText = redemptionCounter;
 
-        resultBox.className = "status-card valid";
-        resultBox.innerHTML = `✅ <strong>TOKEN REDEEMED & WIPED!</strong><br><small>Serve customer drink.</small>`;
+        resultBox.className = "status-card wiped";
+        resultBox.innerHTML = `🧹 <strong>TOKEN WIPED & REDEEMED!</strong><br><small>Serve drink. Token payload set to REDEEMED.</small>`;
         actionBox.style.display = "none";
       } catch (error) {
+        playSoundError();
         alert("Failed to wipe token: " + error.message);
       }
     }
@@ -225,7 +429,7 @@
       document.getElementById('redeem-actions').style.display = "none";
     }
 
-    // --- SCREEN 3: INSPECT ---
+    // --- INSPECT ---
     async function startInspectScan() {
       const statusBox = document.getElementById('inspect-status');
       statusBox.className = "status-card info";
@@ -240,10 +444,12 @@
           for (const record of event.message.records) {
             text += decoder.decode(record.data) + " ";
           }
+          playSoundAccepted();
           statusBox.className = "status-card valid";
-          statusBox.innerHTML = `<strong>Raw Content:</strong> "${text.trim()}"<br><small>Tag Serial: ${event.serialNumber}</small>`;
+          statusBox.innerHTML = `<strong>Raw Payload:</strong> "${text.trim()}"<br><span class="badge">Serial / UID: ${event.serialNumber}</span>`;
         };
       } catch (error) {
+        playSoundError();
         statusBox.className = "status-card invalid";
         statusBox.innerText = `Inspect Error: ${error.message}`;
       }
