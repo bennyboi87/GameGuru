@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Guru - Drink Token Manager</title>
+  <title>Game Guru - Drinks Tokens Manager</title>
   <style>
     :root {
       --bg-color: #12161A;
@@ -67,7 +67,7 @@
 <body>
 
   <header>
-    <h1>Game Guru TCG</h1>
+    <h1>Game Guru Drinks Tokens</h1>
     <p>Drink Token Security & Redemption PWA</p>
   </header>
 
@@ -111,7 +111,7 @@
     <!-- PIN LOCK GATE -->
     <div id="admin-lock-gate" class="pin-box">
       <label for="admin-pin">Enter Manager PIN:</label>
-      <input type="password" id="admin-pin" placeholder="PIN (Default: 1234)" style="text-align:center; letter-spacing:4px;">
+      <input type="password" id="admin-pin" placeholder="Enter PIN" style="text-align:center; letter-spacing:4px;">
       <button class="action-btn primary-btn" onclick="unlockAdmin()">Unlock Admin Settings</button>
     </div>
 
@@ -132,12 +132,23 @@
         <div class="counter">Whitelisted Inventory: <strong id="whitelist-count">0</strong> Tags</div>
       </div>
 
+      <!-- TRANSACTION LOG -->
+      <div style="background:#0E1216; padding:12px; border-radius:8px; margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <h3 style="font-size:0.95rem; color:#FFA000;">📜 Transaction & Activity Log</h3>
+          <button onclick="clearTxLog()" style="background:none; border:none; color:#EF5350; font-size:0.75rem; cursor:pointer; font-weight:bold;">Clear Log</button>
+        </div>
+        <div id="tx-log-list" style="max-height: 220px; overflow-y: auto; background: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color);">
+          <!-- Dynamic Log Entries Injected Here -->
+        </div>
+      </div>
+
       <button class="action-btn cancel-btn" onclick="lockAdmin()">🔒 Lock Admin Panel</button>
     </div>
   </div>
 
   <script>
-    // --- SYNTHESIZED WEB AUDIO API (NO EXTERNAL SOUND FILES REQUIRED) ---
+    // --- SYNTHESIZED WEB AUDIO API ---
     let audioCtx = null;
 
     function getAudioContext() {
@@ -150,11 +161,10 @@
       return audioCtx;
     }
 
-    // Sound 1: Token Written / Commissioned (Ascending 3-Note Victory Chime)
     function playSoundWritten() {
       try {
         const ctx = getAudioContext();
-        const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+        const notes = [523.25, 659.25, 783.99];
         notes.forEach((freq, i) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
@@ -170,11 +180,10 @@
       } catch(e) { console.log("Audio error", e); }
     }
 
-    // Sound 2: Accepted for Redemption (Warm Double-Ding Tavern Chime)
     function playSoundAccepted() {
       try {
         const ctx = getAudioContext();
-        const notes = [587.33, 880.00]; // D5, A5
+        const notes = [587.33, 880.00];
         notes.forEach((freq, i) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
@@ -190,7 +199,6 @@
       } catch(e) { console.log("Audio error", e); }
     }
 
-    // Sound 3: Token Wiped / Redeemed (Descending Sweep / Air Wipe)
     function playSoundWiped() {
       try {
         const ctx = getAudioContext();
@@ -208,7 +216,6 @@
       } catch(e) { console.log("Audio error", e); }
     }
 
-    // Sound 4: Error / Unregistered / Expired (Low Buzzer Double-Beep)
     function playSoundError() {
       try {
         const ctx = getAudioContext();
@@ -227,9 +234,10 @@
       } catch(e) { console.log("Audio error", e); }
     }
 
-    // --- APP STATE & STORAGE ---
+    // --- APP STATE & LOGGING ---
     let redemptionCounter = 0;
     let isAdminUnlocked = false;
+    let lastScannedUID = "";
 
     function getWhitelistedUIDs() {
       return JSON.parse(localStorage.getItem('guru_whitelisted_uids') || '[]');
@@ -249,35 +257,89 @@
       document.getElementById('whitelist-count').innerText = uids.length;
     }
 
+    // TRANSACTION LOG FUNCTIONS
+    function getTxLog() {
+      return JSON.parse(localStorage.getItem('guru_tx_log') || '[]');
+    }
+
+    function addLog(action, details, uid = '') {
+      let log = getTxLog();
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const dateStr = now.toLocaleDateString();
+      
+      const entry = {
+        time: timeStr,
+        date: dateStr,
+        action: action,
+        details: details,
+        uid: uid || 'N/A'
+      };
+      log.unshift(entry);
+      if (log.length > 100) log = log.slice(0, 100);
+      localStorage.setItem('guru_tx_log', JSON.stringify(log));
+      renderTxLog();
+    }
+
+    function renderTxLog() {
+      const logList = document.getElementById('tx-log-list');
+      if (!logList) return;
+      const log = getTxLog();
+      if (log.length === 0) {
+        logList.innerHTML = '<p style="font-size:0.8rem; opacity:0.6; text-align:center; padding:12px;">No transactions logged yet.</p>';
+        return;
+      }
+      logList.innerHTML = log.map(item => `
+        <div style="padding: 8px 10px; border-bottom: 1px solid var(--border-color); font-size: 0.8rem;">
+          <div style="display:flex; justify-content:space-between; opacity:0.7; font-size:0.72rem; margin-bottom:2px;">
+            <span>⏱️ ${item.date} ${item.time}</span>
+            ${item.uid !== 'N/A' ? `<span style="font-family:monospace; color:var(--info-blue);">UID: ${item.uid}</span>` : ''}
+          </div>
+          <div style="font-weight:bold; color:var(--text-color);">
+            ${item.action}: <span style="color:var(--accent-orange);">${item.details}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function clearTxLog() {
+      if (confirm("Are you sure you want to clear the activity log?")) {
+        localStorage.removeItem('guru_tx_log');
+        renderTxLog();
+      }
+    }
+
     // --- NAVIGATION ---
     function switchTab(tab) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       
       if(tab === 'redeem') {
-        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.querySelectorAll('.tab-btn').classList.add('active');
         document.getElementById('view-redeem').classList.add('active');
         document.getElementById('active-key-display').innerText = document.getElementById('keyword-input').value.toUpperCase();
       } else if(tab === 'inspect') {
-        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.querySelectorAll('.tab-btn').classList.add('active');
         document.getElementById('view-inspect').classList.add('active');
       } else if(tab === 'admin') {
-        document.querySelectorAll('.tab-btn')[2].classList.add('active');
+        document.querySelectorAll('.tab-btn').classList.add('active');
         document.getElementById('view-admin').classList.add('active');
         updateWhitelistCount();
+        renderTxLog();
       }
     }
 
     // --- ADMIN LOCK GATE ---
     function unlockAdmin() {
       const pinInput = document.getElementById('admin-pin').value;
-      if (pinInput === "1234" || pinInput === "") { // Default PIN: 1234
+      if (pinInput === "1702") {
         isAdminUnlocked = true;
         document.getElementById('admin-lock-gate').style.display = "none";
         document.getElementById('admin-panel').style.display = "block";
+        renderTxLog();
       } else {
         playSoundError();
-        alert("Incorrect PIN! Try '1234'");
+        alert("Incorrect PIN!");
       }
     }
 
@@ -304,6 +366,7 @@
           if (uid) {
             saveWhitelistedUID(uid);
             playSoundWritten();
+            addLog("Tag Commissioned", "Whitelisted to Inventory", uid);
             statusBox.className = "status-card commissioned";
             statusBox.innerHTML = `✨ <strong>TAG COMMISSIONED & WHITELISTED!</strong><br><span class="badge">UID: ${uid}</span>`;
           }
@@ -332,6 +395,7 @@
           records: [{ recordType: "text", data: keyword }]
         });
         playSoundWritten();
+        addLog("Token Programmed", `Key set to "${keyword}"`);
         statusBox.className = "status-card valid";
         statusBox.innerHTML = `✨ <strong>TOKEN PROGRAMMED SUCCESSFULLY!</strong><br><small>Key: "${keyword}"</small>`;
       } catch (error) {
@@ -360,6 +424,7 @@
         ndef.onreading = event => {
           const decoder = new TextDecoder();
           const uid = event.serialNumber;
+          lastScannedUID = uid;
           let scannedWord = "";
 
           for (const record of event.message.records) {
@@ -377,6 +442,7 @@
 
           if (!isWhitelisted) {
             playSoundError();
+            addLog("Scan Rejected", "Uncommissioned Tag", uid);
             resultBox.className = "status-card invalid";
             resultBox.innerHTML = `⛔ <strong>UNAUTHORIZED / UNCOMMISSIONED TAG!</strong><br><small>This tag is not in official inventory!</small>`;
           } else if (scannedWord === activeKeyword) {
@@ -386,10 +452,12 @@
             actionBox.style.display = "block";
           } else if (scannedWord === "REDEEMED") {
             playSoundError();
+            addLog("Scan Rejected", "Already Wiped", uid);
             resultBox.className = "status-card invalid";
             resultBox.innerHTML = `🔴 <strong>ALREADY REDEEMED & WIPED!</strong><br><small>This token was already used tonight.</small>`;
           } else {
             playSoundError();
+            addLog("Scan Rejected", `Invalid Key: "${scannedWord}"`, uid);
             resultBox.className = "status-card invalid";
             resultBox.innerHTML = `🔴 <strong>INVALID OR EXPIRED TOKEN!</strong><br><small>Scanned: "${scannedWord || 'EMPTY'}"</small>`;
           }
@@ -414,6 +482,8 @@
         playSoundWiped();
         redemptionCounter++;
         document.getElementById('redeem-count').innerText = redemptionCounter;
+
+        addLog("Token Redeemed & Wiped", `Drink #${redemptionCounter} Served`, lastScannedUID);
 
         resultBox.className = "status-card wiped";
         resultBox.innerHTML = `🧹 <strong>TOKEN WIPED & REDEEMED!</strong><br><small>Serve drink. Token payload set to REDEEMED.</small>`;
