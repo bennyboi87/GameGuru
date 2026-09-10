@@ -156,10 +156,18 @@
       <!-- COMMISSION TAGS -->
       <div style="background:#0E1216; padding:12px; border-radius:8px; margin-bottom:16px;">
         <h3 style="font-size:0.95rem; color:#00ACC1; margin-bottom:8px;">➕ Commission New Token (Whitelist)</h3>
-        <p style="font-size:0.8rem; opacity:0.8; margin-bottom:10px;">Tap a new physical token to register its factory UID in your official inventory.</p>
+        <p style="font-size:0.8rem; opacity:0.8; margin-bottom:10px;">Tap a new physical token to register its factory UID in central inventory.</p>
         <button class="action-btn info-btn" onclick="startCommissionScan()">🏷️ Commission New Token</button>
         <div id="commission-status" class="status-card"></div>
         <div class="counter">Whitelisted Inventory: <strong id="whitelist-count">0</strong> Tags</div>
+
+        <!-- CENTRALIZED COMMISSIONED TAGS TABLE -->
+        <div style="margin-top:12px;">
+          <h4 style="font-size:0.85rem; color:#00ACC1; margin-bottom:6px;">📋 Central Inventory List</h4>
+          <div id="commissioned-list" style="max-height: 150px; overflow-y: auto; background: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color);">
+            <p style="font-size:0.75rem; opacity:0.6; text-align:center; padding:10px;">Loading central database...</p>
+          </div>
+        </div>
       </div>
 
       <!-- TRANSACTION LOG -->
@@ -271,13 +279,37 @@
     function initLiveListeners() {
       if (!db) return;
       
-      // Live Whitelist Inventory Sync
+      // Central Live Whitelist & Commissioned Tags Inventory Sync
       db.ref('whitelist').on('value', snapshot => {
         const data = snapshot.val() || {};
-        const uids = Object.values(data);
+        const uids = [];
+        const commListEl = document.getElementById('commissioned-list');
+        
+        let htmlEntries = [];
+        Object.keys(data).forEach(key => {
+          const item = data[key];
+          const uidVal = typeof item === 'object' ? item.uid : item;
+          const dateVal = typeof item === 'object' ? (item.date + ' ' + item.time) : '';
+          uids.push(uidVal);
+
+          htmlEntries.push(`
+            <div style="padding:6px 10px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; font-size:0.75rem;">
+              <div>
+                <span style="font-family:monospace; font-weight:bold; color:var(--info-blue);">${uidVal}</span>
+                ${dateVal ? `<div style="font-size:0.68rem; opacity:0.6;">Added: ${dateVal}</div>` : ''}
+              </div>
+              <button onclick="revokeTag('${key}')" style="background:#C62828; color:#fff; border:none; border-radius:4px; padding:3px 8px; font-size:0.7rem; cursor:pointer;">Revoke</button>
+            </div>
+          `);
+        });
+
         localStorage.setItem('guru_whitelisted_uids', JSON.stringify(uids));
         const countEl = document.getElementById('whitelist-count');
         if (countEl) countEl.innerText = uids.length;
+
+        if (commListEl) {
+          commListEl.innerHTML = htmlEntries.length ? htmlEntries.join('') : '<p style="font-size:0.75rem; opacity:0.6; text-align:center; padding:10px;">No tags commissioned yet.</p>';
+        }
       });
 
       // Live Audit Log & Chart Sync
@@ -383,7 +415,22 @@
 
     function saveWhitelistedUID(uid) {
       if (db) {
-        db.ref('whitelist/' + uid.replace(/[^a-zA-Z0-9]/g, '')).set(uid);
+        const now = new Date();
+        const key = uid.replace(/[^a-zA-Z0-9]/g, '');
+        db.ref('whitelist/' + key).set({
+          uid: uid,
+          date: now.toLocaleDateString(),
+          time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        });
+      }
+    }
+
+    function revokeTag(key) {
+      if (confirm("Revoke this tag from central inventory? It will no longer be accepted at the bar.")) {
+        if (db) {
+          db.ref('whitelist/' + key).remove();
+          addLog("Tag Revoked", "Removed from Inventory", key);
+        }
       }
     }
 
@@ -450,7 +497,7 @@
           if (uid) {
             saveWhitelistedUID(uid);
             playSoundWritten();
-            addLog("Tag Commissioned", "Whitelisted to Inventory", uid);
+            addLog("Tag Commissioned", "Whitelisted to Central DB", uid);
             statusBox.className = "status-card commissioned";
             statusBox.innerHTML = `✨ <strong>TAG COMMISSIONED & WHITELISTED!</strong><br><span class="badge">UID: ${uid}</span>`;
           }
