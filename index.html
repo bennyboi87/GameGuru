@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
-<meta name="theme-color" content="#D95D39">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Game Guru - Drinks Tokens Manager</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="theme-color" content="#D95D39">
   <style>
     :root {
       --bg-color: #12161A;
@@ -66,6 +66,10 @@
     .counter { font-size: 0.85rem; text-align: center; margin-top: 12px; opacity: 0.8; }
     .pin-box { text-align: center; padding: 10px 0; }
   </style>
+
+  <!-- Firebase Realtime Database SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -125,14 +129,12 @@
   <div id="view-admin" class="view">
     <h2>Manager Admin</h2>
 
-    <!-- PIN LOCK GATE -->
     <div id="admin-lock-gate" class="pin-box">
       <label for="admin-pin">Enter Manager PIN:</label>
       <input type="password" id="admin-pin" placeholder="Enter PIN" style="text-align:center; letter-spacing:4px;">
       <button class="action-btn primary-btn" onclick="unlockAdmin()">Unlock Admin Settings</button>
     </div>
 
-    <!-- UNLOCKED ADMIN PANEL -->
     <div id="admin-panel" style="display:none;">
       <div style="background:#0E1216; padding:12px; border-radius:8px; margin-bottom:16px;">
         <label for="keyword-input">Tonight's Secret Keyword:</label>
@@ -152,11 +154,11 @@
       <!-- TRANSACTION LOG -->
       <div style="background:#0E1216; padding:12px; border-radius:8px; margin-bottom:16px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-          <h3 style="font-size:0.95rem; color:#FFA000;">📜 Transaction & Activity Log</h3>
-          <button onclick="clearTxLog()" style="background:none; border:none; color:#EF5350; font-size:0.75rem; cursor:pointer; font-weight:bold;">Clear Log</button>
+          <h3 style="font-size:0.95rem; color:#FFA000;">📜 Live Cloud Transaction Log</h3>
+          <button onclick="clearTxLog()" style="background:none; border:none; color:#EF5350; font-size:0.75rem; cursor:pointer; font-weight:bold;">Clear Cloud Log</button>
         </div>
         <div id="tx-log-list" style="max-height: 220px; overflow-y: auto; background: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color);">
-          <!-- Dynamic Log Entries Injected Here -->
+          <p style="font-size:0.8rem; opacity:0.6; text-align:center; padding:12px;">Connecting to Cloud Database...</p>
         </div>
       </div>
 
@@ -165,166 +167,161 @@
   </div>
 
   <script>
-    // --- SYNTHESIZED WEB AUDIO API ---
-    let audioCtx = null;
+    // --- FIREBASE INITIALIZATION ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyABZGtRAm6fzpCRYM1xTq-vdq80IQI2CKM",
+      authDomain: "game-guru-tokens.firebaseapp.com",
+      databaseURL: "https://game-guru-tokens-default-rtdb.firebaseio.com",
+      projectId: "game-guru-tokens",
+      storageBucket: "game-guru-tokens.firebasestorage.app",
+      messagingSenderId: "939798223914",
+      appId: "1:939798223914:web:ef5f38825357f29183f753",
+      measurementId: "G-GKTCJ4E8VD"
+    };
 
+    let db = null;
+    try {
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.database();
+      initLiveListeners();
+    } catch(e) {
+      console.log("Firebase init error:", e);
+    }
+
+    // --- SYNTHESIZED AUDIO API ---
+    let audioCtx = null;
     function getAudioContext() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
       return audioCtx;
     }
 
     function playSoundWritten() {
       try {
         const ctx = getAudioContext();
-        const notes = [523.25, 659.25, 783.99];
-        notes.forEach((freq, i) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08);
+        [523.25, 659.25, 783.99].forEach((freq, i) => {
+          const osc = ctx.createOscillator(), gain = ctx.createGain();
+          osc.type = 'sine'; osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08);
           gain.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.08);
           gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.08 + 0.2);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(ctx.currentTime + i * 0.08);
-          osc.stop(ctx.currentTime + i * 0.08 + 0.2);
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + i * 0.08); osc.stop(ctx.currentTime + i * 0.08 + 0.2);
         });
-      } catch(e) { console.log("Audio error", e); }
+      } catch(e) {}
     }
 
     function playSoundAccepted() {
       try {
         const ctx = getAudioContext();
-        const notes = [587.33, 880.00];
-        notes.forEach((freq, i) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
+        [587.33, 880.00].forEach((freq, i) => {
+          const osc = ctx.createOscillator(), gain = ctx.createGain();
+          osc.type = 'triangle'; osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
           gain.gain.setValueAtTime(0.35, ctx.currentTime + i * 0.12);
           gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.35);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(ctx.currentTime + i * 0.12);
-          osc.stop(ctx.currentTime + i * 0.12 + 0.35);
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + i * 0.12); osc.stop(ctx.currentTime + i * 0.12 + 0.35);
         });
-      } catch(e) { console.log("Audio error", e); }
+      } catch(e) {}
     }
 
     function playSoundWiped() {
       try {
         const ctx = getAudioContext();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(900, ctx.currentTime);
+        const osc = ctx.createOscillator(), gain = ctx.createGain();
+        osc.type = 'sawtooth'; osc.frequency.setValueAtTime(900, ctx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(180, ctx.currentTime + 0.28);
         gain.gain.setValueAtTime(0.25, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.28);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.28);
-      } catch(e) { console.log("Audio error", e); }
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.28);
+      } catch(e) {}
     }
 
     function playSoundError() {
       try {
         const ctx = getAudioContext();
         [0, 0.15].forEach(startTime => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'square';
-          osc.frequency.setValueAtTime(140, ctx.currentTime + startTime);
+          const osc = ctx.createOscillator(), gain = ctx.createGain();
+          osc.type = 'square'; osc.frequency.setValueAtTime(140, ctx.currentTime + startTime);
           gain.gain.setValueAtTime(0.25, ctx.currentTime + startTime);
           gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + startTime + 0.1);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(ctx.currentTime + startTime);
-          osc.stop(ctx.currentTime + startTime + 0.1);
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + startTime); osc.stop(ctx.currentTime + startTime + 0.1);
         });
-      } catch(e) { console.log("Audio error", e); }
+      } catch(e) {}
     }
 
-    // --- APP STATE & LOGGING ---
+    // --- REALTIME DATABASE SYNC ---
     let redemptionCounter = 0;
-    let isAdminUnlocked = false;
     let lastScannedUID = "";
 
-    function getWhitelistedUIDs() {
-      return JSON.parse(localStorage.getItem('guru_whitelisted_uids') || '[]');
-    }
-
-    function saveWhitelistedUID(uid) {
-      let uids = getWhitelistedUIDs();
-      if (!uids.includes(uid)) {
-        uids.push(uid);
+    function initLiveListeners() {
+      if (!db) return;
+      
+      // Live sync for Whitelist Inventory
+      db.ref('whitelist').on('value', snapshot => {
+        const data = snapshot.val() || {};
+        const uids = Object.values(data);
         localStorage.setItem('guru_whitelisted_uids', JSON.stringify(uids));
-      }
-      updateWhitelistCount();
-    }
+        const countEl = document.getElementById('whitelist-count');
+        if (countEl) countEl.innerText = uids.length;
+      });
 
-    function updateWhitelistCount() {
-      const uids = getWhitelistedUIDs();
-      const countEl = document.getElementById('whitelist-count');
-      if (countEl) countEl.innerText = uids.length;
-    }
+      // Live sync for Audit Log (Updates Laptop & Phones in Realtime!)
+      db.ref('transactions').limitToLast(100).on('value', snapshot => {
+        const data = snapshot.val();
+        const logList = document.getElementById('tx-log-list');
+        if (!logList) return;
 
-    // TRANSACTION LOG FUNCTIONS
-    function getTxLog() {
-      return JSON.parse(localStorage.getItem('guru_tx_log') || '[]');
+        if (!data) {
+          logList.innerHTML = '<p style="font-size:0.8rem; opacity:0.6; text-align:center; padding:12px;">No transactions logged yet.</p>';
+          return;
+        }
+
+        const logArray = Object.values(data).reverse();
+        logList.innerHTML = logArray.map(item => `
+          <div style="padding: 8px 10px; border-bottom: 1px solid var(--border-color); font-size: 0.8rem;">
+            <div style="display:flex; justify-content:space-between; opacity:0.7; font-size:0.72rem; margin-bottom:2px;">
+              <span>⏱️ ${item.date} ${item.time}</span>
+              ${item.uid && item.uid !== 'N/A' ? `<span style="font-family:monospace; color:var(--info-blue);">UID: ${item.uid}</span>` : ''}
+            </div>
+            <div style="font-weight:bold; color:var(--text-color);">
+              ${item.action}: <span style="color:var(--accent-orange);">${item.details}</span>
+            </div>
+          </div>
+        `).join('');
+      });
     }
 
     function addLog(action, details, uid = '') {
-      let log = getTxLog();
       const now = new Date();
-      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      const dateStr = now.toLocaleDateString();
-      
       const entry = {
-        time: timeStr,
-        date: dateStr,
+        time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+        date: now.toLocaleDateString(),
         action: action,
         details: details,
         uid: uid || 'N/A'
       };
-      log.unshift(entry);
-      if (log.length > 100) log = log.slice(0, 100);
-      localStorage.setItem('guru_tx_log', JSON.stringify(log));
-      renderTxLog();
+
+      if (db) {
+        db.ref('transactions').push(entry);
+      }
     }
 
-    function renderTxLog() {
-      const logList = document.getElementById('tx-log-list');
-      if (!logList) return;
-      const log = getTxLog();
-      if (log.length === 0) {
-        logList.innerHTML = '<p style="font-size:0.8rem; opacity:0.6; text-align:center; padding:12px;">No transactions logged yet.</p>';
-        return;
+    function saveWhitelistedUID(uid) {
+      if (db) {
+        db.ref('whitelist/' + uid.replace(/[^a-zA-Z0-9]/g, '')).set(uid);
       }
-      logList.innerHTML = log.map(item => `
-        <div style="padding: 8px 10px; border-bottom: 1px solid var(--border-color); font-size: 0.8rem;">
-          <div style="display:flex; justify-content:space-between; opacity:0.7; font-size:0.72rem; margin-bottom:2px;">
-            <span>⏱️ ${item.date} ${item.time}</span>
-            ${item.uid !== 'N/A' ? `<span style="font-family:monospace; color:var(--info-blue);">UID: ${item.uid}</span>` : ''}
-          </div>
-          <div style="font-weight:bold; color:var(--text-color);">
-            ${item.action}: <span style="color:var(--accent-orange);">${item.details}</span>
-          </div>
-        </div>
-      `).join('');
     }
 
     function clearTxLog() {
-      if (confirm("Are you sure you want to clear the activity log?")) {
-        localStorage.removeItem('guru_tx_log');
-        renderTxLog();
+      if (confirm("Are you sure you want to clear the cloud activity log?")) {
+        if (db) db.ref('transactions').remove();
       }
+    }
+
+    function getWhitelistedUIDs() {
+      return JSON.parse(localStorage.getItem('guru_whitelisted_uids') || '[]');
     }
 
     // --- NAVIGATION ---
@@ -343,9 +340,6 @@
         if (keywordInput) {
           document.getElementById('active-key-display').innerText = keywordInput.value.toUpperCase();
         }
-      } else if (tab === 'admin') {
-        updateWhitelistCount();
-        renderTxLog();
       }
     }
 
@@ -353,10 +347,8 @@
     function unlockAdmin() {
       const pinInput = document.getElementById('admin-pin').value;
       if (pinInput === "1702") {
-        isAdminUnlocked = true;
         document.getElementById('admin-lock-gate').style.display = "none";
         document.getElementById('admin-panel').style.display = "block";
-        renderTxLog();
       } else {
         playSoundError();
         alert("Incorrect PIN!");
@@ -364,13 +356,12 @@
     }
 
     function lockAdmin() {
-      isAdminUnlocked = false;
       document.getElementById('admin-pin').value = "";
       document.getElementById('admin-lock-gate').style.display = "block";
       document.getElementById('admin-panel').style.display = "none";
     }
 
-    // --- COMMISSION TAG (WHITELIST) ---
+    // --- COMMISSION TAG ---
     async function startCommissionScan() {
       const statusBox = document.getElementById('commission-status');
       statusBox.className = "status-card info";
@@ -411,9 +402,7 @@
 
       try {
         const ndef = new NDEFReader();
-        await ndef.write({
-          records: [{ recordType: "text", data: keyword }]
-        });
+        await ndef.write({ records: [{ recordType: "text", data: keyword }] });
         playSoundWritten();
         addLog("Token Programmed", `Key set to "${keyword}"`);
         statusBox.className = "status-card valid";
@@ -448,14 +437,10 @@
           let scannedWord = "";
 
           for (const record of event.message.records) {
-            if (record.recordType === "text") {
-              scannedWord = decoder.decode(record.data).toUpperCase();
-            }
+            if (record.recordType === "text") scannedWord = decoder.decode(record.data).toUpperCase();
           }
 
-          if (scannedWord.length > 2 && scannedWord.startsWith("EN")) {
-            scannedWord = scannedWord.substring(2);
-          }
+          if (scannedWord.length > 2 && scannedWord.startsWith("EN")) scannedWord = scannedWord.substring(2);
 
           const whitelistedUIDs = getWhitelistedUIDs();
           const isWhitelisted = whitelistedUIDs.length === 0 || whitelistedUIDs.includes(uid);
@@ -495,9 +480,7 @@
 
       try {
         const ndef = new NDEFReader();
-        await ndef.write({
-          records: [{ recordType: "text", data: "REDEEMED" }]
-        });
+        await ndef.write({ records: [{ recordType: "text", data: "REDEEMED" }] });
 
         playSoundWiped();
         redemptionCounter++;
