@@ -102,7 +102,7 @@
   <!-- SCREEN 1: BAR REDEEM & WIPE (STAFF SCREEN) -->
   <div id="view-redeem" class="view active">
     <h2>Bar Redemption</h2>
-    <p style="font-size:0.85rem; margin-bottom:12px;">Active Keyword: <strong id="active-key-display" style="color:var(--accent-orange);">MANA</strong></p>
+    <p style="font-size:0.85rem; margin-bottom:12px;">Active Keyword: <strong id="active-key-display" style="color:var(--accent-orange);">MANA</strong> <span id="active-key-updated-display" style="font-size:0.75rem; opacity:0.7; margin-left:4px;"></span></p>
 
     <button class="action-btn primary-btn" onclick="startRedeemScan()">🍺 Scan Customer Token</button>
 
@@ -139,9 +139,13 @@
     <div id="admin-panel" style="display:none;">
       <!-- KEYWORD SETTINGS -->
       <div style="background:#0E1216; padding:12px; border-radius:8px; margin-bottom:16px;">
+        <p style="font-size:0.85rem; margin-bottom:10px; font-weight:bold;">
+          Current Secret Word: <strong id="admin-current-key-display" style="color:var(--accent-orange);">MANA</strong> 
+          <span id="admin-key-updated-display" style="font-size:0.75rem; opacity:0.7; font-weight:normal; margin-left:6px;"></span>
+        </p>
         <label for="keyword-input">Tonight's Secret Keyword:</label>
-        <input type="text" id="keyword-input" value="MANA" placeholder="e.g. MANA">
-        <button class="action-btn primary-btn" onclick="startProgramming()">⚡ LOAD DRINK CREDIT</button>
+        <input type="text" id="keyword-input" value="" placeholder="e.g. MANA">
+        <button class="action-btn primary-btn" onclick="startProgramming()">⚡ LOAD DRINK TOKEN</button>
         <div id="program-status" class="status-card"></div>
       </div>
 
@@ -200,6 +204,8 @@
 
     let db = null;
     let chartInstance = null;
+    let currentSecretWord = localStorage.getItem('guru_secret_word') || 'MANA';
+    let currentSecretWordTs = parseInt(localStorage.getItem('guru_secret_word_ts') || '0', 10);
 
     try {
       firebase.initializeApp(firebaseConfig);
@@ -207,6 +213,35 @@
       initLiveListeners();
     } catch(e) {
       console.log("Firebase init error:", e);
+    }
+
+    function getRelativeTimeStr(ts) {
+      if (!ts) return '';
+      const diffMs = Date.now() - ts;
+      const diffSecs = Math.floor(diffMs / 1000);
+      if (diffSecs < 60) return '(Updated just now)';
+      const diffMins = Math.floor(diffSecs / 60);
+      if (diffMins < 60) return `(Updated ${diffMins} min${diffMins === 1 ? '' : 's'} ago)`;
+      const diffHours = Math.floor(diffMins / 60);
+      if (diffHours < 24) return `(Updated ${diffHours} hr${diffHours === 1 ? '' : 's'} ago)`;
+      const diffDays = Math.floor(diffHours / 24);
+      if (diffDays < 7) return `(Updated ${diffDays} day${diffDays === 1 ? '' : 's'} ago)`;
+      const diffWeeks = Math.floor(diffDays / 7);
+      return `(Updated ${diffWeeks} week${diffWeeks === 1 ? '' : 's'} ago)`;
+    }
+
+    function updateSecretWordDisplays() {
+      const redeemDisplay = document.getElementById('active-key-display');
+      const redeemUpdatedDisplay = document.getElementById('active-key-updated-display');
+      const adminDisplay = document.getElementById('admin-current-key-display');
+      const adminUpdatedDisplay = document.getElementById('admin-key-updated-display');
+
+      const relStr = getRelativeTimeStr(currentSecretWordTs);
+
+      if (redeemDisplay) redeemDisplay.innerText = currentSecretWord;
+      if (redeemUpdatedDisplay) redeemUpdatedDisplay.innerText = relStr;
+      if (adminDisplay) adminDisplay.innerText = currentSecretWord;
+      if (adminUpdatedDisplay) adminUpdatedDisplay.innerText = relStr;
     }
 
     // --- SYNTHESIZED AUDIO API ---
@@ -279,6 +314,23 @@
     function initLiveListeners() {
       if (!db) return;
       
+      // Live Active Secret Word Sync
+      db.ref('activeKeyword').on('value', snapshot => {
+        const val = snapshot.val();
+        if (val) {
+          if (typeof val === 'object' && val.word) {
+            currentSecretWord = val.word.toUpperCase();
+            currentSecretWordTs = val.timestamp || Date.now();
+          } else if (typeof val === 'string') {
+            currentSecretWord = val.toUpperCase();
+            currentSecretWordTs = currentSecretWordTs || Date.now();
+          }
+          localStorage.setItem('guru_secret_word', currentSecretWord);
+          localStorage.setItem('guru_secret_word_ts', currentSecretWordTs);
+          updateSecretWordDisplays();
+        }
+      });
+
       // Central Live Whitelist Sync
       db.ref('whitelist').on('value', snapshot => {
         const data = snapshot.val() || {};
@@ -453,12 +505,7 @@
       if (targetBtn) targetBtn.classList.add('active');
       if (targetView) targetView.classList.add('active');
 
-      if (tab === 'redeem') {
-        const keywordInput = document.getElementById('keyword-input');
-        if (keywordInput) {
-          document.getElementById('active-key-display').innerText = keywordInput.value.toUpperCase();
-        }
-      }
+      updateSecretWordDisplays();
     }
 
     // --- ADMIN LOCK GATE ---
@@ -467,6 +514,7 @@
       if (pinInput === "1702") {
         document.getElementById('admin-lock-gate').style.display = "none";
         document.getElementById('admin-panel').style.display = "block";
+        updateSecretWordDisplays();
         addLog("Admin Unlocked", "PIN 1702 Verified");
       } else {
         playSoundError();
@@ -516,9 +564,10 @@
       }
     }
 
-    // --- LOAD DRINK CREDIT ---
+    // --- LOAD DRINK TOKEN ---
     async function startProgramming() {
-      const keyword = document.getElementById('keyword-input').value.trim().toUpperCase();
+      const keywordInput = document.getElementById('keyword-input');
+      const keyword = keywordInput.value.trim().toUpperCase() || currentSecretWord;
       const statusBox = document.getElementById('program-status');
 
       if (!keyword) { alert("Please enter a keyword first!"); return; }
@@ -535,10 +584,28 @@
       try {
         const ndef = new NDEFReader();
         await ndef.write({ records: [{ recordType: "text", data: keyword }] });
+        
+        // Update active secret word globally with timestamp
+        currentSecretWord = keyword;
+        currentSecretWordTs = Date.now();
+        localStorage.setItem('guru_secret_word', currentSecretWord);
+        localStorage.setItem('guru_secret_word_ts', currentSecretWordTs);
+        
+        if (db) {
+          db.ref('activeKeyword').set({
+            word: currentSecretWord,
+            timestamp: currentSecretWordTs
+          });
+        }
+        updateSecretWordDisplays();
+
         playSoundWritten();
         addLog("Drink Credit Loaded", `Loaded Key: "${keyword}"`);
         statusBox.className = "status-card valid";
         statusBox.innerHTML = `✨ <strong>DRINK CREDIT LOADED SUCCESSFULLY!</strong><br><small>Key: "${keyword}"</small>`;
+        
+        // Clear input box after loading token
+        keywordInput.value = "";
       } catch (error) {
         playSoundError();
         addLog("Load Credit Error", error.message);
@@ -549,7 +616,7 @@
 
     // --- REDEEM & WIPE ---
     async function startRedeemScan() {
-      const activeKeyword = document.getElementById('keyword-input').value.trim().toUpperCase();
+      const activeKeyword = currentSecretWord;
       const resultBox = document.getElementById('redeem-result');
       const actionBox = document.getElementById('redeem-actions');
 
