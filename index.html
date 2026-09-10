@@ -279,7 +279,7 @@
     function initLiveListeners() {
       if (!db) return;
       
-      // Central Live Whitelist & Commissioned Tags Inventory Sync
+      // Central Live Whitelist Sync
       db.ref('whitelist').on('value', snapshot => {
         const data = snapshot.val() || {};
         const uids = [];
@@ -325,7 +325,6 @@
 
         const logArray = Object.values(data).reverse();
         
-        // Render Transaction List
         if (logList) {
           logList.innerHTML = logArray.map(item => `
             <div style="padding: 8px 10px; border-bottom: 1px solid var(--border-color); font-size: 0.8rem;">
@@ -340,7 +339,6 @@
           `).join('');
         }
 
-        // Aggregate Redemptions By Date
         const dateCounts = {};
         Object.values(data).forEach(item => {
           if (item.action && item.action.includes("Redeemed")) {
@@ -371,7 +369,7 @@
           labels: labels.length ? labels : ['No Data'],
           datasets: [{
             label: 'Drinks Served',
-            data: values.length ? values : [0],
+            data: values.length ? values :,
             backgroundColor: '#D95D39',
             borderRadius: 6,
             borderWidth: 0
@@ -550,7 +548,7 @@
         const ndef = new NDEFReader();
         await ndef.scan();
         
-        ndef.onreading = event => {
+        ndef.onreading = async event => {
           const decoder = new TextDecoder();
           const uid = event.serialNumber;
           lastScannedUID = uid;
@@ -577,9 +575,31 @@
             actionBox.style.display = "block";
           } else if (scannedWord === "REDEEMED") {
             playSoundError();
+            let timeAgoBadge = "";
+            const uidKey = uid ? uid.replace(/[^a-zA-Z0-9]/g, '') : '';
+            
+            if (db && uidKey) {
+              try {
+                const snap = await db.ref('redemptions/' + uidKey).once('value');
+                const data = snap.val();
+                if (data && data.timestamp) {
+                  const diffMs = Date.now() - data.timestamp;
+                  const diffMins = Math.floor(diffMs / 60000);
+                  if (diffMins < 1) {
+                    timeAgoBadge = `<br><span class="badge" style="background:#E65100;">⏱️ Redeemed JUST NOW (&lt;1 min ago)</span>`;
+                  } else if (diffMins < 60) {
+                    timeAgoBadge = `<br><span class="badge" style="background:#E65100;">⏱️ Redeemed ${diffMins} min${diffMins === 1 ? '' : 's'} ago (${data.time})</span>`;
+                  } else {
+                    const diffHours = Math.floor(diffMins / 60);
+                    timeAgoBadge = `<br><span class="badge" style="background:#E65100;">⏱️ Redeemed ${diffHours} hr${diffHours === 1 ? '' : 's'} ago (${data.time})</span>`;
+                  }
+                }
+              } catch(e) { console.log(e); }
+            }
+
             addLog("Scan Rejected", "Already Wiped", uid);
             resultBox.className = "status-card invalid";
-            resultBox.innerHTML = `🔴 <strong>ALREADY REDEEMED & WIPED!</strong><br><small>This token was already used tonight.</small>`;
+            resultBox.innerHTML = `🔴 <strong>ALREADY REDEEMED & WIPED!</strong>${timeAgoBadge}<br><small style="margin-top:4px; display:block;">This token was already used tonight.</small>`;
           } else {
             playSoundError();
             addLog("Scan Rejected", `Invalid Key: "${scannedWord}"`, uid);
@@ -605,6 +625,16 @@
         playSoundWiped();
         redemptionCounter++;
         document.getElementById('redeem-count').innerText = redemptionCounter;
+
+        const now = new Date();
+        if (db && lastScannedUID) {
+          const uidKey = lastScannedUID.replace(/[^a-zA-Z0-9]/g, '');
+          db.ref('redemptions/' + uidKey).set({
+            timestamp: Date.now(),
+            date: now.toLocaleDateString(),
+            time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          });
+        }
 
         addLog("Token Redeemed & Wiped", `Drink #${redemptionCounter} Served`, lastScannedUID);
 
