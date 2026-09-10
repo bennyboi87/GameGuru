@@ -72,9 +72,9 @@
   </header>
 
   <nav>
-    <button class="tab-btn active" onclick="switchTab('redeem')">1. Redeem</button>
-    <button class="tab-btn" onclick="switchTab('inspect')">2. Inspect</button>
-    <button class="tab-btn admin-tab" onclick="switchTab('admin')">🔒 Admin</button>
+    <button id="tab-btn-redeem" class="tab-btn active" onclick="switchTab('redeem')">1. Redeem</button>
+    <button id="tab-btn-inspect" class="tab-btn" onclick="switchTab('inspect')">2. Inspect</button>
+    <button id="tab-btn-admin" class="tab-btn admin-tab" onclick="switchTab('admin')">🔒 Admin</button>
   </nav>
 
   <!-- SCREEN 1: BAR REDEEM & WIPE (STAFF SCREEN) -->
@@ -254,7 +254,8 @@
 
     function updateWhitelistCount() {
       const uids = getWhitelistedUIDs();
-      document.getElementById('whitelist-count').innerText = uids.length;
+      const countEl = document.getElementById('whitelist-count');
+      if (countEl) countEl.innerText = uids.length;
     }
 
     // TRANSACTION LOG FUNCTIONS
@@ -314,16 +315,18 @@
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       
-      if(tab === 'redeem') {
-        document.querySelectorAll('.tab-btn').classList.add('active');
-        document.getElementById('view-redeem').classList.add('active');
-        document.getElementById('active-key-display').innerText = document.getElementById('keyword-input').value.toUpperCase();
-      } else if(tab === 'inspect') {
-        document.querySelectorAll('.tab-btn').classList.add('active');
-        document.getElementById('view-inspect').classList.add('active');
-      } else if(tab === 'admin') {
-        document.querySelectorAll('.tab-btn').classList.add('active');
-        document.getElementById('view-admin').classList.add('active');
+      const targetBtn = document.getElementById('tab-btn-' + tab);
+      const targetView = document.getElementById('view-' + tab);
+      
+      if (targetBtn) targetBtn.classList.add('active');
+      if (targetView) targetView.classList.add('active');
+
+      if (tab === 'redeem') {
+        const keywordInput = document.getElementById('keyword-input');
+        if (keywordInput) {
+          document.getElementById('active-key-display').innerText = keywordInput.value.toUpperCase();
+        }
+      } else if (tab === 'admin') {
         updateWhitelistCount();
         renderTxLog();
       }
