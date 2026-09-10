@@ -141,7 +141,7 @@
       <div style="background:#0E1216; padding:12px; border-radius:8px; margin-bottom:16px;">
         <label for="keyword-input">Tonight's Secret Keyword:</label>
         <input type="text" id="keyword-input" value="MANA" placeholder="e.g. MANA">
-        <button class="action-btn primary-btn" onclick="startProgramming()">⚡ Program Token with Key</button>
+        <button class="action-btn primary-btn" onclick="startProgramming()">⚡ LOAD DRINK CREDIT</button>
         <div id="program-status" class="status-card"></div>
       </div>
 
@@ -467,8 +467,10 @@
       if (pinInput === "1702") {
         document.getElementById('admin-lock-gate').style.display = "none";
         document.getElementById('admin-panel').style.display = "block";
+        addLog("Admin Unlocked", "PIN 1702 Verified");
       } else {
         playSoundError();
+        addLog("Admin Lock Failed", "Incorrect PIN Attempt");
         alert("Incorrect PIN!");
       }
     }
@@ -477,6 +479,7 @@
       document.getElementById('admin-pin').value = "";
       document.getElementById('admin-lock-gate').style.display = "block";
       document.getElementById('admin-panel').style.display = "none";
+      addLog("Admin Locked", "Panel Secured");
     }
 
     // --- COMMISSION TAG ---
@@ -485,7 +488,12 @@
       statusBox.className = "status-card info";
       statusBox.innerText = "Tap new token to Commission & Whitelist...";
 
-      if (!('NDEFReader' in window)) { alert("Web NFC is not supported on this device/browser."); return; }
+      if (!('NDEFReader' in window)) { 
+        playSoundError();
+        addLog("Commission Failed", "Web NFC Unsupported");
+        alert("Web NFC is not supported on this device/browser."); 
+        return; 
+      }
 
       try {
         const ndef = new NDEFReader();
@@ -502,18 +510,24 @@
         };
       } catch (error) {
         playSoundError();
+        addLog("Commission Error", error.message);
         statusBox.className = "status-card invalid";
         statusBox.innerText = `Commission Error: ${error.message}`;
       }
     }
 
-    // --- PROGRAM KEYWORD ---
+    // --- LOAD DRINK CREDIT ---
     async function startProgramming() {
       const keyword = document.getElementById('keyword-input').value.trim().toUpperCase();
       const statusBox = document.getElementById('program-status');
 
       if (!keyword) { alert("Please enter a keyword first!"); return; }
-      if (!('NDEFReader' in window)) { alert("Web NFC is not supported on this device."); return; }
+      if (!('NDEFReader' in window)) { 
+        playSoundError();
+        addLog("Load Credit Failed", "Web NFC Unsupported");
+        alert("Web NFC is not supported on this device."); 
+        return; 
+      }
 
       statusBox.className = "status-card info";
       statusBox.innerText = `Ready! Tap token to write "${keyword}"...`;
@@ -522,11 +536,12 @@
         const ndef = new NDEFReader();
         await ndef.write({ records: [{ recordType: "text", data: keyword }] });
         playSoundWritten();
-        addLog("Token Programmed", `Key set to "${keyword}"`);
+        addLog("Drink Credit Loaded", `Loaded Key: "${keyword}"`);
         statusBox.className = "status-card valid";
-        statusBox.innerHTML = `✨ <strong>TOKEN PROGRAMMED SUCCESSFULLY!</strong><br><small>Key: "${keyword}"</small>`;
+        statusBox.innerHTML = `✨ <strong>DRINK CREDIT LOADED SUCCESSFULLY!</strong><br><small>Key: "${keyword}"</small>`;
       } catch (error) {
         playSoundError();
+        addLog("Load Credit Error", error.message);
         statusBox.className = "status-card invalid";
         statusBox.innerText = `❌ Error writing token: ${error.message}`;
       }
@@ -542,7 +557,12 @@
       resultBox.innerText = "Approach customer token to scan...";
       actionBox.style.display = "none";
 
-      if (!('NDEFReader' in window)) { alert("Web NFC is not supported on this device."); return; }
+      if (!('NDEFReader' in window)) { 
+        playSoundError();
+        addLog("Redeem Scan Failed", "Web NFC Unsupported");
+        alert("Web NFC is not supported on this device."); 
+        return; 
+      }
 
       try {
         const ndef = new NDEFReader();
@@ -570,12 +590,14 @@
             resultBox.innerHTML = `⛔ <strong>UNAUTHORIZED / UNCOMMISSIONED TAG!</strong><br><small>This tag is not in official inventory!</small>`;
           } else if (scannedWord === activeKeyword) {
             playSoundAccepted();
+            addLog("Valid Scan Accepted", `Scanned Key: "${scannedWord}" (Awaiting Wipe)`, uid);
             resultBox.className = "status-card valid";
             resultBox.innerHTML = `🟢 <strong>VALID DRINK TOKEN ACCEPTED!</strong><br><span class="badge">Keyword: ${scannedWord}</span>`;
             actionBox.style.display = "block";
           } else if (scannedWord === "REDEEMED") {
             playSoundError();
             let timeAgoBadge = "";
+            let timeDetailsForLog = "Already Wiped";
             const uidKey = uid ? uid.replace(/[^a-zA-Z0-9]/g, '') : '';
             
             if (db && uidKey) {
@@ -587,28 +609,32 @@
                   const diffMins = Math.floor(diffMs / 60000);
                   if (diffMins < 1) {
                     timeAgoBadge = `<br><span class="badge" style="background:#E65100;">⏱️ Redeemed JUST NOW (&lt;1 min ago)</span>`;
+                    timeDetailsForLog = "Wiped <1 min ago";
                   } else if (diffMins < 60) {
                     timeAgoBadge = `<br><span class="badge" style="background:#E65100;">⏱️ Redeemed ${diffMins} min${diffMins === 1 ? '' : 's'} ago (${data.time})</span>`;
+                    timeDetailsForLog = `Wiped ${diffMins}m ago (${data.time})`;
                   } else {
                     const diffHours = Math.floor(diffMins / 60);
                     timeAgoBadge = `<br><span class="badge" style="background:#E65100;">⏱️ Redeemed ${diffHours} hr${diffHours === 1 ? '' : 's'} ago (${data.time})</span>`;
+                    timeDetailsForLog = `Wiped ${diffHours}h ago (${data.time})`;
                   }
                 }
               } catch(e) { console.log(e); }
             }
 
-            addLog("Scan Rejected", "Already Wiped", uid);
+            addLog("Scan Rejected", timeDetailsForLog, uid);
             resultBox.className = "status-card invalid";
             resultBox.innerHTML = `🔴 <strong>ALREADY REDEEMED & WIPED!</strong>${timeAgoBadge}<br><small style="margin-top:4px; display:block;">This token was already used tonight.</small>`;
           } else {
             playSoundError();
-            addLog("Scan Rejected", `Invalid Key: "${scannedWord}"`, uid);
+            addLog("Scan Rejected", `Invalid Key: "${scannedWord || 'EMPTY'}"`, uid);
             resultBox.className = "status-card invalid";
             resultBox.innerHTML = `🔴 <strong>INVALID OR EXPIRED TOKEN!</strong><br><small>Scanned: "${scannedWord || 'EMPTY'}"</small>`;
           }
         };
       } catch (error) {
         playSoundError();
+        addLog("Scan Error", error.message);
         resultBox.className = "status-card invalid";
         resultBox.innerText = `Scan Error: ${error.message}`;
       }
@@ -643,11 +669,15 @@
         actionBox.style.display = "none";
       } catch (error) {
         playSoundError();
+        addLog("Wipe Failed", error.message, lastScannedUID);
         alert("Failed to wipe token: " + error.message);
       }
     }
 
     function resetRedeemView() {
+      if (lastScannedUID) {
+        addLog("Redemption Cancelled", "Token Returned / Cancelled", lastScannedUID);
+      }
       document.getElementById('redeem-result').style.display = "none";
       document.getElementById('redeem-actions').style.display = "none";
     }
@@ -667,12 +697,15 @@
           for (const record of event.message.records) {
             text += decoder.decode(record.data) + " ";
           }
+          const cleanText = text.trim();
           playSoundAccepted();
+          addLog("Token Inspected", `Payload: "${cleanText}"`, event.serialNumber);
           statusBox.className = "status-card valid";
-          statusBox.innerHTML = `<strong>Raw Payload:</strong> "${text.trim()}"<br><span class="badge">Serial / UID: ${event.serialNumber}</span>`;
+          statusBox.innerHTML = `<strong>Raw Payload:</strong> "${cleanText}"<br><span class="badge">Serial / UID: ${event.serialNumber}</span>`;
         };
       } catch (error) {
         playSoundError();
+        addLog("Inspect Error", error.message);
         statusBox.className = "status-card invalid";
         statusBox.innerText = `Inspect Error: ${error.message}`;
       }
