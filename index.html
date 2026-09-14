@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -421,7 +421,7 @@
           labels: labels.length ? labels : ['No Data'],
           datasets: [{
             label: 'Drinks Served',
-            data: values.length ? values :,
+            data: values.length ? values : [0],
             backgroundColor: '#D95D39',
             borderRadius: 6,
             borderWidth: 0
@@ -451,8 +451,8 @@
     function addLog(action, details, uid = '') {
       const now = new Date();
       const entry = {
-        time: now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-        date: now.toLocaleDateString('en-GB'),
+        time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+        date: now.toLocaleDateString(),
         action: action,
         details: details,
         uid: uid || 'N/A'
@@ -469,8 +469,8 @@
         const key = uid.replace(/[^a-zA-Z0-9]/g, '');
         db.ref('whitelist/' + key).set({
           uid: uid,
-          date: now.toLocaleDateString('en-GB'),
-          time: now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+          date: now.toLocaleDateString(),
+          time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         });
       }
     }
@@ -724,8 +724,8 @@
           const uidKey = lastScannedUID.replace(/[^a-zA-Z0-9]/g, '');
           db.ref('redemptions/' + uidKey).set({
             timestamp: Date.now(),
-            date: now.toLocaleDateString('en-GB'),
-            time: now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+            date: now.toLocaleDateString(),
+            time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           });
         }
 
