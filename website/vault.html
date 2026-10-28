@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vault & App | Game Guru</title>
+<meta name="description" content="The Game Guru app: table tools, lore counters, timers and trackers, your card collection and trades, membership and loyalty points.">
+<meta name="theme-color" content="#D9603F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="concept"><strong>Concept mockup</strong> for discussion. Prices, events and stock shown are examples.</div>
+<div class="util-bar">
+  <div class="wrap util-row">
+    <div class="venue-pick">
+      <label for="venue">Your venue</label>
+      <select id="venue" name="venue">
+        <option value="arena">Utilita Arena, Birmingham</option>
+        <option value="touchwood">Touchwood, Solihull</option>
+      </select>
+    </div>
+    <span class="util-hours">Open today 10am to 10pm</span>
+    <a class="util-link" href="vault.html#membership">Membership</a>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="logo" href="index.html"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="5" width="42" height="40" rx="14" fill="#D9603F"/><path d="M10 9 L16 15 M38 9 L32 15" stroke="#231F1E" stroke-width="3" stroke-linecap="round"/><circle cx="17" cy="23" r="7" fill="#FFF8EE" stroke="#231F1E" stroke-width="2.5"/><circle cx="31" cy="23" r="7" fill="#FFF8EE" stroke="#231F1E" stroke-width="2.5"/><circle cx="17" cy="23" r="2.8" fill="#231F1E"/><circle cx="31" cy="23" r="2.8" fill="#231F1E"/><path d="M21 31 L24 35 L27 31 Z" fill="#E9A93A" stroke="#231F1E" stroke-width="1.5" stroke-linejoin="round"/></svg><span>Game Guru</span></a>
+    <nav class="main-nav" id="main-nav" aria-label="Main">
+        <a href="visit.html">Visit</a>
+        <a href="eat-drink.html">Eat &amp; Drink</a>
+        <a href="whats-on.html">What's On</a>
+        <a href="parties.html">Parties &amp; Groups</a>
+        <a href="shop.html">Shop</a>
+        <a href="vault.html" aria-current="page">Vault &amp; App</a>
+    </nav>
+    <a class="btn btn-primary header-book" href="#book" data-book="table">Book a table</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+  </div>
+</header>
+<main id="main">
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">One account for the website, the app and the venues</span>
+    <h1>Vault &amp; app</h1>
+    <p>Order from your table, track your card collection, trade with other players, and keep score with built-in table tools. Your membership and points come with you.</p>
+    <div class="cta-row"><a class="btn btn-primary" href="#tools">Try the table tools</a><a class="btn" href="#vault">Your Vault</a><a class="btn" href="#membership">Membership</a></div>
+  </div>
+</section>
+
+<section class="section" id="tools">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Table companion · Scan the QR code on your table</span><h2>Table tools</h2><p class="muted">These work right here in the browser. Ordering and "Call a Guru" are linked to your table.</p></div></div>
+    <div class="tool-grid">
+      <div class="phone"><div class="screen" data-lore>
+        <div class="screen-top"><span>Lore counter</span><span>Table 12</span></div>
+        <div class="screen-body">
+          <div class="lore">
+            <div class="lore-player p1"><button type="button" data-p="0" data-d="-1" aria-label="Player 1 minus one lore">–</button><div class="lore-score"><b data-score="0">0</b><span>Player 1 lore</span><div class="lore-bar"><i data-bar="0"></i></div></div><button type="button" data-p="0" data-d="1" aria-label="Player 1 plus one lore">+</button></div>
+            <div class="lore-player p2"><button type="button" data-p="1" data-d="-1" aria-label="Player 2 minus one lore">–</button><div class="lore-score"><b data-score="1">0</b><span>Player 2 lore</span><div class="lore-bar"><i data-bar="1"></i></div></div><button type="button" data-p="1" data-d="1" aria-label="Player 2 plus one lore">+</button></div>
+          </div>
+          <p class="win" role="status"></p>
+          <div class="order-strip"><button class="btn btn-sm" type="button" data-reset>New game</button><a class="btn btn-sm btn-dark" href="eat-drink.html">Order a round</a></div>
+        </div>
+        <div class="screen-tabs" aria-hidden="true"><span class="on">Tools</span><span>Order</span><span>Vault</span><span>Me</span></div>
+      </div></div>
+
+      <div class="phone"><div class="screen" data-clock>
+        <div class="screen-top"><span>Game clock · 10 min</span><span>Table 12</span></div>
+        <div class="screen-body">
+          <div class="clock">
+            <button type="button" class="face" aria-pressed="false" aria-label="Player 1 clock. Tap to end your turn."><b>10:00</b><span>Player 1 · tap to end turn</span></button>
+            <button type="button" class="face" aria-pressed="false" aria-label="Player 2 clock. Tap to end your turn."><b>10:00</b><span>Player 2 · tap to end turn</span></button>
+          </div>
+          <div class="clock-controls"><button class="btn btn-sm" type="button" data-pause>Pause</button><button class="btn btn-sm" type="button" data-reset>Reset</button></div>
+          <div class="order-strip"><a class="btn btn-sm" href="#">Call a Guru</a><a class="btn btn-sm btn-dark" href="eat-drink.html">Order a round</a></div>
+        </div>
+        <div class="screen-tabs" aria-hidden="true"><span class="on">Tools</span><span>Order</span><span>Vault</span><span>Me</span></div>
+      </div></div>
+
+      <div class="phone"><div class="screen" data-tracker>
+        <div class="screen-top"><span>Cyberpunk RED tracker</span><span>Table 7</span></div>
+        <div class="screen-body">
+          <p style="font-weight:800">Edgerunner: "Switch" <span class="muted" style="font-weight:600">· Solo</span></p>
+          <div class="tracker">
+            <div class="stat"><span class="lbl">HP (max 40)</span><button type="button" data-k="hp" data-d="-1" aria-label="Lose 1 HP">–</button><output data-out="hp" aria-live="polite">40</output><button type="button" data-k="hp" data-d="1" aria-label="Gain 1 HP">+</button><div class="hp-track"><i data-hpbar></i></div><span class="state" data-state role="status"></span></div>
+            <div class="stat"><span class="lbl">Humanity</span><button type="button" data-k="hum" data-d="-1" aria-label="Lose 1 Humanity">–</button><output data-out="hum">50</output><button type="button" data-k="hum" data-d="1" aria-label="Gain 1 Humanity">+</button></div>
+            <div class="stat"><span class="lbl">Ammo</span><button type="button" data-k="ammo" data-d="-1" aria-label="Fire one round">–</button><output data-out="ammo">8</output><button type="button" data-k="ammo" data-d="8" aria-label="Reload eight rounds">+8</button></div>
+          </div>
+          <p class="muted" style="font-size:.78rem">Tracks numbers only. Rules stay in your rulebook.</p>
+          <div class="order-strip"><a class="btn btn-sm" href="#">Initiative order</a><a class="btn btn-sm btn-dark" href="eat-drink.html">Order a round</a></div>
+        </div>
+        <div class="screen-tabs" aria-hidden="true"><span class="on">Tools</span><span>Order</span><span>Vault</span><span>Me</span></div>
+      </div></div>
+    </div>
+    <p class="muted" style="margin-top:20px">Also planned: Magic life and commander damage, One Piece life and DON!!, Star Wars: Unlimited base damage, Pokémon prize cards, score pads for popular board games, dice roller, first-player picker, and Guru-written quick-start rules for every library game.</p>
+  </div>
+</section>
+
+<section class="section band-peach" id="vault">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Guru Vault · Example account</span><h2>Your collection</h2><p class="muted">Scan cards with your phone, or import a list from another app. Anything you buy from us is added automatically.</p></div><a class="btn btn-dark" href="#">Scan cards</a></div>
+    <div class="vault-stats">
+      <div class="vstat"><b>1,284</b><span>cards tracked</span></div>
+      <div class="vstat"><b>£X</b><span>estimated value, today's market</span></div>
+      <div class="vstat"><b>23</b><span>cards on your wantlist</span></div>
+      <div class="vstat"><b>41</b><span>duplicates for trade</span></div>
+    </div>
+    <div class="two-col" style="margin-top:28px">
+      <div class="stack">
+        <h3>Set progress</h3>
+        <div class="set-progress">
+          <div class="set-row"><span>One Piece · OP01</span><div class="bar"><i style="width:82%"></i></div><span class="num">101/121</span></div>
+          <div class="set-row"><span>Lorcana · The First Chapter</span><div class="bar"><i style="width:69%"></i></div><span class="num">142/204</span></div>
+          <div class="set-row"><span>Pokémon · Obsidian Flames</span><div class="bar"><i style="width:44%"></i></div><span class="num">88/197</span></div>
+          <div class="set-row"><span>Board games owned</span><div class="bar"><i style="width:100%"></i></div><span class="num">37</span></div>
+        </div>
+      </div>
+      <div class="match" id="trades">
+        <span class="eyebrow">Trade match found</span>
+        <h3>A member at Utilita Arena has a card you want</h3>
+        <div class="swap"><div><strong>You give</strong><br>Roronoa Zoro (OP01-025), NM</div><span class="arrow" aria-label="for">⇄</span><div><strong>You get</strong><br>Nami (OP01-016), NM</div></div>
+        <p style="font-size:.9rem">Values are within 5% of each other at today's prices. Meet at Trade Night on Friday, and staff can check both cards.</p>
+        <div class="cta-row"><a class="btn btn-primary btn-sm" href="#">Propose trade</a><a class="btn btn-sm" href="shop.html">Or get a buylist quote</a></div>
+        <p style="font-size:.78rem;opacity:.85">Game Guru isn't a party to member trades and never holds members' money or cards.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="membership">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Membership</span><h2>Play more, pay less</h2><p class="muted">Join in the app. Monthly plans can be cancelled with one month's notice <span class="tbc">TBC</span>. Valid at both venues.</p></div></div>
+    <div class="packages">
+      <article class="package"><h3>Casual Player</h3><span class="amount">£30 <small>a month</small></span><ul><li>Unlimited play, Monday to Friday</li><li>10% off food and drink</li><li>Priority event booking</li></ul><p class="muted">Pays for itself after five 2-hour visits a month.</p><a class="btn" href="#">Join in the app</a></article>
+      <article class="package featured"><h3>Core Gamer</h3><span class="amount">£45 <small>a month</small></span><ul><li>Unlimited play, every day</li><li>15% off food and drink</li><li>5% off the shop</li><li>Priority event booking</li></ul><p class="muted">Pays for itself after eight 2-hour visits a month.</p><a class="btn btn-primary" href="#">Join in the app</a></article>
+      <article class="package"><h3>The Golden Ticket</h3><span class="amount">£350 <small>a year</small></span><ul><li>Everything in Core Gamer for a year</li><li>A free guest pass on every visit</li><li>Limited to 300</li></ul><p class="muted"><strong>X of 300 left</strong></p><a class="btn" href="#">Join in the app</a></article>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="stack">
+        <a class="logo" href="index.html"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="5" width="42" height="40" rx="14" fill="#D9603F"/><path d="M10 9 L16 15 M38 9 L32 15" stroke="#231F1E" stroke-width="3" stroke-linecap="round"/><circle cx="17" cy="23" r="7" fill="#FFF8EE" stroke="#231F1E" stroke-width="2.5"/><circle cx="31" cy="23" r="7" fill="#FFF8EE" stroke="#231F1E" stroke-width="2.5"/><circle cx="17" cy="23" r="2.8" fill="#231F1E"/><circle cx="31" cy="23" r="2.8" fill="#231F1E"/><path d="M21 31 L24 35 L27 31 Z" fill="#E9A93A" stroke="#231F1E" stroke-width="1.5" stroke-linejoin="round"/></svg><span>Game Guru</span></a>
+        <p class="muted" style="color:#CDBFB4">Eat, drink, play and compete at Birmingham and Solihull's home of games.</p>
+      </div>
+      <div>
+        <h3>Utilita Arena</h3>
+        <ul>
+          <li>Unit 1, King Edwards Road<br>Birmingham B1 2AA</li>
+          <li><a href="tel:+441218246592">0121 824 6592</a></li>
+          <li>Open daily 10am to 10pm</li>
+          <li><a href="visit.html">Getting here and access</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Touchwood</h3>
+        <ul>
+          <li>25 Jubilee Walk, Touchwood<br>Solihull B91 3HT</li>
+          <li><a href="tel:+441212969218">0121 296 9218</a></li>
+          <li>Open daily 10am to 10pm</li>
+          <li><a href="visit.html">Getting here and access</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>More</h3>
+        <ul>
+          <li><a href="whats-on.html">Leagues and standings</a></li>
+          <li><a href="parties.html#corporate">Corporate and private hire</a></li>
+          <li><a href="vault.html">Membership and the app</a></li>
+          <li><a href="visit.html#access">Accessibility</a></li>
+          <li><a href="https://www.instagram.com/" aria-label="Game Guru on Instagram">Instagram</a> · <a href="https://www.tiktok.com/" aria-label="Game Guru on TikTok">TikTok</a> · <a href="https://www.facebook.com/" aria-label="Game Guru on Facebook">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 Game Guru. Concept mockup, not the live site.</span>
+      <span><a href="#">Terms</a> · <a href="#">Privacy</a> · <a href="#">Allergens</a> · <a href="#">Accessibility statement</a></span>
+    </div>
+  </div>
+</footer>
+<div class="book-bar"><a class="btn btn-primary" href="#book" data-book="table">Book a table</a><a class="btn" href="whats-on.html">What's on</a></div>
+<dialog class="drawer" id="book-drawer" aria-labelledby="book-title">
+  <div class="drawer-inner">
+    <div class="drawer-head">
+      <h2 id="book-title">Book at Game Guru</h2>
+      <button class="close" type="button" data-close aria-label="Close booking">&#x2715;</button>
+    </div>
+    <form class="form" data-mock="Mockup only: in the live site this hands over to the booking system and you get a confirmation email.">
+      <div class="field full">
+        <label for="b-type">What are you booking?</label>
+        <select id="b-type" name="type">
+          <option value="table">A table to eat, drink and play</option>
+          <option value="party">A party</option>
+          <option value="corporate">A corporate or group event</option>
+          <option value="event">An event or tournament entry</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="b-venue">Venue</label>
+        <select id="b-venue" name="venue">
+          <option value="arena">Utilita Arena</option>
+          <option value="touchwood">Touchwood</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="b-guests">Guests</label>
+        <input id="b-guests" name="guests" type="number" min="1" max="60" value="4">
+      </div>
+      <div class="field">
+        <label for="b-date">Date</label>
+        <input id="b-date" name="date" type="date" value="2026-11-07">
+      </div>
+      <div class="field">
+        <label for="b-time">Time</label>
+        <select id="b-time" name="time"><option>12:00</option><option>14:00</option><option>16:00</option><option selected>18:00</option><option>19:30</option></select>
+      </div>
+      <fieldset class="field full" style="border:0;padding:0;margin:0">
+        <legend style="font-weight:700;font-size:.9rem;margin-bottom:6px">Play time (per person)</legend>
+        <div class="radio-tiles">
+          <label><input type="radio" name="play" value="1"><span>1 hour<br>£4</span></label>
+          <label><input type="radio" name="play" value="2" checked><span>2 hours<br>£6</span></label>
+          <label><input type="radio" name="play" value="3"><span>3 hours<br>£8</span></label>
+        </div>
+        <span class="hint">Members play free. Food and drink are ordered at the table.</span>
+      </fieldset>
+      <div class="field full">
+        <label for="b-access">Access needs (optional)</label>
+        <input id="b-access" name="access" type="text" placeholder="e.g. wheelchair space, quieter table, carer">
+        <span class="hint">We pass this to the team before you arrive.</span>
+      </div>
+      <button class="btn btn-primary full" type="submit">Check availability</button>
+      <p class="confirm full" role="status" tabindex="-1" hidden></p>
+    </form>
+  </div>
+</dialog>
+<script src="assets/app.js" defer></script>
+</body>
+</html>
