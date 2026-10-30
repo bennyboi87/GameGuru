@@ -15,6 +15,7 @@ A clickable concept mockup of a redesigned [gameguru.co.uk](https://www.gameguru
 | `shop.html` | Board games with player, time, complexity and collect-from filters; TCG singles with decklist import; buylist and member trading | P7, singles, V4 |
 | `visit.html` | Venue details, travel, access and sensory guide, games library preview | P8, P10, X2 |
 | `vault.html` | Working table tools (Lorcana lore counter, game clock, Cyberpunk RED tracker), Guru Vault collection and trade match, membership | A3, V1 to V3, P9 |
+| `concepts.html` | Interactive design concepts: three homepage directions (balanced, community, specialist) with clickable events, shop and café booking views. Standalone page, not part of the shared header and footer | Design direction |
 
 Every page has a working "Book" drawer with play-time prices and an access-needs field, a sticky mobile booking bar, and a venue switcher that remembers your choice.
 
