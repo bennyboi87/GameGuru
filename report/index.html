@@ -1,0 +1,1171 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Game Guru Site Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a single reading column (report) that widens for scorecards and tables; a games-table felt green carries the brand, dice pips carry the scores. */
+:root{
+  --bg:#F3F5F2; --surface:#FFFFFF; --fg:#16211C; --muted:#56635D; --line:#D5DCD7;
+  --felt:#1E6A4E; --felt-soft:#E1EEE7; --pip:#E0A21B; --pip-off:#CFD7D2;
+  --bad:#B23A26; --bad-soft:#F7E3DE; --warn:#9A6A00; --warn-soft:#F8EDCF; --good:#1E6A4E; --good-soft:#E1EEE7;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Public Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1512; --surface:#16201B; --fg:#E4EBE7; --muted:#9AA8A1; --line:#2A3832;
+  --felt:#5FC39C; --felt-soft:#173329; --pip:#F0B93C; --pip-off:#34433C;
+  --bad:#F08A73; --bad-soft:#3A1E18; --warn:#E8BE55; --warn-soft:#352B12; --good:#5FC39C; --good-soft:#173329;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1512; --surface:#16201B; --fg:#E4EBE7; --muted:#9AA8A1; --line:#2A3832;
+  --felt:#5FC39C; --felt-soft:#173329; --pip:#F0B93C; --pip-off:#34433C;
+  --bad:#F08A73; --bad-soft:#3A1E18; --warn:#E8BE55; --warn-soft:#352B12; --good:#5FC39C; --good-soft:#173329;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16.5px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto;padding-block:40px 80px}
+.col{max-width:720px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.1rem,5vw,3.3rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.55rem,3vw,2.05rem);font-weight:800;letter-spacing:-.01em}
+h3{font-size:1.18rem;font-weight:600}
+p{margin:0}
+a{color:var(--felt);text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--felt);outline-offset:2px}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.18rem;color:var(--fg);max-width:680px}
+.muted{color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:14px}
+.stack-lg{display:flex;flex-direction:column;gap:22px}
+section{padding-block:44px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:22px}
+header.top{display:flex;flex-direction:column;gap:18px;padding-bottom:36px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:.9rem;color:var(--muted)}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px}
+nav.toc a{font-size:.88rem;padding:5px 11px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--fg);background:var(--surface)}
+nav.toc a:hover{border-color:var(--felt)}
+.note{background:var(--warn-soft);border-left:3px solid var(--warn);padding:14px 16px;border-radius:4px;font-size:.95rem}
+.verdict{background:var(--felt);color:var(--bg);padding:26px 26px;border-radius:10px;display:flex;flex-direction:column;gap:12px}
+.verdict h2{color:var(--bg)}
+.verdict p{max-width:760px}
+ul,ol{margin:0;padding-left:1.2em}
+li{margin-block:4px}
+li::marker{color:var(--muted)}
+
+/* scorecard */
+.score{width:100%;border-collapse:collapse;font-size:.95rem}
+.score th{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}
+.score td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.score td:first-child{font-weight:600;white-space:nowrap}
+.pips{display:inline-flex;gap:4px;padding-top:6px}
+.pips i{width:11px;height:11px;border-radius:50%;background:var(--pip-off);display:block}
+.pips i.on{background:var(--pip)}
+.tablebox{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+.tablebox .score td:first-child,.tablebox .score th:first-child{padding-left:16px}
+
+/* findings */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.works{background:var(--good-soft);border-radius:8px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+.works h3{color:var(--good)}
+.finding{display:grid;grid-template-columns:96px 1fr;gap:6px 18px;padding-block:16px;border-bottom:1px solid var(--line)}
+.finding:last-child{border-bottom:0}
+.finding > div{min-width:0}
+.sev{font-family:var(--mono);font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:4px;align-self:start;justify-self:start}
+.sev.crit{background:var(--bad-soft);color:var(--bad)}
+.sev.high{background:var(--warn-soft);color:var(--warn)}
+.sev.med{background:var(--pip-off);color:var(--fg)}
+.finding h3{margin-bottom:6px}
+.finding ul{font-size:.96rem}
+.ev{font-family:var(--mono);font-size:.82rem;background:var(--surface);border:1px solid var(--line);padding:1px 5px;border-radius:3px;overflow-wrap:anywhere}
+@media (max-width:560px){.finding{grid-template-columns:1fr}}
+
+/* proposals */
+.prop{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px 22px;display:flex;flex-direction:column;gap:14px}
+.prop-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.prop-head .id{font-family:var(--mono);font-size:.8rem;color:var(--felt)}
+.prop-head .tags{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);padding:2px 7px;border-radius:4px;color:var(--muted)}
+.vp{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:12px}
+.vp > div{min-width:0;background:var(--bg);border-radius:6px;padding:12px 14px;font-size:.93rem}
+.vp b{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:4px}
+.prop details summary{cursor:pointer;font-weight:600;font-size:.95rem;color:var(--felt)}
+.prop details[open] summary{margin-bottom:8px}
+
+/* sitemap */
+.ia{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px}
+.ia > div{border-top:3px solid var(--felt);background:var(--surface);padding:12px 14px;border-radius:0 0 6px 6px;font-size:.92rem}
+.ia h3{font-size:1rem;margin-bottom:6px}
+.ia ul{padding-left:1em}
+.flow{display:flex;flex-direction:column;gap:0;counter-reset:s}
+.flow li{list-style:none;padding:10px 0 10px 44px;position:relative;border-bottom:1px dashed var(--line)}
+.flow li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:9px;width:28px;height:28px;border-radius:6px;background:var(--felt-soft);color:var(--felt);font-family:var(--mono);font-size:.8rem;display:grid;place-items:center}
+.flow{padding:0}
+
+.phase{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}
+.phase > div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.phase h3{font-size:1.02rem}
+.phase .when{font-family:var(--mono);font-size:.75rem;color:var(--felt)}
+.phase ul{font-size:.92rem}
+.num{font-variant-numeric:tabular-nums}
+
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.shots.wide{grid-template-columns:1fr}
+.shot{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+.shot img{border:1px solid var(--line);border-radius:8px;background:var(--surface);width:100%;height:auto}
+.shot figcaption{font-size:.9rem;color:var(--muted)}
+.shot figcaption b{color:var(--fg)}
+.shots-pair{display:grid;grid-template-columns:2.4fr 1fr;gap:20px;align-items:start}
+@media (max-width:700px){.shots-pair{grid-template-columns:1fr}}
+.score td.proj{font-variant-numeric:tabular-nums;text-align:center;color:var(--muted);white-space:nowrap}
+.score td.proj.up{color:var(--felt)}
+.score td.proj.up b::before{content:"▲ ";font-size:.7em}
+#scorecard .score td:last-child{min-width:280px}
+.score td.movers{font-family:var(--mono);font-size:.76rem;color:var(--muted);white-space:nowrap}
+.score tr.total td{font-weight:700;border-top:2px solid var(--fg)}
+.impact{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.85rem}
+.impact .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.impact .chip{background:var(--felt-soft);color:var(--felt);border-radius:999px;padding:2px 10px;font-weight:600;font-variant-numeric:tabular-nums}
+.impact .chip.none{background:var(--bg);color:var(--muted)}
+.ba{display:flex;flex-direction:column;gap:12px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.ba-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.ba-score{font-family:var(--mono);font-size:.78rem;color:var(--felt);background:var(--felt-soft);border-radius:999px;padding:2px 10px}
+.ba-desktop{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ba-mobile{display:grid;grid-template-columns:repeat(2,minmax(0,220px));gap:14px;margin-top:10px}
+.ba-shot{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0}
+.ba-shot img{width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.ba-tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;align-self:flex-start;padding:2px 8px;border-radius:4px}
+.ba-tag.before{background:var(--bad-soft);color:var(--bad)}
+.ba-tag.after{background:var(--good-soft);color:var(--good)}
+.ba-missing{aspect-ratio:16/10;border:2px dashed var(--line);border-radius:8px;display:grid;place-items:center;color:var(--muted);font-weight:600;text-align:center;padding:16px}
+.ba-mobile-wrap summary{cursor:pointer;font-weight:600;color:var(--felt);font-size:.92rem}
+@media (max-width:640px){.ba-desktop{grid-template-columns:1fr}}
+footer{padding-top:30px;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){nav.toc a{transition:border-color .15s}}
+@media print{
+  @page{size:A4;margin:14mm 12mm}
+  :root{color-scheme:light}
+  body{padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;zoom:.72}
+  .wrap{padding-block:0;max-width:none}
+  nav.toc{display:none}
+  section{padding-block:22px}
+  .finding,.prop,.works,.shot,figure,tr,.phase > div,.ia > div{break-inside:avoid}
+  h2,h3{break-after:avoid}
+  .tablebox{overflow:visible}
+  details > summary{list-style:none}
+}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <span class="eyebrow">Website review &amp; overhaul proposal · gameguru.co.uk</span>
+  <h1>Game Guru sells the shop well and the venue badly</h1>
+  <p class="lede">A warts-and-all review of the current site, followed by a full overhaul plan. Every proposed change is tied back to what it adds for customers and what it earns the business.</p>
+  <div class="meta">
+    <span>Prepared for the owners of Game Guru</span>
+    <span>Site audited 28 October 2026</span>
+    <span>Venues: Utilita Arena, Birmingham · Touchwood, Solihull</span>
+  </div>
+  <nav class="toc" aria-label="Contents">
+    <a href="#verdict">Verdict</a>
+    <a href="#scorecard">Scorecard</a>
+    <a href="#works">What works</a>
+    <a href="#broken">What doesn't</a>
+    <a href="#benchmark">Competitors</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#sitemap">New structure</a>
+    <a href="#before-after">Before &amp; after</a>
+    <a href="#mockups">Mockups</a>
+    <a href="#proposals">Proposals</a>
+    <a href="#singles">TCG singles</a>
+    <a href="#vault">Collection &amp; trading</a>
+    <a href="#app">App &amp; table tools</a>
+    <a href="#access">Accessibility</a>
+    <a href="#community">Community</a>
+    <a href="#roadmap">Now, next, later</a>
+    <a href="#kpis">Measuring it</a>
+    <a href="#method">Method &amp; limits</a>
+    <a href="#moscow">MoSCoW</a>
+  </nav>
+</header>
+
+<div class="verdict" id="verdict">
+  <span class="eyebrow" style="color:var(--bg);opacity:.8">The short version</span>
+  <h2>The website is a Shopify toy shop with café pages attached. The business is a two-site restaurant, bar, play venue and events operator that also has a shop.</h2>
+  <p>The "Book" button works in Chrome, but it relies on a script, and the "Book Now" headings on six pages have nothing visible under them. There is no page for parties, none for corporate events, and no way to send a party or corporate enquiry. The kitchen and bar, which are probably the biggest earners per visit, sit behind PDF menus on a page called "cafe". Organised play is the strongest part of the site, but it has gaps: Pokémon is still "coming soon", the events have no prices, and two links go to the wrong place.</p>
+  <p>The fix is not a reskin. The site needs to be rebuilt around what people come to do: <strong>eat and drink, play, compete, celebrate, and take something home</strong>. Each of those needs a clear page and a way to book or buy on the spot.</p>
+</div>
+
+<!-- SCORECARD -->
+<section id="scorecard">
+  <div class="stack col">
+    <span class="eyebrow">Part 1 · Review</span>
+    <h2>Scorecard</h2>
+    <p class="muted">Each area is scored out of six, like a d6. One pip means it is missing or broken. Six means best in class for a UK hospitality and games venue.</p>
+    <p class="muted">The three projected columns show where each score should land once the recommendations on that horizon (<a href="#roadmap">Now, Next and Later</a>) are delivered. "Moved by" names the proposals that do the moving, with "·" separating the horizons. Projections are design judgements, not measurements. Altogether the site goes from 23 to 51 after Now, 62 after Next, and 67 after Later, out of 72.</p>
+  </div>
+  <div class="tablebox">
+  <table class="score">
+    <thead><tr><th>Area</th><th>Today</th><th>After Now</th><th>After Next</th><th>After Later</th><th>Moved by</th><th>In one line</th></tr></thead>
+    <tbody>
+      <tr><td>Booking (tables, parties, events)</td><td><span class="pips" aria-label="3 of 6"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td class="proj up"><b>5</b></td><td class="proj"><b>5</b></td><td class="proj up"><b>6</b></td><td class="movers">P1, X2 · P13</td><td>Table booking works in Chrome, but it depends on a script. There is no booking path for parties, groups or events.</td></tr>
+      <tr><td>Parties &amp; celebrations</td><td><span class="pips" aria-label="1 of 6"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></span></td><td class="proj up"><b>5</b></td><td class="proj"><b>5</b></td><td class="proj"><b>5</b></td><td class="movers">P3, P1</td><td>Not mentioned anywhere on the site.</td></tr>
+      <tr><td>Corporate &amp; private hire</td><td><span class="pips" aria-label="1 of 6"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></span></td><td class="proj up"><b>5</b></td><td class="proj"><b>5</b></td><td class="proj"><b>5</b></td><td class="movers">P4, P1</td><td>Not mentioned. The contact form has no option for it.</td></tr>
+      <tr><td>Restaurant &amp; bar</td><td><span class="pips" aria-label="2 of 6"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td class="proj up"><b>5</b></td><td class="proj up"><b>6</b></td><td class="proj"><b>6</b></td><td class="movers">P2 · A3</td><td>Menus exist, but only as PDFs, on a page that calls a full kitchen and licensed bar a "cafe".</td></tr>
+      <tr><td>Events &amp; organised play</td><td><span class="pips" aria-label="3 of 6"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td class="proj up"><b>5</b></td><td class="proj up"><b>6</b></td><td class="proj"><b>6</b></td><td class="movers">P5, C1 · P6</td><td>A real weekly schedule with links to official platforms. No prices, no calendar, and no Pokémon yet.</td></tr>
+      <tr><td>Online shop</td><td><span class="pips" aria-label="3 of 6"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td class="proj"><b>3</b></td><td class="proj up"><b>5</b></td><td class="proj up"><b>6</b></td><td class="movers">P7, singles · V2</td><td>A solid Shopify base with a large range, let down by 31 overlapping collections and no click &amp; collect.</td></tr>
+      <tr><td>Membership</td><td><span class="pips" aria-label="2 of 6"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td class="proj up"><b>3</b></td><td class="proj up"><b>5</b></td><td class="proj up"><b>6</b></td><td class="movers">Quick fixes · P9 · P13</td><td>The tiers are clear, but the page doesn't compare them with the £4, £6 and £8 hourly play prices, so the saving isn't obvious.</td></tr>
+      <tr><td>Games library</td><td><span class="pips" aria-label="2 of 6"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td class="proj"><b>2</b></td><td class="proj up"><b>5</b></td><td class="proj up"><b>6</b></td><td class="movers">P8, X3, A3 · V1</td><td>A good idea that loads in a browser, but only by script, so Google can't see it, and its filters overlap.</td></tr>
+      <tr><td>Venue &amp; local information</td><td><span class="pips" aria-label="2 of 6"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td class="proj up"><b>5</b></td><td class="proj"><b>5</b></td><td class="proj"><b>5</b></td><td class="movers">P10, X2</td><td>Addresses and hours are there. Parking, transport, accessibility and facilities are not, and one map link names a different business.</td></tr>
+      <tr><td>Search visibility (SEO)</td><td><span class="pips" aria-label="1 of 6"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></span></td><td class="proj up"><b>4</b></td><td class="proj up"><b>5</b></td><td class="proj up"><b>6</b></td><td class="movers">P11, P10, P2, P5 · P6, P8 · content</td><td>Every page shares one café meta description, the blog has no posts, and there are no venue landing pages.</td></tr>
+      <tr><td>Accessibility</td><td><span class="pips" aria-label="1 of 6"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></span></td><td class="proj up"><b>4</b></td><td class="proj up"><b>5</b></td><td class="proj"><b>5</b></td><td class="movers">X1, X2 · P12, X3, X4</td><td>Image descriptions are empty across the site, social icons have no labels, and headings are used for menu items.</td></tr>
+      <tr><td>Polish &amp; consistency</td><td><span class="pips" aria-label="2 of 6"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td class="proj up"><b>5</b></td><td class="proj"><b>5</b></td><td class="proj"><b>5</b></td><td class="movers">Quick fixes, P11</td><td>"Utillita" is misspelt on every page, the footer says © 2025, and content is duplicated.</td></tr>
+      <tr><td>Speed &amp; mobile</td><td><span class="pips" aria-label="2 of 6"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td class="proj">–</td><td class="proj up" colspan="2"><b>Target: pass</b></td><td class="movers">P12</td><td>Measured with Lighthouse: every page scores 30 to 43 out of 100 on a phone, and the main content takes 5 to 24 seconds to appear (Google's "good" is 2.5). Desktop is better, at 38 to 82. See <a href="#slow">the speed finding</a>.</td></tr>
+    <tr class="total"><td>Total (12 scored areas)</td><td class="proj"><b>23</b> / 72</td><td class="proj up"><b>51</b> / 72</td><td class="proj up"><b>62</b> / 72</td><td class="proj up"><b>67</b> / 72</td><td class="movers"></td><td>Speed is measured with Lighthouse rather than scored in pips, with a target of passing Core Web Vitals on a phone.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- WHAT WORKS -->
+<section id="works">
+  <div class="stack col">
+    <h2>What works</h2>
+    <p class="muted">There is a lot to keep. These are the foundations the overhaul builds on.</p>
+  </div>
+  <div class="grid2">
+    <div class="works"><h3>A sound platform</h3><p>Shopify gives you secure checkout, customer accounts, reliable hosting and a big app ecosystem. Nothing here needs a platform migration.</p></div>
+    <div class="works"><h3>A deep range</h3><p>The board games collection alone lists 372 items, with sale pricing, stock status, price filters and nine sort options. The product photography is high quality.</p></div>
+    <div class="works"><h3>Credible organised play</h3><p>The weekly schedule covers One Piece, Lorcana and Star Wars: Unlimited at both venues, with registration through Bandai TCG+, Ravensburger Play Hub and Melee. TCG players trust these platforms.</p></div>
+    <div class="works"><h3>Concrete membership tiers</h3><p>Casual Player (£30 a month), Core Gamer (£45 a month) and The Golden Ticket (£350 a year, limited to 300) are easy to understand, and the scarcity on the Golden Ticket is a good hook.</p></div>
+    <div class="works"><h3>Clear basics</h3><p>Both addresses, both phone numbers and simple hours (10am to 10pm every day) appear on every page. The hero line "Play. Collect. Café." is short and memorable.</p></div>
+    <div class="works"><h3>A good story to tell</h3><p>450+ games, a full kitchen, cocktails, an app with table ordering, and a second, larger venue that opened in 2026. The press coverage is better at saying this than the website is.</p></div>
+  </div>
+</section>
+
+<!-- WHAT DOESN'T -->
+<section id="broken">
+  <div class="stack col">
+    <h2>What doesn't work</h2>
+    <p class="muted">Ordered by how much revenue or trust each problem costs. The evidence is taken from the live pages on the audit date.</p>
+  </div>
+  <div>
+    <div class="finding"><span class="sev high">High</span><div>
+      <h3>Booking works, but only for tables, and only once scripts load</h3>
+      <ul>
+        <li>The "Book" button works in Chrome (confirmed by the owners' team). In the page code it points to <span class="ev">#book</span>, which doesn't exist, so the booking only appears once a script runs. Test it in Safari on iPhone, in Firefox, and inside the Instagram and TikTok in-app browsers, where scripts often behave differently.</li>
+        <li>Six pages have a "Book Now" heading with nothing visible underneath it until a script fills it in. Search engines and some screen readers only see the empty heading.</li>
+        <li>No booking path for parties, groups, corporate events or event tickets. Those still mean a phone call, and the phone numbers aren't tappable on mobile.</li>
+      </ul>
+    </div></div>
+
+    <div class="finding"><span class="sev crit">Critical</span><div>
+      <h3>Parties and corporate events are invisible</h3>
+      <ul>
+        <li>No page, package, price, photo or form for kids' birthdays, adult celebrations, team building, private hire or buyouts.</li>
+        <li>The contact form's "query type" only offers General, Utilita Arena and Touchwood. There is no way to tell you about a 40-person corporate booking.</li>
+        <li>These are the highest-value bookings a venue like this takes, and today they depend on word of mouth and phone calls.</li>
+      </ul>
+    </div></div>
+
+    <div class="finding"><span class="sev crit">Critical</span><div>
+      <h3>The restaurant and bar are undersold</h3>
+      <ul>
+        <li>The page is called "cafe", and the site-wide description talks about "comfort food". The press describes wood-fired pizza, craft burgers, bao, katsu, brunch, speciality coffee and cocktails.</li>
+        <li>The food, drinks and kids' menus are PDFs only. That means no prices on the page, poor reading on phones, nothing for Google to index, and no allergen or dietary labels on the page.</li>
+        <li>Nothing says what is different between the two venues, or invites people in to eat even if they don't want to play a game.</li>
+        <li>The Utilita Arena venue sits next to a major concert venue, and the site makes no pre-show or event-day pitch at all.</li>
+      </ul>
+    </div></div>
+
+    <div class="finding"><span class="sev high">High</span><div>
+      <h3>The homepage sells diecast cars ahead of the venue</h3>
+      <ul>
+        <li>Below the hero, the homepage is mostly shop: 12 category tiles, then the same eight products twice, once under "Game shop" and again under "Merch shop".</li>
+        <li>Those eight products look alphabetical rather than chosen (1969 Ford Mustang, 1994 Honda Del Sol, then Topps boxes). It reads as a default setting, not a curated shelf.</li>
+        <li>The only venue content is a ResDiary venue picker under "Reserve to Play", which only appears once a script runs. There is nothing on the homepage about events, parties, food, or what a visit costs.</li>
+        <li>The "Up to 15% off · Express Delivery" shop banner runs on every page, including café, venues and membership.</li>
+      </ul>
+    </div></div>
+
+    <div class="finding"><span class="sev high">High</span><div>
+      <h3>Play prices exist, but they're hard to find and don't sell membership</h3>
+      <ul>
+        <li>The Play page shows a clear price table: £4 for one hour, £6 for two and £8 for three, per person, with under-6s free and 6 to 14s at half price. But the whole table is a single image with no description, so Google can't read the prices and screen-reader users don't hear them.</li>
+        <li>The prices aren't linked to membership. At £6 for two hours, Casual Player (£30 a month) pays for itself after five two-hour visits a month, but nobody does that sum for the customer.</li>
+        <li>Nothing says whether food spend, children, peak times or event nights change the price.</li>
+        <li>The membership page says to download the app to subscribe, and also to "sign up to our newsletter to be the first to know when you can join". "Play every day (Mon–Fri)" contradicts itself. Nothing covers terms, cancellation, which venues are included, or how many Golden Tickets are left.</li>
+      </ul>
+    </div></div>
+
+    <div class="finding"><span class="sev high">High</span><div>
+      <h3>Events have holes that TCG players will notice</h3>
+      <ul>
+        <li>Pokémon, the biggest TCG by player count, shows "Coming Soon". Magic says "will be announced soon". Yu-Gi-Oh has no day or time.</li>
+        <li>Both Star Wars: Unlimited buttons point to the same Melee location page, so one venue is probably linked wrong. Both Yu-Gi-Oh buttons go to Konami product pages, not event registration.</li>
+        <li>No entry fees, formats, prize support, capacity, or calendar view. The organised play email address is plain text, not a link.</li>
+        <li>Social nights mentioned in the press (Play &amp; Connect, Member Meetup, Social Game Night, Family &amp; Friends Day) don't appear on the events page.</li>
+      </ul>
+    </div></div>
+
+    <div class="finding"><span class="sev high">High</span><div>
+      <h3>The shop is harder to browse than it should be</h3>
+      <ul>
+        <li>31 collections, many of which overlap: "Family &amp; Kids Games", "Family Favourites" and "Kids' Games"; "Miniature Games", "Miniatures" and "Hobby &amp; Wargames"; three different strategy collections; two Hot Wheels URLs.</li>
+        <li>Filters are availability and price only. Board game buyers shop by player count, play time, age and complexity.</li>
+        <li>No click &amp; collect, though you have two shops open 10am to 10pm every day. Collection gets people through the door, where they buy food and drink.</li>
+        <li>On the product page, there are no reviews, no delivery or returns information near the button, and an empty "You may also like" block. Nothing says "try it at our tables first". The buttons show leaked state text ("Add Added"), and the Azul title shows a stray "€" encoding error.</li>
+        <li>TCG product is sealed only, with no singles and no pre-order terms. See <a href="#singles">TCG singles</a>.</li>
+      </ul>
+    </div></div>
+
+    <div class="finding"><span class="sev high">High</span><div>
+      <h3>Google can't see most of what you do</h3>
+      <ul>
+        <li>The browser-tab title is just "GameGuru". Every page uses the same café meta description, including shop and product pages. It says "Birmingham" only, and it's missing a comma ("…Café Birmingham enjoy board games…").</li>
+        <li>No separate pages for each venue, so no page can rank for "board game café Solihull" or "restaurant near Utilita Arena".</li>
+        <li>The News blog has no posts. Menus are in PDFs. The library list loads by script, so search engines may not see any of it.</li>
+        <li>The social share image is listed as 27×35 pixels and served over http, so shared links look broken on Facebook and WhatsApp.</li>
+      </ul>
+    </div></div>
+
+    <div class="finding" id="slow"><span class="sev high">High</span><div>
+      <h3>The site is slow on phones, where most visitors are</h3>
+      <ul>
+        <li>Lighthouse mobile scores are low on every page tested: home 30, play 40, café 40, events 30, shop 33, venues 38, membership 31, library 43 (out of 100, where 90 or more is good). On desktop the same pages score between 38 and 82.</li>
+        <li>On a phone, the main image or heading takes between 5 and 24 seconds to appear. Google counts 2.5 seconds as good and anything over 4 seconds as poor. The page also freezes while scripts run, for between 1.2 and 7.3 seconds, so taps on Book or the menu do nothing at first.</li>
+        <li>The biggest causes are a 3 MB banner image on the homepage, collection images several times larger than the phone needs on the shop page (about 2.7 MB could be saved), two or three copies of the ResDiary booking widget loaded on every page whether or not anyone books, and a heavy page-builder and header script. Pages weigh 3.5 to 7 MB on a phone, and the library weighs 12 MB on desktop.</li>
+        <li>The shop page jumps about as it loads (layout shift of 0.22 on desktop and 0.11 on mobile, where 0.1 is the limit for good).</li>
+        <li>Lighthouse's automated checks also flag low colour contrast, links with no name, headings out of order, and tap targets that are too small. Its accessibility scores of 82 to 91 only cover what a machine can check, and the manual findings above still stand.</li>
+        <li>On a phone, the "Ask the Guru" chat button sits over the page content, covering text and the homepage Book button, and the shop banner wraps onto three lines above the logo.</li>
+      </ul>
+    </div></div>
+
+    <div class="finding"><span class="sev med">Medium</span><div>
+      <h3>Venue pages lack the information visitors need</h3>
+      <ul>
+        <li>One photo each, plus address and hours. No parking, public transport, step-free access, toilets, baby-changing, capacity, play areas, bar or kitchen details.</li>
+        <li>The Touchwood directions link is labelled "Alioli", which is a different business. The Utilita Arena map link points at the postcode, not the venue.</li>
+        <li>On the Play page, both venues use the same photo.</li>
+        <li>No holiday or event-day opening hours.</li>
+      </ul>
+    </div></div>
+
+    <div class="finding"><span class="sev med">Medium</span><div>
+      <h3>Accessibility falls short</h3>
+      <ul>
+        <li>Image descriptions (alt text) are empty on almost every page. Where they exist, some are filenames ("IMG_8080.jpg").</li>
+        <li>The Facebook, TikTok and Instagram icons have no text label, so screen readers can't announce them.</li>
+        <li>Menu items are marked up as headings, the copyright line is a heading, and the menu, hours and addresses repeat two or three times. Screen-reader users hear all of it.</li>
+        <li>Phone numbers aren't tap-to-call. Basket text reads "Total items in basket: 0 0".</li>
+      </ul>
+    </div></div>
+
+    <div class="finding"><span class="sev med">Medium</span><div>
+      <h3>Small errors that add up</h3>
+      <ul>
+        <li>"Utillita Arena" is misspelt in the footer of every page.</li>
+        <li>The brand appears as "GameGuru" and "Game Guru", and as "Cafe" and "Café". Menu labels mix "play", "cafe" and "shop" with "Home", "Library" and "Contact". The menu says "Loyalty", while the page title says "Membership".</li>
+        <li>The footer says © 2025. The theme-colour tag is empty. Collection images include "Pokeemon" and "Magivplayboosters" in their filenames, and the Funko tile uses the site logo as a placeholder.</li>
+      </ul>
+    </div></div>
+  </div>
+</section>
+
+<!-- BENCHMARK -->
+<section id="benchmark">
+  <div class="stack col">
+    <h2>How Game Guru compares</h2>
+    <p>Game Guru competes in three markets at once. Each one has different leaders, and the website has to hold its own against all of them.</p>
+  </div>
+  <div class="tablebox">
+  <table class="score">
+    <thead><tr><th>Who</th><th>Competes for</th><th>What they do better online</th><th>What to borrow</th></tr></thead>
+    <tbody>
+      <tr><td>Draughts, London</td><td>Board game café visits</td><td>Publishes admission on the page: £7.95 off-peak and £9.95 peak, under-12s free, sessions capped at 3 hours. Booking is the main call to action, there are separate pages for each venue, and FAQs answer the usual questions. It promotes "1,000+ games" as a headline.</td><td>Price transparency, peak and off-peak pricing to fill quiet times, and a single headline number for the library.</td></tr>
+      <tr><td>Geek Retreat (chain, includes Birmingham)</td><td>TCG players, café trade, retail</td><td>A national franchise that combines a café, retail and TCG events under one brand. It competes for the same local TCG players.</td><td>Game Guru wins on food, the bar, space and two flagship venues. The site needs to show that, not hide it behind a shop.</td></tr>
+      <tr><td>Flight Club, Birmingham (and other "competitive socialising" venues)</td><td>Corporate, party and group budgets</td><td>Events brochures for each venue, set packages for groups, and a booking flow aimed at groups.</td><td>Package-led party and corporate pages with per-head prices, and a downloadable brochure.</td></tr>
+      <tr><td>Zatu Games</td><td>Online board game sales</td><td>A Victory Points loyalty scheme: £1 spent earns 1 point, with extra points for reviews and newsletter sign-ups, VIP tiers, and points shown at checkout. The vendor's case study says engaged customers place 4.6× more orders.</td><td>Points that link online spending, venue visits and event entry into one scheme run through the app.</td></tr>
+      <tr><td>Cardmarket</td><td>TCG singles (UK and EU)</td><td>The largest single-card marketplace in Europe, with tools that let shops bulk upload and price their stock.</td><td>Sell through it, rather than against it, and sync it to the store's own stock (see <a href="#singles">TCG singles</a>).</td></tr>
+      <tr><td>TCGplayer, Collectr, CardNexus</td><td>Collectors' attention and trading</td><td>Apps that scan cards, track a collection's value and link straight to a marketplace. CardNexus added a marketplace to its collection tracker in March 2026, with a 5% seller fee and payment held until the cards arrive.</td><td>The collection tracker is now the way into buying and selling. See <a href="#vault">collection tracking and trading</a>.</td></tr>
+      <tr><td>Magic Madhouse, Chaos Cards</td><td>Online TCG sealed and singles in the UK</td><td>Large catalogues, quick dispatch, and selling on marketplaces as well as their own sites. Magic Madhouse's eBay shop shows 426,000+ items sold.</td><td>Game Guru can't win on catalogue size or price. It wins on local pickup, events and in-person trust.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note col">The pattern is clear. Rivals that do well online publish prices, push one booking button, and package group events. The TCG leaders are moving from shops to platforms, built on collections and trading. Game Guru's advantage is the physical venues. The site should turn that into something online-only rivals can't offer: try it here, collect it here, trade it here, safely.</div>
+</section>
+
+<!-- STRATEGY -->
+<section id="strategy">
+  <div class="stack col">
+    <span class="eyebrow">Part 2 · Overhaul</span>
+    <h2>The idea behind the new site</h2>
+    <p>Today the site answers "what can I buy?". The new site should answer the question every visitor actually arrives with: <strong>"what can I do at Game Guru, and how do I lock it in?"</strong></p>
+    <p>The proposed positioning line:</p>
+    <p class="lede" style="font-family:var(--display);font-weight:600">Eat, drink, play and compete at Birmingham and Solihull's home of games, and take the game home with you.</p>
+    <p>Every proposal below is tied to one or more of five value levers. Each change has to pull at least one of them, or it isn't in the plan.</p>
+  </div>
+  <div class="vp" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))">
+    <div><b>Lever 1</b>More bookings and covers, especially off-peak</div>
+    <div><b>Lever 2</b>Higher spend per visit (food, drink, retail)</div>
+    <div><b>Lever 3</b>Recurring revenue (membership, leagues, singles)</div>
+    <div><b>Lever 4</b>Being found (local search, social sharing)</div>
+    <div><b>Lever 5</b>Less staff time on phones, emails and no-shows</div>
+  </div>
+</section>
+
+<!-- SITEMAP -->
+<section id="sitemap">
+  <div class="stack col">
+    <h2>New site structure</h2>
+    <p>Five sections that match what people come to do, a venue switcher in the header, and one persistent "Book" button that opens a real booking flow.</p>
+  </div>
+  <div class="ia">
+    <div><h3>Visit</h3><ul><li>Utilita Arena, Birmingham</li><li>Touchwood, Solihull</li><li>Kitchen &amp; Bar</li><li>How play works &amp; prices</li><li>Games library</li></ul></div>
+    <div><h3>What's On</h3><ul><li>Calendar (all events)</li><li>Weekly organised play</li><li>Leagues &amp; standings</li><li>Tournaments &amp; prereleases</li><li>Social &amp; family nights</li></ul></div>
+    <div><h3>Parties &amp; Groups</h3><ul><li>Kids' parties</li><li>Adult celebrations</li><li>Corporate &amp; team building</li><li>Private hire</li><li>Schools &amp; clubs</li></ul></div>
+    <div><h3>Shop</h3><ul><li>Board games</li><li>TCG sealed &amp; pre-orders</li><li>TCG singles</li><li>Collectables</li><li>Gift cards</li></ul></div>
+    <div><h3>Join</h3><ul><li>Membership &amp; app</li><li>Newsletter</li><li>Community (Discord)</li><li>Guru Vault (collection &amp; trades)</li><li>App &amp; table tools</li><li>Sell or trade cards</li></ul></div>
+  </div>
+  <div class="stack col">
+    <h3>Homepage, top to bottom</h3>
+    <ol class="flow">
+      <li><strong>Hero with venue switcher.</strong> One photo of a busy table with food and a game, the positioning line, and two buttons: "Book a table" and "What's on tonight".</li>
+      <li><strong>Four doors.</strong> Eat &amp; drink, Play, Parties &amp; groups, Shop. Each is a large tile with a single sentence and a price cue, such as "Parties from £X per child".</li>
+      <li><strong>Tonight and this week.</strong> The next six events for the selected venue, pulled live from the calendar.</li>
+      <li><strong>How a visit works.</strong> Three steps: book or walk in, pick a game with a Guru, order from the table in the app. Show the play prices here: £4, £6 or £8 per person for one to three hours.</li>
+      <li><strong>Menu highlights.</strong> Four signature dishes and two cocktails, with prices, linking to the full menu.</li>
+      <li><strong>Parties strip.</strong> Photo, packages from £X, and an "Enquire" button.</li>
+      <li><strong>Curated shelf.</strong> Six hand-picked products ("Guru picks this month"), not an alphabetical list.</li>
+      <li><strong>Membership pitch.</strong> A break-even line: "Visit twice a month and Casual Player pays for itself."</li>
+      <li><strong>Reviews and social proof.</strong> Google rating, three short quotes, and press logos.</li>
+      <li><strong>Newsletter sign-up.</strong> Choose your venue and interests.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- BEFOREAFTER -->
+<section id="before-after">
+  <div class="stack col">
+    <h2>Before and after</h2>
+    <p>Each pair puts a page of the live site, captured on 28 October 2026, next to its equivalent in the mockup. Both are shown at the same desktop size, and you can open the phone versions under each pair. The score change shows which scorecard rows the new page moves.</p>
+  </div>
+  <div class="stack-lg">
+  <article class="ba">
+    <div class="ba-head"><h3>Homepage</h3><span class="ba-score">Booking 3 → 5 · Polish 2 → 5</span></div>
+    <p>Today the homepage leads with shop tiles and the same eight products twice. The new homepage leads with what people come to do, with one booking button, this week's events and play prices on the first screen.</p>
+    <div class="ba-desktop"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-home-desktop.jpg" alt="Current gameguru.co.uk homepage page, desktop" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-index-desktop.jpg" alt="Proposed homepage page, desktop" loading="lazy"></figure></div>
+    <details class="ba-mobile-wrap"><summary>Compare on a phone</summary><div class="ba-mobile"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-home-mobile.jpg" alt="Current gameguru.co.uk homepage page, mobile" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-index-mobile.jpg" alt="Proposed homepage page, mobile" loading="lazy"></figure></div></details>
+  </article>
+  <article class="ba">
+    <div class="ba-head"><h3>Play and visiting</h3><span class="ba-score">Venue info 2 → 5 · Booking 3 → 5</span></div>
+    <p>Today the play prices are a single image with no description, and both venues share one photo. The new Visit page has the prices as real text, plus addresses, travel, and a switch between the two venues.</p>
+    <div class="ba-desktop"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-play-desktop.jpg" alt="Current gameguru.co.uk play and visiting page, desktop" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-visit-desktop.jpg" alt="Proposed play and visiting page, desktop" loading="lazy"></figure></div>
+    <details class="ba-mobile-wrap"><summary>Compare on a phone</summary><div class="ba-mobile"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-play-mobile.jpg" alt="Current gameguru.co.uk play and visiting page, mobile" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-visit-mobile.jpg" alt="Proposed play and visiting page, mobile" loading="lazy"></figure></div></details>
+  </article>
+  <article class="ba">
+    <div class="ba-head"><h3>Food and drink</h3><span class="ba-score">Restaurant &amp; bar 2 → 5</span></div>
+    <p>PDF menus on a page called "cafe" become a Kitchen &amp; Bar page with menus as real text, prices, dietary tags and deals.</p>
+    <div class="ba-desktop"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-cafe-desktop.jpg" alt="Current gameguru.co.uk food and drink page, desktop" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-eat-drink-desktop.jpg" alt="Proposed food and drink page, desktop" loading="lazy"></figure></div>
+    <details class="ba-mobile-wrap"><summary>Compare on a phone</summary><div class="ba-mobile"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-cafe-mobile.jpg" alt="Current gameguru.co.uk food and drink page, mobile" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-eat-drink-mobile.jpg" alt="Proposed food and drink page, mobile" loading="lazy"></figure></div></details>
+  </article>
+  <article class="ba">
+    <div class="ba-head"><h3>Events and organised play</h3><span class="ba-score">Events 3 → 5 → 6</span></div>
+    <p>A text list without prices becomes a filterable calendar with entry fees, formats, places left and league standings.</p>
+    <div class="ba-desktop"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-events-desktop.jpg" alt="Current gameguru.co.uk events and organised play page, desktop" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-whats-on-desktop.jpg" alt="Proposed events and organised play page, desktop" loading="lazy"></figure></div>
+    <details class="ba-mobile-wrap"><summary>Compare on a phone</summary><div class="ba-mobile"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-events-mobile.jpg" alt="Current gameguru.co.uk events and organised play page, mobile" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-whats-on-mobile.jpg" alt="Proposed events and organised play page, mobile" loading="lazy"></figure></div></details>
+  </article>
+  <article class="ba">
+    <div class="ba-head"><h3>Parties and corporate</h3><span class="ba-score">Parties 1 → 5 · Corporate 1 → 5</span></div>
+    <p>There is no page for parties or corporate events today. The new section has priced packages and an enquiry form that goes to the events team.</p>
+    <div class="ba-desktop"><figure class="ba-shot"><span class="ba-tag before">Today</span><div class="ba-missing">No page exists for this today</div></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-parties-desktop.jpg" alt="Proposed parties and corporate page, desktop" loading="lazy"></figure></div>
+    <details class="ba-mobile-wrap"><summary>Compare on a phone</summary><div class="ba-mobile"><figure class="ba-shot"><span class="ba-tag before">Today</span><div class="ba-missing">No page exists for this today</div></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-parties-mobile.jpg" alt="Proposed parties and corporate page, mobile" loading="lazy"></figure></div></details>
+  </article>
+  <article class="ba">
+    <div class="ba-head"><h3>Shop</h3><span class="ba-score">Online shop 3 → 5 → 6</span></div>
+    <p>Thirty-one overlapping collections become filters by players, time, complexity and collect-from venue, with click &amp; collect and a TCG singles section.</p>
+    <div class="ba-desktop"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-shop-desktop.jpg" alt="Current gameguru.co.uk shop page, desktop" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-shop-desktop.jpg" alt="Proposed shop page, desktop" loading="lazy"></figure></div>
+    <details class="ba-mobile-wrap"><summary>Compare on a phone</summary><div class="ba-mobile"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-shop-mobile.jpg" alt="Current gameguru.co.uk shop page, mobile" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-shop-mobile.jpg" alt="Proposed shop page, mobile" loading="lazy"></figure></div></details>
+  </article>
+  <article class="ba">
+    <div class="ba-head"><h3>Venues and access</h3><span class="ba-score">Venue info 2 → 5 · Accessibility 1 → 4</span></div>
+    <p>Address and hours only become full access and sensory information for each venue.</p>
+    <div class="ba-desktop"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-venues-desktop.jpg" alt="Current gameguru.co.uk venues and access page, desktop" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-venue-access-desktop.jpg" alt="Proposed venues and access page, desktop" loading="lazy"></figure></div>
+    <details class="ba-mobile-wrap"><summary>Compare on a phone</summary><div class="ba-mobile"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-venues-mobile.jpg" alt="Current gameguru.co.uk venues and access page, mobile" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-venue-access-mobile.jpg" alt="Proposed venues and access page, mobile" loading="lazy"></figure></div></details>
+  </article>
+  <article class="ba">
+    <div class="ba-head"><h3>Membership</h3><span class="ba-score">Membership 2 → 3 → 5</span></div>
+    <p>Tiers with no comparison become tiers with a break-even line against the £4, £6 and £8 play prices.</p>
+    <div class="ba-desktop"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-membership-desktop.jpg" alt="Current gameguru.co.uk membership page, desktop" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-membership-desktop.jpg" alt="Proposed membership page, desktop" loading="lazy"></figure></div>
+    <details class="ba-mobile-wrap"><summary>Compare on a phone</summary><div class="ba-mobile"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-membership-mobile.jpg" alt="Current gameguru.co.uk membership page, mobile" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-membership-mobile.jpg" alt="Proposed membership page, mobile" loading="lazy"></figure></div></details>
+  </article>
+  <article class="ba">
+    <div class="ba-head"><h3>Games library</h3><span class="ba-score">Games library 2 → 5</span></div>
+    <p>A list that only appears once scripts run becomes indexable game cards showing players, time, complexity, venue and a buy link.</p>
+    <div class="ba-desktop"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-library-desktop.jpg" alt="Current gameguru.co.uk games library page, desktop" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-library-desktop.jpg" alt="Proposed games library page, desktop" loading="lazy"></figure></div>
+    <details class="ba-mobile-wrap"><summary>Compare on a phone</summary><div class="ba-mobile"><figure class="ba-shot"><span class="ba-tag before">Today</span><img src="beforeafter/before-library-mobile.jpg" alt="Current gameguru.co.uk games library page, mobile" loading="lazy"></figure><figure class="ba-shot"><span class="ba-tag after">Proposed</span><img src="beforeafter/after-library-mobile.jpg" alt="Proposed games library page, mobile" loading="lazy"></figure></div></details>
+  </article>
+  </div>
+</section>
+<!-- /BEFOREAFTER -->
+
+<!-- MOCKUPS -->
+<section id="mockups">
+  <div class="stack col">
+    <h2>What the new site could look like</h2>
+    <p>A clickable concept of the proposed site, built in Game Guru's existing coral, peach and cream brand with its chunky display type. It has seven pages, and the booking drawer, filters, tabs and table tools all work. It's plain HTML and CSS, hosted alongside this report: <a href="../website/">open the clickable mockup</a>. Prices, menu items and events are examples, and anything marked TBC needs confirming.</p>
+  </div>
+  <div class="shots-pair">
+    <figure class="shot"><img src="mockups/index-desktop.jpg" alt="Homepage on desktop: venue switcher, Eat. Drink. Play. Compete. headline, Book a table and What's on tonight buttons, games-table illustration" loading="lazy"><figcaption><b>Homepage.</b> A venue switcher, the positioning line, one booking button, and play prices up front.</figcaption></figure>
+    <figure class="shot"><img src="mockups/index-mobile.jpg" alt="Homepage on a phone with a sticky Book a table bar at the bottom" loading="lazy"><figcaption><b>On a phone.</b> The Book bar stays on screen.</figcaption></figure>
+  </div>
+  <div class="shots">
+    <figure class="shot"><img src="mockups/booking-desktop.jpg" alt="Booking drawer with booking type, venue, guests, date, time, 1, 2 or 3 hours of play priced £4, £6, £8, and an access needs field" loading="lazy"><figcaption><b>Booking (P1, X2).</b> Tables, parties, groups and events in one flow, with play prices and an access-needs field.</figcaption></figure>
+    <figure class="shot"><img src="mockups/whats-on-desktop.jpg" alt="What's On page with filter chips for venue, game and type, and event cards showing price and places left" loading="lazy"><figcaption><b>What's On (P5).</b> Filter by venue, game and type. Every event shows price, format and places left.</figcaption></figure>
+    <figure class="shot"><img src="mockups/leagues-desktop.jpg" alt="League standings table with wins, losses, attendance and points" loading="lazy"><figcaption><b>Leagues (C1).</b> Points for turning up as well as winning. Results come in from the app.</figcaption></figure>
+    <figure class="shot"><img src="mockups/parties-kids-desktop.jpg" alt="Kids' party packages: Game On, Pokémon or Lorcana Party, Tournament Party" loading="lazy"><figcaption><b>Parties (P3).</b> Named packages with what's included and a deposit-backed booking. £X for the owners to price.</figcaption></figure>
+    <figure class="shot"><img src="mockups/eat-drink-mobile.jpg" alt="Eat and Drink page on a phone with menu tabs and dishes with prices and dietary tags" loading="lazy"><figcaption><b>Kitchen &amp; Bar (P2).</b> Menus as real text with prices and dietary tags, not PDFs.</figcaption></figure>
+    <figure class="shot"><img src="mockups/shop-mobile.jpg" alt="Shop page on a phone" loading="lazy"><figcaption><b>Shop (P7).</b> Filters for players, time, complexity, good-for and collect-from.</figcaption></figure>
+    <figure class="shot"><img src="mockups/singles-desktop.jpg" alt="TCG singles table with card, set and number, condition, price and stock by venue, plus a paste-a-decklist box" loading="lazy"><figcaption><b>TCG singles.</b> Their own stock, with stock shown by venue, decklist import and pickup at league night.</figcaption></figure>
+    <figure class="shot"><img src="mockups/access-desktop.jpg" alt="Access and sensory guide with facilities, a noise-by-day chart and sensory notes" loading="lazy"><figcaption><b>Access &amp; sensory guide (X2).</b> Facilities, how loud it gets and when, and items for the owners to confirm.</figcaption></figure>
+    <figure class="shot"><img src="mockups/vault-section-desktop.jpg" alt="Guru Vault with cards tracked, set progress bars and a trade match card" loading="lazy"><figcaption><b>Guru Vault (V1 to V3).</b> Collection value, set progress, and a trade match to meet at Trade Night.</figcaption></figure>
+  </div>
+  <div class="shots wide">
+    <figure class="shot"><img src="mockups/tools-desktop.jpg" alt="Three phone screens: Lorcana lore counter at 4 and 7, a two-player game clock, and a Cyberpunk RED tracker showing 17 of 40 HP, Seriously wounded" loading="lazy"><figcaption><b>Table tools (A3, X4).</b> A working Lorcana lore counter, game clock and Cyberpunk RED tracker, each with an Order a round button.</figcaption></figure>
+  </div>
+</section>
+
+<!-- PROPOSALS -->
+<section id="proposals">
+  <div class="stack col">
+    <h2>The proposals</h2>
+    <p class="muted">Each one lists what changes, why, and the value to customers and to the business. Effort is relative: S is days, M is weeks, L is a month or more of build and setup.</p>
+  </div>
+
+  <div class="stack-lg">
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P1</span><h3>One booking engine for tables, parties and groups</h3><div class="tags"><span class="tag">Now</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Booking 3 → 5</span></p>
+    <p>Game Guru already uses ResDiary for table bookings, so keep it and extend it rather than replace it. <strong>Agreed direction: a hospitality booking tool.</strong> Make every "Book" button a real link to the ResDiary booking page, so it works even before scripts load, load the widget only when someone opens it rather than on every page, and set ResDiary up for play time, deposits for groups and parties, and enquiries for large events. If ResDiary can't take party deposits or give the app API access, SevenRooms is the alternative to check. The same tool also takes party and group bookings with deposits, and links to a Shopify site through an embedded widget or a booking page. The "Book" button opens the widget pre-set to the venue the visitor has selected.</p>
+    <div class="vp">
+      <div><b>For customers</b>Book at 11pm from the sofa, in under a minute, with a confirmation and reminder.</div>
+      <div><b>For the business</b>Captures demand outside opening hours. Deposits cut no-shows. Fewer phone calls. You build a guest database you own.</div>
+      <div><b>Measure it</b>Online bookings per week, no-show rate, share of covers booked ahead.</div>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P2</span><h3>Turn "cafe" into Kitchen &amp; Bar, with menus as real pages</h3><div class="tags"><span class="tag">Now</span><span class="tag">Effort S–M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Restaurant &amp; bar 2 → 5</span><span class="chip">SEO +1</span></p>
+    <p>Rename the section. Publish food, drinks, cocktails and kids' menus as web pages with prices, per venue, with dietary tags (V, VG, GF) and a clear allergen statement and route to full allergen information. Keep a PDF download for people who want one. Add offers that link food to play: "Pizza, pint and a game", a pre-show menu on Arena event days, a weekday lunch deal, and post-tournament food deals.</p>
+    <div class="vp">
+      <div><b>For customers</b>See what's on the menu and what it costs before deciding where to eat. Check allergens on a phone.</div>
+      <div><b>For the business</b>Wins searches from people who just want food or a drink, not games. Raises spend per head. Fills the venue on concert nights.</div>
+      <div><b>Measure it</b>Menu page visits, food-only bookings, average spend per cover.</div>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P3</span><h3>A parties hub with packages and prices</h3><div class="tags"><span class="tag">Now</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Parties 1 → 5</span></p>
+    <p>One page per audience: kids' parties, teen parties, adult celebrations (birthdays, hen and stag dos). Each shows two or three named packages with a per-head price, what's included (time, a dedicated Guru host, food, a party bag from the shop), the minimum group size, photos and FAQs. Themed options (Pokémon, Lorcana, murder mystery) use what you already sell. Booking takes a deposit online, or goes to a short enquiry form that asks for date, venue, ages and headcount.</p>
+    <details><summary>Example packages for the owners to price</summary>
+      <ul>
+        <li><strong>Kids' Party (ages 5 to 11):</strong> 2 hours, a reserved table area, a Guru host who runs games, pizza and a soft drink each, and a party bag. £X per child, minimum 8.</li>
+        <li><strong>Kids' Party Plus:</strong> as above, plus a themed TCG session with a starter deck for every child to keep, and a cake slot. £X per child.</li>
+        <li><strong>Teen Tournament Party:</strong> a mini Pokémon or Lorcana tournament with prizes, food and drinks. £X per guest.</li>
+        <li><strong>Grown-ups' Game Night:</strong> 3 hours of play, sharing platters, and a welcome cocktail or beer. £X per person, minimum 6.</li>
+        <li><strong>Hen and stag:</strong> a murder mystery or party-games host, food, and drinks packages. £X per person.</li>
+      </ul>
+    </details>
+    <div class="vp">
+      <div><b>For parents and organisers</b>Know the price and what's included straight away. Book without phone tag.</div>
+      <div><b>For the business</b>Prepaid, high-value bookings that fill weekend and school-holiday daytime. Party bags and gift purchases add retail revenue.</div>
+      <div><b>Measure it</b>Party enquiries and deposits per month, conversion from enquiry to booking, revenue per party.</div>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P4</span><h3>Corporate, team building and private hire</h3><div class="tags"><span class="tag">Now</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Corporate 1 → 5</span></p>
+    <p>A dedicated section for businesses: facilitated team-building sessions (co-operative games, a mini tournament, an escape-room-style challenge), meeting-plus-lunch packages, Christmas parties, partial and full venue hire, and Arena event-day hospitality. Include capacities for each space, sample itineraries, a downloadable brochure, logos of past clients, and an enquiry form that asks for company, headcount, date, budget and dietary needs, routed straight to whoever handles events.</p>
+    <details><summary>Example packages for the owners to price</summary>
+      <ul>
+        <li><strong>Team Play (2 hours):</strong> a hosted session of co-operative and party games, with sharing food and soft drinks. £X per head, minimum 10.</li>
+        <li><strong>Team Tournament (half day):</strong> a facilitated tournament in teams, with lunch, a trophy and prizes. £X per head.</li>
+        <li><strong>Meet and Play (full day):</strong> a meeting space in the morning, lunch, and games in the afternoon. £X per head.</li>
+        <li><strong>Christmas Party:</strong> a festive menu, a drinks package, a hosted game show, and an exclusive area. £X per head.</li>
+        <li><strong>Venue hire:</strong> partial or full buyout, with a minimum spend. £X minimum spend.</li>
+        <li><strong>Arena Night:</strong> pre-show dining and drinks for groups on Utilita Arena event days. £X per head.</li>
+      </ul>
+    </details>
+    <div class="vp">
+      <div><b>For HR and office managers</b>Something different from bowling, with food and drink sorted. Everything needed to get sign-off on one page.</div>
+      <div><b>For the business</b>Large bookings on midweek days and evenings that would otherwise be quiet. Repeat bookings and Christmas-party demand every year.</div>
+      <div><b>Measure it</b>Corporate enquiries, average booking value, repeat clients.</div>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P5</span><h3>One What's On calendar</h3><div class="tags"><span class="tag">Now</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Events 3 → 5</span><span class="chip">SEO +1</span></p>
+    <p>A single calendar that can be filtered by venue, game and type (weekly play, league, tournament, prerelease, social night, family). Every event shows day, time, entry fee, format, prizes, capacity and how to register. Paid entries can be sold as Shopify products or through a ticketing app, while keeping the official platform link (Bandai TCG+, Play Hub, Melee) for registration where the game requires it. Add "add to calendar" and Event structured data so events appear in Google. Fix the Star Wars and Yu-Gi-Oh links now, and set a date for Pokémon.</p>
+    <div class="vp">
+      <div><b>For players</b>One place to see what's on this week at their venue, what it costs, and whether there's space.</div>
+      <div><b>For the business</b>Paid entries collected up front, fuller tables on weeknights, and events showing up in Google search. Every event night also sells food and drink.</div>
+      <div><b>Measure it</b>Event attendance, sell-through for capped events, food and drink spend on event nights.</div>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P6</span><h3>A TCG hub with a page for each game</h3><div class="tags"><span class="tag">Next</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Events 5 → 6</span><span class="chip">SEO +1</span></p>
+    <p>A page for each game you support (One Piece, Lorcana, Star Wars: Unlimited, Pokémon, Magic, Yu-Gi-Oh) with the weekly schedule at both venues, league standings, a learn-to-play night for beginners, deck loans, upcoming prereleases, sealed product and pre-orders, singles (see below), and the game's Discord channel. These pages become the landing page for searches like "Lorcana tournament Birmingham".</p>
+    <div class="vp">
+      <div><b>For players</b>Everything for their game in one place, from first game to competitive play.</div>
+      <div><b>For the business</b>Strong local search ranking for each game. A path from casual player to regular to sealed and singles buyer.</div>
+      <div><b>Measure it</b>Organic traffic to each game page, new players at learn-to-play nights, TCG revenue per game.</div>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P7</span><h3>Fix and tidy the shop</h3><div class="tags"><span class="tag">Next</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Online shop 3 → 5</span></p>
+    <ul>
+      <li>Reduce 31 collections to about ten clear ones, and add product data for players, play time, age and complexity so customers can filter on what matters.</li>
+      <li>Turn on Shopify local pickup at both venues: "Collect today from Touchwood".</li>
+      <li>Show delivery cost, cut-off time and returns right next to "Add to basket". Show payment options (Apple Pay, Shop Pay, and Klarna if you use it).</li>
+      <li>Add product reviews, and fill or remove the empty "You may also like" block.</li>
+      <li>Add a "Play it at our tables" badge on products that are in the library, linking to booking.</li>
+      <li>Publish pre-order terms (charge timing, release date, cancellations) on every pre-order.</li>
+      <li>Fix the button-state text, the encoding error, the duplicate Hot Wheels collection and the alphabetical homepage shelves.</li>
+    </ul>
+    <div class="vp">
+      <div><b>For customers</b>Find the right game quickly, see the total cost, collect it today, or try it first.</div>
+      <div><b>For the business</b>Higher conversion, fewer abandoned baskets, and collection trips that turn into a coffee or lunch.</div>
+      <div><b>Measure it</b>Shop conversion rate, share of orders collected, basket value.</div>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P8</span><h3>Make the library a discovery tool</h3><div class="tags"><span class="tag">Next</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Games library 2 → 5</span><span class="chip">SEO +1</span></p>
+    <p>Render the library so it loads without waiting for a script and can be indexed by Google. Show the game count ("450+ games"). Each game gets a card with players, time, age and complexity on a full scale (including heavy games), which venue has it, a staff pick note, and a "Buy it" link where you stock it. Replace the overlapping filter ranges with simple ones (for example 2, 3–4, 5+ players).</p>
+    <div class="vp">
+      <div><b>For customers</b>Plan their evening before they arrive, and find a game that suits the group.</div>
+      <div><b>For the business</b>Hundreds of indexable game pages, and a direct route from playing a game to buying it.</div>
+      <div><b>Measure it</b>Library page views, clicks from library to product pages.</div>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P9</span><h3>Membership you can say yes to</h3><div class="tags"><span class="tag">Next</span><span class="tag">Effort S</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Membership 3 → 5</span></p>
+    <p>Show the hourly play prices (£4, £6 and £8 per person) next to the membership tiers, with the break-even point. For example: "Five two-hour visits a month cost £30. Casual Player covers unlimited weekday play for the same price." Consider cheaper off-peak hours on weekday daytimes, as Draughts does, to fill quiet periods. Give one way to join (through the app, with a website fallback), and state the minimum term, cancellation, which venues are covered, and how the Golden Ticket guest pass works. Show how many Golden Tickets remain. Name it the same thing everywhere.</p>
+    <div class="vp">
+      <div><b>For customers</b>See in ten seconds whether membership saves them money.</div>
+      <div><b>For the business</b>More recurring monthly revenue, and members who visit more and spend more on food and drink.</div>
+      <div><b>Measure it</b>New members per month, churn, member visit frequency.</div>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P10</span><h3>A proper page for each venue</h3><div class="tags"><span class="tag">Now</span><span class="tag">Effort S–M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Venue info 2 → 5</span><span class="chip">SEO +1</span></p>
+    <p>One page each for Utilita Arena and Touchwood: a photo gallery of that venue, spaces and capacities, the kitchen and bar, play areas, accessibility (step-free access, accessible toilet, baby-changing, quiet times), nearest car parks and stations, event-day and holiday hours, and that venue's events. Match each page to its Google Business Profile, add LocalBusiness and Restaurant structured data, and fix the "Alioli" and postcode-only map links.</p>
+    <div class="vp">
+      <div><b>For visitors</b>Know how to get there, where to park, and whether the venue works for their group.</div>
+      <div><b>For the business</b>Ranks for "[thing] near me" searches in both towns. Fewer "are you accessible?" phone calls. Makes the second venue visible in its own right.</div>
+      <div><b>Measure it</b>Local search impressions, direction requests and calls from Google Business Profile.</div>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P11</span><h3>Search, sharing and content basics</h3><div class="tags"><span class="tag">Now</span><span class="tag">Effort S</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">SEO 1 → 4</span><span class="chip">Polish 2 → 5</span></p>
+    <p>A unique title and description for every page. A proper 1200×630 share image for every section. Product, Event, LocalBusiness and Restaurant structured data. Turn the empty News blog into a regular "Guru picks" and event-results column. Fix the spelling of Utilita, the © date, the brand name, and sentence-case menu labels.</p>
+    <div class="vp">
+      <div><b>For customers</b>Better results in Google, and shared links that show a real picture.</div>
+      <div><b>For the business</b>More free traffic, every month, with little ongoing cost.</div>
+      <div><b>Measure it</b>Organic sessions, search impressions, click-through rate.</div>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P12</span><h3>Accessibility and speed</h3><div class="tags"><span class="tag">Next</span><span class="tag">Effort S–M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Accessibility 4 → 5</span><span class="chip">Speed target: pass</span></p>
+    <p>Aim for WCAG 2.2 AA. That means alt text on every meaningful image, labelled social links, a correct heading structure, the menu output once instead of three times, tap-to-call phone numbers, and visible focus states. Resize images (product photos are 3840px wide) and serve modern formats, then test Core Web Vitals on a phone over 4G.</p>
+    <div class="vp">
+      <div><b>For customers</b>A site that works for disabled visitors, older visitors and people on slow mobile connections.</div>
+      <div><b>For the business</b>Faster pages convert better and rank better. It also lowers your legal risk under the Equality Act.</div>
+      <div><b>Measure it</b>Lighthouse accessibility and performance scores, mobile conversion rate.</div>
+    </div>
+  </article>
+
+  <article class="prop">
+    <div class="prop-head"><span class="id">P13</span><h3>Connect the website, the app and your data</h3><div class="tags"><span class="tag">Later</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Booking 5 → 6</span><span class="chip">Membership 5 → 6</span></p>
+    <p>Explain the app on the site: table ordering, points, and membership. Link straight into it. Track every booking, enquiry, call tap, newsletter sign-up and purchase in GA4 and Shopify analytics, use campaign tags on social and email links, and review a monthly dashboard.</p>
+    <div class="vp">
+      <div><b>For customers</b>One account and one set of rewards, whether they shop online, order at the table, or book a party.</div>
+      <div><b>For the business</b>You'll know which channels and pages bring in bookings, so you can spend marketing money where it works.</div>
+      <div><b>Measure it</b>App downloads from the site, tracked conversions by channel.</div>
+    </div>
+  </article>
+
+  </div>
+</section>
+
+<!-- SINGLES -->
+<section id="singles">
+  <div class="stack col">
+    <span class="eyebrow">New requirement</span>
+    <h2>TCG singles marketplace</h2>
+    <p><strong>Confirmed direction: Game Guru sells its own singles stock.</strong> The owners would also consider an embedded trading platform for players, as long as it doesn't make Game Guru liable for the trades. The site structure above has room for both (Shop → TCG singles, Join → Sell or trade cards). Singles work very differently from sealed product, so they need their own design, tools and plan.</p>
+  </div>
+  <div class="grid2">
+    <div class="prop">
+      <div class="prop-head"><span class="id">Model A</span><h3>Game Guru sells its own singles</h3></div>
+      <p>You buy cards from players (cash or store credit), grade them, and sell them on your site, in store, and on Cardmarket, which is the main singles marketplace in the UK and Europe.</p>
+      <ul>
+        <li>You control stock, pricing and quality.</li>
+        <li>The usual retailer rules apply. No new regulatory set-up.</li>
+        <li>The main cost is staff time to buy, grade and list cards.</li>
+      </ul>
+      <p><strong>Confirmed. Start here.</strong></p>
+    </div>
+    <div class="prop">
+      <div class="prop-head"><span class="id">Model B</span><h3>An embedded player-to-player trading board</h3></div>
+      <p>Players list cards for trade or sale, and arrange the deal between themselves. Game Guru never takes the money or holds the card.</p>
+      <ul>
+        <li>The lowest-liability way to do this is to embed or link to a third-party marketplace that already handles payments, buyer protection and disputes (for example CardNexus or Cardmarket), or to run a listings-only board where Game Guru isn't a party to the sale.</li>
+        <li>No platform is completely liability-free. A board where users post listings still needs clear terms that say Game Guru isn't a party to trades, rules and moderation for fakes and scams, and a check of duties for user-to-user services under the Online Safety Act. Under-18 users need particular care.</li>
+        <li>Taking payments or commission would turn Game Guru into a marketplace operator. That brings split payouts, seller checks and HMRC platform reporting, so it stays out of scope for now.</li>
+      </ul>
+      <p><strong>Consider later</strong> as a listings-only board inside the Guru Vault (see <a href="#vault">V4</a>).</p>
+    </div>
+  </div>
+  <div class="stack col">
+    <h3>What the singles experience needs</h3>
+    <ul>
+      <li><strong>Inventory tools built for singles.</strong> A TCG inventory and pricing tool that syncs stock between your Shopify shop, Cardmarket and both venues, so a card sold at Touchwood disappears online. Shopify alone isn't designed for tens of thousands of single-card listings.</li>
+      <li><strong>Card search players expect.</strong> Search by name, set, collector number, rarity, language, foil and condition, with the card image and set symbol.</li>
+      <li><strong>Decklist import.</strong> Paste a decklist and add every card you stock to the basket in one step. This is the feature that keeps competitive players coming back.</li>
+      <li><strong>A clear condition guide</strong> (Near Mint to Damaged) with photos, and a promise to refund or replace if a card arrives in worse condition than described.</li>
+      <li><strong>Prices linked to the market,</strong> updated daily from market data, with floor prices set by you so a price crash doesn't sell cards at a loss.</li>
+      <li><strong>Collect at events.</strong> "Pick up at Thursday's Lorcana night", free. This brings players in on event nights and saves postage on low-value cards.</li>
+      <li><strong>Buylist and trade-in.</strong> Publish what you're buying and at what price, and pay a bonus (for example 20–30% more) if the seller takes store credit. Store credit stays in your business.</li>
+      <li><strong>Wantlists and alerts.</strong> Players save the cards they're hunting and get an email when one comes in stock.</li>
+      <li><strong>High-value card protection.</strong> Tracked and signed-for delivery above a set value, and authenticity checks on key cards.</li>
+    </ul>
+  </div>
+  <div class="vp">
+    <div><b>For players</b>Finish a deck before Friday's tournament without waiting a week for post. Turn spare cards into store credit locally.</div>
+    <div><b>For the business</b>Singles usually carry better margins than sealed product. Trade-in turns old cards into credit spent with you. Every pickup is a visit that can include food and drink. It makes Game Guru the place for TCG players in the region.</div>
+    <div><b>Risks to plan for</b>Labour to grade and list. Price swings when sets rotate or get reprinted. Counterfeits. Tied-up cash in stock. Start with one or two games you already run events for (One Piece and Lorcana) before scaling.</div>
+  </div>
+</section>
+
+<!-- VAULT -->
+<section id="vault">
+  <div class="stack col">
+    <span class="eyebrow">New requirement</span>
+    <h2>Collection tracking and peer-to-peer trading</h2>
+    <p>Collectors already track their cards in apps like Collectr and TCGplayer, and those apps are turning into marketplaces. If Game Guru offers its own tracker, every card a player owns, wants, or wants to get rid of becomes a reason to deal with Game Guru first.</p>
+    <p>The proposal is a feature called <strong>Guru Vault</strong>, built into the app and the customer account on the website. It works for TCGs and board games.</p>
+  </div>
+
+  <div class="stack-lg">
+    <article class="prop">
+      <div class="prop-head"><span class="id">V1</span><h3>Track your collection</h3><div class="tags"><span class="tag">Later</span><span class="tag">Effort L</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Games library 5 → 6</span></p>
+      <ul>
+        <li>Add cards by scanning with the phone camera, searching, or importing a CSV from another app. Players won't re-enter a collection by hand.</li>
+        <li>Track the value of the collection using daily market prices, set completion ("142 of 204 in this set"), graded cards and sealed product.</li>
+        <li>Anything bought at Game Guru, online or in store, is added automatically.</li>
+        <li>Board gamers get a shelf too: games owned, games played at the venues, and a wishlist. Import from BoardGameGeek.</li>
+      </ul>
+      <div class="vp">
+        <div><b>For collectors</b>One place to see what they own and what it's worth, free, from the shop they play at.</div>
+        <div><b>For the business</b>Detailed data on what each customer owns and wants. Logged-in users who return to the app weekly.</div>
+        <div><b>Measure it</b>Active Vault users, cards tracked, weekly return visits.</div>
+      </div>
+    </article>
+
+    <article class="prop">
+      <div class="prop-head"><span class="id">V2</span><h3>Wantlists that sell</h3><div class="tags"><span class="tag">Later</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Online shop 5 → 6</span></p>
+      <p>Missing cards from a set or deck go on a wantlist. When Game Guru gets a card in, or another member lists it for trade, the player gets a notification with a "reserve for pickup at Thursday's league" button. Board game wishlists work the same way for restocks and sales, and can be shared as a gift list for birthdays.</p>
+      <div class="vp">
+        <div><b>For collectors</b>Get told when the card they need turns up locally.</div>
+        <div><b>For the business</b>Demand you can see before you buy stock. Turns singles and buylist stock over faster.</div>
+        <div><b>Measure it</b>Wantlist-to-sale conversion, time singles sit in stock.</div>
+      </div>
+    </article>
+
+    <article class="prop">
+      <div class="prop-head"><span class="id">V3</span><h3>Trade binders and in-venue trade nights</h3><div class="tags"><span class="tag">Later</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip none">Beyond the scorecard: drives repeat visits and trade-ins</span></p>
+      <p>Players mark duplicates as "for trade". The Vault matches their binder against other members' wantlists and suggests fair trades using market prices. Trades happen in person at a monthly Trade Night, or at any league night, with a member of staff on hand to check condition and authenticity. Game Guru doesn't touch any money in a straight swap, so this is low-risk to launch.</p>
+      <div class="vp">
+        <div><b>For players</b>Safe, fair trades with people they've met, without postage or the risk of fakes.</div>
+        <div><b>For the business</b>Another regular footfall night. Food and drink trade from it. A trust advantage no online marketplace can match.</div>
+        <div><b>Measure it</b>Trades completed, Trade Night attendance, food and drink spend that night.</div>
+      </div>
+    </article>
+
+    <article class="prop">
+      <div class="prop-head"><span class="id">V4</span><h3>Sell to the store, or list for other members</h3><div class="tags"><span class="tag">Later</span><span class="tag">Effort L</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip none">Beyond the scorecard: store credit and singles stock</span></p>
+      <p>From the Vault, one tap gets a buylist quote: "Game Guru will pay £X cash or £Y store credit for these 12 cards". Drop them off at either venue. Members can also mark cards "for sale or trade" so they appear to other members' wantlists. Buyer and seller agree the deal themselves, ideally at a Trade Night, and Game Guru stays out of the money.</p>
+      <ul>
+        <li><strong>Keep the liability low:</strong> publish terms saying Game Guru isn't a party to member trades, require listings to be met in person at a venue or handled through a linked third-party marketplace with buyer protection, offer an optional staff condition check, and give a way to report fakes and bad actors.</li>
+        <li><strong>Only if it proves popular:</strong> a paid service, where Game Guru holds the card and the money and takes a commission. That needs a payments provider built for marketplaces (for example Stripe Connect), seller checks and HMRC platform reporting. It's a decision for later, based on the numbers.</li>
+      </ul>
+      <div class="vp">
+        <div><b>For players</b>Turn spare cards into cash or credit locally, and buy from neighbours with the shop guaranteeing the deal.</div>
+        <div><b>For the business</b>Store credit that stays with you, more singles stock through trade-ins, and Trade Night footfall, without taking on the risk of other people's sales.</div>
+        <div><b>Measure it</b>Buylist volume, consignment sales and commission, share of payouts taken as credit.</div>
+      </div>
+    </article>
+  </div>
+
+  <div class="note col"><strong>Build or buy.</strong> Don't build card recognition or price data yourselves. Licence it, or use a TCG platform that already has it (for example one that also handles singles stock and Cardmarket sync, such as TCG Sync). The value Game Guru adds is the local layer on top: the venues, the leagues, staff checks and store credit. Start with one game you already run events for, prove people use it, then expand.</div>
+</section>
+
+<!-- APP -->
+<section id="app">
+  <div class="stack col">
+    <span class="eyebrow">New requirement</span>
+    <h2>Build once for the website and the app</h2>
+    <p>The current app handles in-store ordering and loyalty points. Most of this proposal (booking, events, leagues, membership, the Vault, singles) also belongs in the app. If the website is built as a set of pages that own their data, each feature has to be built twice. Instead, the rebuild should treat the website and the app as two front ends on one shared set of services.</p>
+  </div>
+
+  <div class="stack-lg">
+    <article class="prop">
+      <div class="prop-head"><span class="id">A1</span><h3>One back end, two front ends</h3><div class="tags"><span class="tag">Now</span><span class="tag">Effort L</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip none">Enabler: no score moves on its own, but P13, A2 and A3 depend on it</span></p>
+      <ul>
+        <li><strong>Commerce:</strong> keep Shopify, but have both the site and the app read products, baskets, customers and orders through Shopify's Storefront API, instead of relying on theme-only features.</li>
+        <li><strong>Content:</strong> keep menus, events, packages, game pages and rules in structured content (Shopify metaobjects or a headless CMS), not typed into page layouts. Write it once and it appears on the site, in the app, and in Google.</li>
+        <li><strong>Bookings, leagues, Vault and loyalty:</strong> pick tools that have an API, so the app can show and change the same data. Make "has an API" a buying requirement for every new tool.</li>
+        <li><strong>One customer login</strong> across the site, the app and in-store, so points, bookings, league standings and collections follow the person.</li>
+        <li><strong>One design system:</strong> shared colours, type, buttons and cards, so the site and app look like the same brand.</li>
+      </ul>
+      <div class="vp">
+        <div><b>For customers</b>Everything in one place, signed in once, whether on a laptop at home or a phone at the table.</div>
+        <div><b>For the business</b>Each feature is built once and then appears on both. Lower running costs, and you aren't locked into one agency's theme.</div>
+        <div><b>Measure it</b>Features shipped to both site and app, development cost per feature.</div>
+      </div>
+    </article>
+
+    <article class="prop">
+      <div class="prop-head"><span class="id">A2</span><h3>Start as an installable web app</h3><div class="tags"><span class="tag">Next</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip none">Enabler for A3</span></p>
+      <p>Build the new site as a progressive web app: fast on mobile, installable to the home screen, and able to keep table tools working with poor signal. That gets the table companion (A3) into people's hands without waiting for app store releases. The proven parts can then move into the existing native app, sharing the same back end. Whoever built the current app should be involved early, because how easily it can be extended decides the route.</p>
+      <div class="vp">
+        <div><b>For customers</b>Scan a QR code at the table and the tools open straight away, with nothing to download.</div>
+        <div><b>For the business</b>Test features cheaply and quickly before paying for native app work.</div>
+        <div><b>Measure it</b>QR scans per table, home-screen installs, conversion to app downloads.</div>
+      </div>
+    </article>
+
+    <article class="prop">
+      <div class="prop-head"><span class="id">A3</span><h3>Table companion: rules, timers and trackers</h3><div class="tags"><span class="tag">Next</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Restaurant &amp; bar 5 → 6</span><span class="chip">Games library +</span></p>
+      <p>Turn the app from something used once (to order) into something open all evening on the table. Every library box and table gets a QR code that opens the right tools.</p>
+      <ul>
+        <li><strong>Learn the game:</strong> a page for each library game with a quick-start summary written by your Gurus, a teaching video, the publisher's official rules link, common rules questions, and "Ask a Guru to teach us" (sent to staff like a table order).</li>
+        <li><strong>Timers:</strong> a turn timer, a chess clock for 2 to 6 players, and a round timer for organised play. On league nights, the round timer is driven by the organiser so every table sees the same clock.</li>
+        <li><strong>TCG trackers:</strong> a Lorcana lore counter (to 20) with ink tracking, Magic life totals with commander damage, One Piece life and DON!! counts, Star Wars: Unlimited base damage, and Pokémon prize cards and damage counters.</li>
+        <li><strong>RPG trackers:</strong> a Cyberpunk RED sheet for HP, Humanity, ammo and an initiative order, plus the same idea for D&amp;D and other systems.</li>
+        <li><strong>Board game helpers:</strong> score pads for popular games (fill in, total up, save to the Vault as a play log), a first-player picker, and a dice roller.</li>
+        <li><strong>Built-in hospitality:</strong> "Order another round" and "Call a Guru" buttons on every tool screen, tied to the table.</li>
+        <li><strong>Results:</strong> on league nights, players report results from their phone straight into the standings (C1).</li>
+      </ul>
+      <div class="vp">
+        <div><b>For players</b>Everything they need for the game in one app, without ads, and linked to their table.</div>
+        <div><b>For the business</b>An app that stays open all evening, so ordering another drink is one tap away. Data on what's being played. A reason to download the app that also works at home.</div>
+        <div><b>Measure it</b>Tool sessions per visit, orders placed from tool screens, weekly active users away from the venues.</div>
+      </div>
+    </article>
+  </div>
+
+  <div class="note col"><strong>Intellectual property.</strong> Counters, timers and score pads only track numbers, and they're safe to build. Don't copy rulebook text or card artwork. Write your own summaries and link to the publisher's official rules. Use game names descriptively ("lore counter for Disney Lorcana"), and avoid publishers' logos unless you have permission. Cyberpunk RED and the other RPGs belong to their publishers, so check their fan content policies before you publish anything beyond trackers. Publishers often welcome this kind of partnership with a venue, so it's worth asking them.</div>
+</section>
+
+<!-- ACCESS -->
+<section id="access">
+  <div class="stack col">
+    <h2>Accessibility for everyone who visits</h2>
+    <p>A games venue suits a wide range of people, including families with disabled children, autistic and neurodivergent players (who are well represented in tabletop gaming), older visitors and wheelchair users. Accessibility affects the website, the app and the venue information, so it gets its own section rather than a line in P12.</p>
+  </div>
+  <div class="stack-lg">
+    <article class="prop">
+      <div class="prop-head"><span class="id">X1</span><h3>An accessible website and app as standard</h3><div class="tags"><span class="tag">Now</span><span class="tag">Effort S–M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Accessibility 1 → 4</span></p>
+      <ul>
+        <li>Meet WCAG 2.2 AA on the website and in the app: alt text, labelled controls, a correct heading order, keyboard access, visible focus, sufficient colour contrast, and text that resizes without breaking the layout.</li>
+        <li>Menus, prices, rules and events as real text, not images or PDFs, so screen readers and translation tools can read them.</li>
+        <li>Captions and transcripts on teaching videos.</li>
+        <li>Test with real users, including a screen-reader user and a keyboard-only user, before launch. Recheck every quarter.</li>
+        <li>Publish an accessibility statement that says what works, what doesn't yet, and how to report a problem.</li>
+      </ul>
+      <div class="vp">
+        <div><b>For customers</b>Everyone can book, order, check a menu and follow events without help.</div>
+        <div><b>For the business</b>Reaches more customers, lowers the risk of claims under the Equality Act, and improves search ranking.</div>
+        <div><b>Measure it</b>Automated audit score, issues reported and fixed, results from user testing.</div>
+      </div>
+    </article>
+    <article class="prop">
+      <div class="prop-head"><span class="id">X2</span><h3>Access information that helps people plan</h3><div class="tags"><span class="tag">Now</span><span class="tag">Effort S</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Venue info +</span><span class="chip">Booking +</span><span class="chip">Accessibility +</span></p>
+      <ul>
+        <li>On each venue page: step-free access, the route from the car park or station, accessible toilets, Changing Places if there is one, baby-changing, seating types, table heights for wheelchairs, and assistance dogs.</li>
+        <li>A sensory guide for each venue, covering noise levels by time of day, lighting, quieter areas and the busiest times. Include photos of the entrance and the inside, so people know what to expect.</li>
+        <li>An "access needs" field in the booking form (for example a wheelchair space, a quieter table, or a carer), passed to staff.</li>
+        <li>Carer tickets: say clearly whether a carer plays free.</li>
+        <li>A link to an AccessAble-style detailed access guide, if the owners commission one.</li>
+      </ul>
+      <div class="vp">
+        <div><b>For customers</b>Fewer surprises on arrival, and a booking that's ready for their needs.</div>
+        <div><b>For the business</b>Fewer phone queries, better reviews, and bookings from groups who would otherwise go elsewhere.</div>
+        <div><b>Measure it</b>Bookings with access needs noted, visits to the access pages.</div>
+      </div>
+    </article>
+    <article class="prop">
+      <div class="prop-head"><span class="id">X3</span><h3>Inclusive sessions and an inclusive library</h3><div class="tags"><span class="tag">Next</span><span class="tag">Effort S</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Games library +</span><span class="chip">Accessibility +</span></p>
+      <ul>
+        <li>Regular relaxed sessions with lower music, softer lighting and smaller numbers, listed in What's On. Include relaxed versions of kids' parties and learn-to-play nights.</li>
+        <li>Accessibility tags in the library, such as colour-blind friendly, low reading load, large print available, one-handed play, and good for players with dyslexia. Gurus can then recommend games that suit the group.</li>
+        <li>Easy-read rules summaries for popular family games.</li>
+        <li>Staff training in disability awareness and autism awareness, mentioned on the site.</li>
+      </ul>
+      <div class="vp">
+        <div><b>For customers</b>A welcoming place to play, with games that work for them.</div>
+        <div><b>For the business</b>Fills quieter times, builds loyalty with families and SEND groups, and gives the site a story worth telling locally.</div>
+        <div><b>Measure it</b>Relaxed-session attendance, repeat visits from those groups, library tag filter use.</div>
+      </div>
+    </article>
+    <article class="prop">
+      <div class="prop-head"><span class="id">X4</span><h3>Accessible table tools</h3><div class="tags"><span class="tag">Next</span><span class="tag">Effort S</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Accessibility +</span></p>
+      <p>The A3 table companion should support screen readers, large text, high contrast, colour-blind-safe colours, haptic or spoken alerts for timers, and big tap targets for counters. Never rely on colour alone to show whose turn it is or which player is which.</p>
+      <div class="vp">
+        <div><b>For customers</b>Tools that everyone at the table can use.</div>
+        <div><b>For the business</b>Built in from the start, it costs very little. Fixing it later costs much more.</div>
+        <div><b>Measure it</b>Accessibility settings in use, issues reported.</div>
+      </div>
+    </article>
+  </div>
+  <div class="note col"><strong>When choosing suppliers.</strong> Make accessibility a requirement for the booking tool, the singles platform, the loyalty and newsletter tools, and any agency. Ask each for its accessibility statement or conformance report before signing. A third-party booking widget that a screen reader can't use undoes the work on the rest of the site.</div>
+</section>
+
+<!-- COMMUNITY -->
+<section id="community">
+  <div class="stack col">
+    <span class="eyebrow">New requirement</span>
+    <h2>Community engagement</h2>
+    <p>Game Guru's regulars are its most valuable asset. A player who comes every week for a league eats, drinks, buys product and brings friends. The website should give them a reason to come back that isn't just a sale.</p>
+  </div>
+  <div class="stack-lg">
+    <article class="prop">
+      <div class="prop-head"><span class="id">C1</span><h3>Weekly play leagues with seasons and standings</h3><div class="tags"><span class="tag">Now</span><span class="tag">Effort M</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip">Events +</span></p>
+      <p>Turn weekly play into leagues of six to eight weeks per game, per venue. Players earn points for attending as well as for winning, so newcomers aren't discouraged. A standings table on each game page updates after every session. The season ends in a finals night with store-credit prizes and a "Guru Champion" title. Run a casual board game league alongside it (for example, a different game each week, scored across the season) so non-TCG players have a reason to come back too. Members can get a discount on league entry.</p>
+      <div class="vp">
+        <div><b>For players</b>A reason to come every week, a sense of progress, and a public record of how they've done.</div>
+        <div><b>For the business</b>Guaranteed footfall on set weeknights, predictable food and drink trade, and prize support paid in store credit that stays in the business.</div>
+        <div><b>Measure it</b>Weekly attendance per league, retention from week 1 to week 6, spend per player on league nights.</div>
+      </div>
+    </article>
+
+    <article class="prop">
+      <div class="prop-head"><span class="id">C2</span><h3>A segmented newsletter</h3><div class="tags"><span class="tag">Now</span><span class="tag">Effort S</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip none">Beyond the scorecard: repeat visits and email revenue</span></p>
+      <p>The site already asks people to sign up for the newsletter, but it doesn't say what they'll get. At sign-up, ask for a home venue and interests (board games, specific TCGs, family days, food and drink offers, parties). Then send a short weekly "What's on this week" per venue, plus targeted emails: pre-orders and prerelease dates to TCG players, school holiday activities to families, Christmas party dates to corporate contacts in September. Shopify Email or Klaviyo can do this using the shop's customer data.</p>
+      <div class="vp">
+        <div><b>For customers</b>Only hear about things they care about, at the venue they actually visit.</div>
+        <div><b>For the business</b>An audience you own and can reach for free. Prerelease and pre-order sales announced directly to the people who want them.</div>
+        <div><b>Measure it</b>Sign-ups per month, open and click rates per segment, revenue attributed to email.</div>
+      </div>
+    </article>
+
+    <article class="prop">
+      <div class="prop-head"><span class="id">C3</span><h3>Community hub and a Discord server</h3><div class="tags"><span class="tag">Next</span><span class="tag">Effort S</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip none">Beyond the scorecard: community and retention</span></p>
+      <p>A Community page that links to an official Game Guru Discord with channels for each game and venue, "looking for players" posts, and trade threads. Feature a regular of the month, event photos and tournament results. Show who's playing what this week.</p>
+      <div class="vp">
+        <div><b>For players</b>Find opponents and a group to play with, between visits.</div>
+        <div><b>For the business</b>Players organise themselves into your venues. Staff can announce events and stock to a ready audience.</div>
+        <div><b>Measure it</b>Discord members, active members per week, events filled through Discord.</div>
+      </div>
+    </article>
+
+    <article class="prop">
+      <div class="prop-head"><span class="id">C4</span><h3>Welcoming nights for new and under-served players</h3><div class="tags"><span class="tag">Next</span><span class="tag">Effort S</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip none">Beyond the scorecard: new players</span></p>
+      <p>Regular learn-to-play nights for each TCG (with free starter decks to borrow), beginners' board game evenings, family Sundays, and inclusive nights run with local groups. Each has its own page explaining what to expect, so a first-timer knows they'll be welcome.</p>
+      <div class="vp">
+        <div><b>For newcomers</b>An easy, low-pressure first visit.</div>
+        <div><b>For the business</b>A steady flow of new players into leagues, membership and the shop.</div>
+        <div><b>Measure it</b>First-time attendees, how many return within a month.</div>
+      </div>
+    </article>
+
+    <article class="prop">
+      <div class="prop-head"><span class="id">C5</span><h3>Local partnerships</h3><div class="tags"><span class="tag">Later</span><span class="tag">Effort S</span></div></div>
+    <p class="impact"><span class="lbl">Scorecard</span><span class="chip none">Beyond the scorecard: daytime bookings and local links</span></p>
+      <p>School and youth club sessions, university society nights, charity game marathons, and a link-up with the Arena on concert days. Give each partnership a short page or news post.</p>
+      <div class="vp">
+        <div><b>For the community</b>Access to games and a social space for groups who wouldn't otherwise find it.</div>
+        <div><b>For the business</b>Daytime bookings, local press, and links from other local websites that help search ranking.</div>
+        <div><b>Measure it</b>Partner bookings, referral traffic, press mentions.</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="stack col">
+    <h2>Now, next and later</h2>
+    <p class="muted">Every recommendation sits on one of three horizons. Now fixes what is losing money or trust today. Next grows the regulars. Later builds the platform features that rivals can't copy. Timings assume one Shopify developer or agency, plus a member of the team for content and photos.</p>
+  </div>
+  <div class="phase">
+    <div><span class="when">Now · 0 to 3 months</span><h3>Stop the leaks and sell the venue</h3><ul>
+      <li>Quick fixes: "Utillita", the "Alioli" map link, the Star Wars and Yu-Gi-Oh links, © date, share image, the duplicate homepage grid and empty headings, and the shop banner on venue pages</li>
+      <li>Make play prices (£4, £6, £8) readable text on Play, Visit and Membership</li>
+      <li>P1 test booking across browsers, then extend it to parties and groups with deposits</li>
+      <li>P2 Kitchen &amp; Bar with real menu pages</li>
+      <li>P3 parties and P4 corporate sections, and party and corporate options on the contact form</li>
+      <li>P5 What's On calendar with prices</li>
+      <li>P10 venue pages and P11 search basics</li>
+      <li>X1 accessibility basics and statement, and X2 access and sensory information</li>
+      <li>C1 weekly leagues and C2 segmented newsletter</li>
+      <li>A1 decide on a shared back end for the site and app</li>
+      <li>New homepage</li>
+      <li>Set up analytics and confirm the revenue split, so there's a baseline</li>
+    </ul></div>
+    <div><span class="when">Next · 3 to 6 months</span><h3>Grow the regulars</h3><ul>
+      <li>P6 TCG hub with league standings</li>
+      <li>P7 shop restructure and click &amp; collect</li>
+      <li>P8 library rebuild and P9 membership page</li>
+      <li>P12 accessibility and speed</li>
+      <li>X3 relaxed sessions and library accessibility tags, and X4 accessible table tools</li>
+      <li>Singles from their own stock: pilot one or two games in store and on Cardmarket, then launch on the site with decklist import and a buylist</li>
+      <li>A2 installable web app and A3 table companion (rules, timers, lore counters, trackers, score pads)</li>
+      <li>C3 Discord and community page, and C4 welcome nights</li>
+    </ul></div>
+    <div><span class="when">Later · 6 to 12 months</span><h3>Build the platform</h3><ul>
+      <li>Guru Vault: V1 collection tracking and V2 wantlists</li>
+      <li>V3 trade binders and staff-checked Trade Nights</li>
+      <li>V4 buylist quotes from the Vault, and a listings-only trading board for members</li>
+      <li>P13 app and data integration</li>
+      <li>C5 local partnerships</li>
+      <li>Review the numbers and decide whether a paid marketplace is worth the extra liability</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- KPIs -->
+<section id="kpis">
+  <div class="stack col">
+    <h2>How we'll know it's working</h2>
+    <p class="muted">Take a baseline in the Now horizon, before anything changes, so every later number can be compared with it.</p>
+  </div>
+  <div class="tablebox">
+  <table class="score">
+    <thead><tr><th>Goal</th><th>Measure</th><th>Where it comes from</th></tr></thead>
+    <tbody>
+      <tr><td>More bookings</td><td>Online table bookings per week, per venue</td><td>Booking system</td></tr>
+      <tr><td>Fewer no-shows</td><td>No-show rate on booked tables</td><td>Booking system</td></tr>
+      <tr><td>Parties &amp; corporate</td><td>Enquiries, deposits taken, average booking value</td><td>Booking system, enquiry form</td></tr>
+      <tr><td>Higher spend</td><td>Average spend per cover, event-night food and drink takings</td><td>EPOS</td></tr>
+      <tr><td>Recurring revenue</td><td>Active members, churn, league players per week</td><td>App, league tables</td></tr>
+      <tr><td>Shop</td><td>Conversion rate, basket value, share of orders collected</td><td>Shopify analytics</td></tr>
+      <tr><td>Singles</td><td>Singles revenue and margin, trade-in value paid as credit</td><td>Inventory tool, Cardmarket</td></tr>
+      <tr><td>Collection &amp; trading</td><td>Active Vault users, wantlist-to-sale conversion, trades and consignment sales</td><td>App, inventory tool</td></tr>
+      <tr><td>App use</td><td>Weekly active users, table-tool sessions per visit, orders placed from tool screens</td><td>App analytics, EPOS</td></tr>
+      <tr><td>Being found</td><td>Organic visits, local search impressions, direction requests</td><td>Search Console, Google Business Profile</td></tr>
+      <tr><td>Community</td><td>Newsletter list size and click rate, Discord active members</td><td>Email platform, Discord</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section id="method">
+  <div class="stack col">
+    <h2>Method and limits</h2>
+    <ul>
+      <li><strong>What was reviewed.</strong> The page content of the home, play, café, events, venues, membership, library, contact, shop, board games collection, one product page (Brass: Birmingham), the News blog and the sitemap, fetched on 28 October 2026. Background facts (450+ games, the menu, the app, the Touchwood opening) come from <a href="https://www.ukgamesexpo.co.uk/content/news/introducing-game-guru-birminghams-new-home-for-board-gaming/">UK Games Expo</a> and <a href="https://www.greaterbirminghamchambers.com/resource/game-guru-launches-touchwood-caf-with-golden-ticket-giveaway.html">Greater Birmingham Chambers of Commerce</a>.</li>
+      <li><strong>Benchmark sources.</strong> <a href="https://draughtslondon.com/?p=453">Draughts London</a>, <a href="https://en.wikipedia.org/wiki/Geek_Retreat">Geek Retreat</a>, <a href="https://flightclubdarts.com/birmingham/files/events/fc_brochure_2021_birmingham.pdf">Flight Club Birmingham events brochure</a>, <a href="https://www.loyoly.io/case-studies/zatu-games">Zatu Games loyalty case study</a> (published by the vendor), <a href="https://www.cardpulse.club/blog/cardmarket-complete-guide-2026">Cardmarket guide 2026</a>, <a href="https://cardnexus.com/en/blog/cardnexus-marketplace-is-live">CardNexus marketplace launch</a>, <a href="https://www.mydextcg.com/blog/best-pokemon-card-collection-apps-2026">collection app comparison</a>, <a href="https://tcgsync.com/integrations/cardmarket">TCG Sync</a>, <a href="https://www.ebay.com/usr/magicmadhouse">Magic Madhouse on eBay</a>. Competitor sites were reviewed from their page content, not tested end to end. Fees quoted are as published and should be checked before any decision.</li>
+      <li><strong>How speed and mobile were measured.</strong> Lighthouse 12.6 in headless Chrome on 28 October 2026, on eight pages (home, play, café, events, shop, venues, membership, library), once with mobile settings (a mid-range phone on a throttled 4G connection) and once with desktop settings. Phone screenshots were taken at 390×844 and desktop ones at 1440×900, after the page had finished loading. These are lab tests from a cloud server, run once per page. Real visitors' phones will give different numbers, so treat them as a guide to the size of the problem rather than exact figures. A few analytics and booking-widget styling files were blocked by the test network, so the real pages are, if anything, slightly heavier. Google's real-visitor data (PageSpeed Insights) was over its quota and wasn't used.</li>
+      <li><strong>What the browser check confirmed.</strong> The "Book" button works. On the homepage it scrolls to a ResDiary venue picker under "Reserve to Play". On other pages, the "Book Now" headings and their <span class="ev">#book</span> links stay hidden. Every page loads two or three copies of the ResDiary widget whether or not anyone books, which slows each page down. The library does load in a browser, with game cards and filters, pulled from the shop's catalogue by a script, so Google still can't see it. The £4, £6 and £8 play prices, and the kids' rates (under 6 free, 6 to 14 half price), are a single image with no description, shown once per venue on the Play page. So the prices are visible to sighted visitors but not to Google or screen readers.</li>
+      <li><strong>Assumptions.</strong> The revenue split between food and drink, events and parties, and retail isn't known. The report assumes the venues earn more per customer than online retail. Confirming the split with the owners is a Now task, because it should set the final priority order. That the till and booking set-up can take a third-party booking tool. That the owners' "singles marketplace" could mean either model described above. Prices for packages are left as £X for the owners to set.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- MOSCOW -->
+<section id="moscow">
+  <div class="stack col">
+    <h2>MoSCoW summary</h2>
+    <p class="muted">Every recommendation in one list, sorted into must have, should have, could have and won't have this time. Must haves are what the relaunch can't go live without.</p>
+  </div>
+  <div class="grid2">
+    <div class="prop"><div class="prop-head"><span class="id">Must have</span></div><ul>
+      <li>Booking that works in every browser, extended to parties and groups with deposits (P1)</li>
+      <li>Parties and corporate pages with packages and an enquiry form (P3, P4)</li>
+      <li>Kitchen &amp; Bar with menu pages, prices and allergen route (P2)</li>
+      <li>What's On calendar with prices and correct links (P5)</li>
+      <li>Play prices readable on the page, and next to membership</li>
+      <li>Venue pages for each site (P10)</li>
+      <li>Search basics and the quick fixes (P11)</li>
+      <li>Accessibility basics: alt text, labels, headings, tap-to-call, and an accessibility statement (P12, X1)</li>
+      <li>Access and sensory information for each venue, and an access-needs field in the booking form (X2)</li>
+      <li>Accessibility as a requirement when choosing every supplier</li>
+      <li>Shared back end decision for the site and app (A1)</li>
+      <li>Analytics baseline and the revenue split</li>
+    </ul></div>
+    <div class="prop"><div class="prop-head"><span class="id">Should have</span></div><ul>
+      <li>Weekly leagues with standings (C1) and the TCG hub (P6)</li>
+      <li>Segmented newsletter (C2)</li>
+      <li>Singles from their own stock, synced with Cardmarket</li>
+      <li>Shop tidy-up and click &amp; collect (P7)</li>
+      <li>Membership page with the break-even sum (P9)</li>
+      <li>Library rebuild (P8)</li>
+      <li>Installable web app and table companion (A2, A3)</li>
+      <li>Full speed and accessibility work (P12)</li>
+      <li>Relaxed sessions, library accessibility tags and accessible table tools (X3, X4)</li>
+    </ul></div>
+    <div class="prop"><div class="prop-head"><span class="id">Could have</span></div><ul>
+      <li>Guru Vault collection tracking and wantlists (V1, V2)</li>
+      <li>Trade binders and Trade Nights (V3)</li>
+      <li>Buylist quotes from the Vault, and a listings-only trading board (V4)</li>
+      <li>Discord and community page (C3)</li>
+      <li>Welcome nights and local partnerships (C4, C5)</li>
+      <li>App and data integration (P13)</li>
+    </ul></div>
+    <div class="prop"><div class="prop-head"><span class="id">Won't have, this time</span></div><ul>
+      <li>A paid marketplace where Game Guru holds members' money or cards, because of the liability</li>
+      <li>In-house card recognition or price data. License it instead.</li>
+      <li>Moving off Shopify</li>
+      <li>Copying rulebook text or publisher artwork into the app</li>
+    </ul></div>
+  </div>
+</section>
+
+<footer>
+  Game Guru website review and overhaul proposal · Prepared October 2026
+</footer>
+
+</div>
+
+<script>addEventListener("beforeprint",()=>document.querySelectorAll("details").forEach(d=>d.open=true))</script>
+</body></html>
