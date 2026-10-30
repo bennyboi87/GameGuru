@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eat & Drink | Game Guru</title>
+<meta name="description" content="The Game Guru kitchen and bar: brunch, wood-fired pizza, burgers, bao, coffee, craft beer and cocktails at Utilita Arena and Touchwood.">
+<meta name="theme-color" content="#D9603F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="concept"><strong>Concept mockup</strong> for discussion. Prices, events and stock shown are examples.</div>
+<div class="util-bar">
+  <div class="wrap util-row">
+    <div class="venue-pick">
+      <label for="venue">Your venue</label>
+      <select id="venue" name="venue">
+        <option value="arena">Utilita Arena, Birmingham</option>
+        <option value="touchwood">Touchwood, Solihull</option>
+      </select>
+    </div>
+    <span class="util-hours">Open today 10am to 10pm</span>
+    <a class="util-link" href="vault.html#membership">Membership</a>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="logo" href="index.html"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="5" width="42" height="40" rx="14" fill="#D9603F"/><path d="M10 9 L16 15 M38 9 L32 15" stroke="#231F1E" stroke-width="3" stroke-linecap="round"/><circle cx="17" cy="23" r="7" fill="#FFF8EE" stroke="#231F1E" stroke-width="2.5"/><circle cx="31" cy="23" r="7" fill="#FFF8EE" stroke="#231F1E" stroke-width="2.5"/><circle cx="17" cy="23" r="2.8" fill="#231F1E"/><circle cx="31" cy="23" r="2.8" fill="#231F1E"/><path d="M21 31 L24 35 L27 31 Z" fill="#E9A93A" stroke="#231F1E" stroke-width="1.5" stroke-linejoin="round"/></svg><span>Game Guru</span></a>
+    <nav class="main-nav" id="main-nav" aria-label="Main">
+        <a href="visit.html">Visit</a>
+        <a href="eat-drink.html" aria-current="page">Eat &amp; Drink</a>
+        <a href="whats-on.html">What's On</a>
+        <a href="parties.html">Parties &amp; Groups</a>
+        <a href="shop.html">Shop</a>
+        <a href="vault.html">Vault &amp; App</a>
+    </nav>
+    <a class="btn btn-primary header-book" href="#book" data-book="table">Book a table</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+  </div>
+</header>
+<main id="main">
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Kitchen &amp; bar · Served 10am until close</span>
+    <h1>Eat &amp; drink</h1>
+    <p>Come for the food, stay for a game, or just the food. Everything is cooked in our own kitchen, and the bar is open all day.</p>
+    <div class="cta-row"><a class="btn btn-primary" href="#book" data-book="table">Book to eat</a><a class="btn" href="#arena-nights">Arena event days</a><a class="btn" href="#allergens">Allergens</a></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="Menus">
+      <button role="tab" id="t-food" aria-controls="p-food" aria-selected="true">Food</button>
+      <button role="tab" id="t-drinks" aria-controls="p-drinks" aria-selected="false">Drinks &amp; cocktails</button>
+      <button role="tab" id="t-kids" aria-controls="p-kids" aria-selected="false">Kids</button>
+      <button role="tab" id="t-deals" aria-controls="p-deals" aria-selected="false">Deals</button>
+    </div>
+    <p class="muted" style="margin-bottom:18px;font-size:.9rem">Example dishes and prices for the mockup. <abbr title="Vegetarian">V</abbr> vegetarian, <abbr title="Vegan">VG</abbr> vegan, <abbr title="Gluten-free option">GF</abbr> gluten-free option.</p>
+
+    <div role="tabpanel" id="p-food" aria-labelledby="t-food">
+      <div class="menu-grid">
+        <div>
+          <h2 style="font-size:1.4rem;margin-bottom:6px">Wood-fired pizza</h2>
+          <div class="dish"><h3>The Guru Pepperoni</h3><span class="price">£13</span><p>Double pepperoni, hot honey, fior di latte.</p></div>
+          <div class="dish"><h3>Margherita <span class="diet"><abbr title="Vegetarian">V</abbr><abbr title="Gluten-free option">GF</abbr></span></h3><span class="price">£11</span><p>San Marzano tomato, basil, mozzarella.</p></div>
+          <div class="dish"><h3>Mushroom &amp; Truffle <span class="diet"><abbr title="Vegetarian">V</abbr></span></h3><span class="price">£13</span><p>Roast mushrooms, truffle cream, rocket.</p></div>
+          <h2 style="font-size:1.4rem;margin:22px 0 6px">Bao &amp; small plates</h2>
+          <div class="dish"><h3>Korean fried chicken bao</h3><span class="price">£9</span><p>Gochujang glaze, pickles, sesame.</p></div>
+          <div class="dish"><h3>Crispy tofu bao <span class="diet"><abbr title="Vegan">VG</abbr></span></h3><span class="price">£8</span><p>Hoisin, cucumber, spring onion.</p></div>
+          <div class="dish"><h3>Loaded fries for the table <span class="diet"><abbr title="Vegetarian">V</abbr></span></h3><span class="price">£7</span><p>Cheese sauce, jalapeños, crispy onions. Built to share mid-game.</p></div>
+        </div>
+        <div>
+          <h2 style="font-size:1.4rem;margin-bottom:6px">Burgers &amp; mains</h2>
+          <div class="dish"><h3>Smash burger</h3><span class="price">£14</span><p>Two patties, American cheese, house sauce, fries.</p></div>
+          <div class="dish"><h3>Chicken katsu curry</h3><span class="price">£14</span><p>Panko chicken, katsu sauce, rice, pickled slaw.</p></div>
+          <div class="dish"><h3>Plant burger <span class="diet"><abbr title="Vegan">VG</abbr></span></h3><span class="price">£14</span><p>Vegan patty, vegan cheese, fries.</p></div>
+          <h2 style="font-size:1.4rem;margin:22px 0 6px">Brunch · until 12pm</h2>
+          <div class="dish"><h3>Full English</h3><span class="price">£12</span><p>Sausage, bacon, eggs, beans, hash brown, mushrooms, toast.</p></div>
+          <div class="dish"><h3>Avocado &amp; eggs <span class="diet"><abbr title="Vegetarian">V</abbr></span></h3><span class="price">£10</span><p>Sourdough, poached eggs, chilli oil.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div role="tabpanel" id="p-drinks" aria-labelledby="t-drinks" hidden>
+      <div class="menu-grid">
+        <div>
+          <h2 style="font-size:1.4rem;margin-bottom:6px">Signature cocktails</h2>
+          <div class="dish"><h3>Critical Hit</h3><span class="price">£10</span><p>Spiced rum, passion fruit, lime, ginger beer.</p></div>
+          <div class="dish"><h3>Natural 20</h3><span class="price">£10</span><p>Gin, elderflower, cucumber, prosecco.</p></div>
+          <div class="dish"><h3>Mana Potion (alcohol-free)</h3><span class="price">£6</span><p>Blue spirulina lemonade, butterfly pea, mint.</p></div>
+        </div>
+        <div>
+          <h2 style="font-size:1.4rem;margin-bottom:6px">Coffee &amp; beer</h2>
+          <div class="dish"><h3>Spanish latte</h3><span class="price">£4.20</span><p>Condensed milk, double shot.</p></div>
+          <div class="dish"><h3>Iced matcha</h3><span class="price">£4.50</span><p>Ceremonial grade, oat milk.</p></div>
+          <div class="dish"><h3>Local craft pale, pint</h3><span class="price">£6.50</span><p>Rotating Midlands brewery tap.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div role="tabpanel" id="p-kids" aria-labelledby="t-kids" hidden>
+      <div class="menu-grid">
+        <div>
+          <div class="dish"><h3>Mini margherita <span class="diet"><abbr title="Vegetarian">V</abbr></span></h3><span class="price">£6</span><p>With carrot sticks and a drink.</p></div>
+          <div class="dish"><h3>Chicken goujons</h3><span class="price">£6</span><p>With fries or veg, and a drink.</p></div>
+        </div>
+        <div>
+          <div class="dish"><h3>Pancake stack <span class="diet"><abbr title="Vegetarian">V</abbr></span></h3><span class="price">£5</span><p>Berries and maple syrup.</p></div>
+          <div class="dish"><h3>Fruit shaker</h3><span class="price">£2.50</span><p>Blended fruit, no added sugar.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div role="tabpanel" id="p-deals" aria-labelledby="t-deals" hidden>
+      <div class="packages">
+        <div class="package"><span class="eyebrow">Mon to Thu</span><h3>Pizza, pint &amp; a game</h3><span class="amount">£18</span><p class="muted">Any pizza, a pint or soft drink, and 2 hours of play.</p></div>
+        <div class="package featured"><span class="eyebrow">League nights</span><h3>Between-rounds deal</h3><span class="amount">£10</span><p class="muted">Bao and a drink for anyone with a league entry.</p></div>
+        <div class="package"><span class="eyebrow">Weekdays 12 to 3</span><h3>Lunch &amp; learn</h3><span class="amount">£12</span><p class="muted">A main, a coffee, and a Guru teaches you a new game.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section band-ink" id="arena-nights" data-venue="arena">
+  <div class="wrap two-col">
+    <div class="stack"><span class="eyebrow">Utilita Arena event days</span><h2>Eat before the show</h2><p class="muted">Concert or event at the Arena? Book a pre-show table and we'll have you fed and out in time for doors.</p><div class="cta-row"><a class="btn btn-primary" href="#book" data-book="table">Book pre-show</a></div></div>
+    <div class="breakeven"><div class="line"><span>Pre-show set menu</span><span>2 courses</span></div><div class="line"><span>Served from</span><span>4:30pm</span></div><div class="line"><span>Ready for doors</span><span>Guaranteed</span></div></div>
+  </div>
+</section>
+
+<section class="section-tight" id="allergens">
+  <div class="wrap">
+    <div class="notice"><strong>Allergies and dietary needs.</strong> Tell your server or add a note in the app before you order. Full allergen information for every dish is available from the team and in the app. Our kitchen handles all 14 major allergens, so we can't guarantee any dish is free from traces.</div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="stack">
+        <a class="logo" href="index.html"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="5" width="42" height="40" rx="14" fill="#D9603F"/><path d="M10 9 L16 15 M38 9 L32 15" stroke="#231F1E" stroke-width="3" stroke-linecap="round"/><circle cx="17" cy="23" r="7" fill="#FFF8EE" stroke="#231F1E" stroke-width="2.5"/><circle cx="31" cy="23" r="7" fill="#FFF8EE" stroke="#231F1E" stroke-width="2.5"/><circle cx="17" cy="23" r="2.8" fill="#231F1E"/><circle cx="31" cy="23" r="2.8" fill="#231F1E"/><path d="M21 31 L24 35 L27 31 Z" fill="#E9A93A" stroke="#231F1E" stroke-width="1.5" stroke-linejoin="round"/></svg><span>Game Guru</span></a>
+        <p class="muted" style="color:#CDBFB4">Eat, drink, play and compete at Birmingham and Solihull's home of games.</p>
+      </div>
+      <div>
+        <h3>Utilita Arena</h3>
+        <ul>
+          <li>Unit 1, King Edwards Road<br>Birmingham B1 2AA</li>
+          <li><a href="tel:+441218246592">0121 824 6592</a></li>
+          <li>Open daily 10am to 10pm</li>
+          <li><a href="visit.html">Getting here and access</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Touchwood</h3>
+        <ul>
+          <li>25 Jubilee Walk, Touchwood<br>Solihull B91 3HT</li>
+          <li><a href="tel:+441212969218">0121 296 9218</a></li>
+          <li>Open daily 10am to 10pm</li>
+          <li><a href="visit.html">Getting here and access</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>More</h3>
+        <ul>
+          <li><a href="whats-on.html">Leagues and standings</a></li>
+          <li><a href="parties.html#corporate">Corporate and private hire</a></li>
+          <li><a href="vault.html">Membership and the app</a></li>
+          <li><a href="visit.html#access">Accessibility</a></li>
+          <li><a href="https://www.instagram.com/" aria-label="Game Guru on Instagram">Instagram</a> · <a href="https://www.tiktok.com/" aria-label="Game Guru on TikTok">TikTok</a> · <a href="https://www.facebook.com/" aria-label="Game Guru on Facebook">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 Game Guru. Concept mockup, not the live site.</span>
+      <span><a href="#">Terms</a> · <a href="#">Privacy</a> · <a href="#">Allergens</a> · <a href="#">Accessibility statement</a></span>
+    </div>
+  </div>
+</footer>
+<div class="book-bar"><a class="btn btn-primary" href="#book" data-book="table">Book a table</a><a class="btn" href="whats-on.html">What's on</a></div>
+<dialog class="drawer" id="book-drawer" aria-labelledby="book-title">
+  <div class="drawer-inner">
+    <div class="drawer-head">
+      <h2 id="book-title">Book at Game Guru</h2>
+      <button class="close" type="button" data-close aria-label="Close booking">&#x2715;</button>
+    </div>
+    <form class="form" data-mock="Mockup only: in the live site this hands over to the booking system and you get a confirmation email.">
+      <div class="field full">
+        <label for="b-type">What are you booking?</label>
+        <select id="b-type" name="type">
+          <option value="table">A table to eat, drink and play</option>
+          <option value="party">A party</option>
+          <option value="corporate">A corporate or group event</option>
+          <option value="event">An event or tournament entry</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="b-venue">Venue</label>
+        <select id="b-venue" name="venue">
+          <option value="arena">Utilita Arena</option>
+          <option value="touchwood">Touchwood</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="b-guests">Guests</label>
+        <input id="b-guests" name="guests" type="number" min="1" max="60" value="4">
+      </div>
+      <div class="field">
+        <label for="b-date">Date</label>
+        <input id="b-date" name="date" type="date" value="2026-11-07">
+      </div>
+      <div class="field">
+        <label for="b-time">Time</label>
+        <select id="b-time" name="time"><option>12:00</option><option>14:00</option><option>16:00</option><option selected>18:00</option><option>19:30</option></select>
+      </div>
+      <fieldset class="field full" style="border:0;padding:0;margin:0">
+        <legend style="font-weight:700;font-size:.9rem;margin-bottom:6px">Play time (per person)</legend>
+        <div class="radio-tiles">
+          <label><input type="radio" name="play" value="1"><span>1 hour<br>£4</span></label>
+          <label><input type="radio" name="play" value="2" checked><span>2 hours<br>£6</span></label>
+          <label><input type="radio" name="play" value="3"><span>3 hours<br>£8</span></label>
+        </div>
+        <span class="hint">Members play free. Food and drink are ordered at the table.</span>
+      </fieldset>
+      <div class="field full">
+        <label for="b-access">Access needs (optional)</label>
+        <input id="b-access" name="access" type="text" placeholder="e.g. wheelchair space, quieter table, carer">
+        <span class="hint">We pass this to the team before you arrive.</span>
+      </div>
+      <button class="btn btn-primary full" type="submit">Check availability</button>
+      <p class="confirm full" role="status" tabindex="-1" hidden></p>
+    </form>
+  </div>
+</dialog>
+<script src="assets/app.js" defer></script>
+</body>
+</html>
